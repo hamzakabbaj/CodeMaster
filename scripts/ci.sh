@@ -7,7 +7,9 @@ ROOT=$(git rev-parse --show-toplevel)
 cd "$ROOT"
 
 echo "▸ 1/3 JSON validity"
-json_files=$(git ls-files '*.json')
+# Include untracked-but-not-ignored files so new configs are validated locally
+# before they're committed (CI sees everything anyway). Same fix as check_links.
+json_files=$(git ls-files --cached --others --exclude-standard -- '*.json')
 if [ -n "$json_files" ]; then
   for f in $json_files; do
     python3 -m json.tool "$f" >/dev/null && echo "  ✓ $f"
