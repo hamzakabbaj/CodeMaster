@@ -19,6 +19,9 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Shell lint (shellcheck)
+        run: git ls-files '*.sh' '.githooks/*' | xargs shellcheck
+
       - name: JSON validity
         run: |
           files=$(git ls-files '*.json')
