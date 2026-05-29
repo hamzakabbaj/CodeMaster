@@ -54,9 +54,9 @@
 *Make [doc 02](docs/02-robust-code-process.md) executable.*
 
 - [x] `CM-12` — Verification ladder: shellcheck lint rung + 4-rung fail-fast `ci.sh`/CI (typecheck/test = extension point for real repos)
-- [ ] `CM-13` — `/spec` + plan-review flow
-- [ ] `CM-14` — Checkpoint/rollback helper
-- [ ] `CM-15` — DoD checklist template
+- [x] `CM-13` — `/spec` command: spec + plan-review gate before code
+- [x] `CM-14` — `scripts/checkpoint.sh`: green-gated checkpoint commit (rollback documented)
+- [x] `CM-15` — DoD checklist as `.github/pull_request_template.md`
 - [ ] `CM-16` — Run the full loop on a tiny sample feature (with tests)
 
 **Exit:** full loop demonstrated end-to-end inside CodeMaster.
