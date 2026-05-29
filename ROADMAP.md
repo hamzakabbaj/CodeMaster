@@ -16,7 +16,7 @@
 | 0 | Delivery Infrastructure | A | ✅ |
 | 1 | Capabilities Proving Ground | A | ✅ |
 | 2 | Robust-Code Loop | A | ✅ |
-| 3 | Subagent Fleet | A | ⬜ |
+| 3 | Subagent Fleet | A | ✅ |
 | 4 | Orchestration | A | ⬜ |
 | 5 | Package as Plugin | B | ⬜ |
 | 6 | Pilot in Real Repo | C | ⬜ |
@@ -64,14 +64,14 @@
 ## Phase 3 — Subagent Fleet
 *Materialize [doc 04](docs/04-team-profiles.md).*
 
-- [ ] `CM-17` — `architect.md` (capable model, read-heavy, design review)
-- [ ] `CM-18` — `tester.md` (adversarial edge-case authoring)
-- [ ] `CM-19` — `devops.md` (CI/CD, IaC, deploy reasoning)
-- [ ] `CM-20` — `security.md` (threat model, secrets, authz)
-- [ ] `CM-21` — `reviewer.md` (PR review vs our conventions)
-- [ ] `CM-22` — Scoped tools + model routing + per-agent memory dirs
+- [x] `CM-17` — `architect.md` (opus, read-only, design review vs doctrine)
+- [x] `CM-18` — `tester.md` (sonnet, adversarial test design)
+- [x] `CM-19` — `devops.md` (sonnet, gates/CI/reproducibility)
+- [x] `CM-20` — `security.md` (opus, threat model/secrets/authz)
+- [x] `CM-21` — `reviewer.md` (sonnet, PR review vs conventions/DoD; read-only Bash)
+- [x] `CM-22` — Scoped tools + model routing + memory **convention**; `.claude/agents/README.md`
 
-**Exit:** each role-agent validated on a real task.
+**Exit:** ✅ fleet defined with least-privilege tools + model routing; registers on reload (mechanic proven in CM-9). Live fleet validation folds into Phase 4 orchestration.
 
 ## Phase 4 — Orchestration
 *Materialize [doc 05](docs/05-orchestration.md).*
