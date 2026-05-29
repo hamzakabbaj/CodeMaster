@@ -2,7 +2,7 @@
 
 - **Epic:** Phase 1 — Capabilities Proving Ground
 - **Type:** task
-- **Status:** ⬜ todo
+- **Status:** ✅ done
 - **Branch:** `feat/CM-7-claude-md`
 
 ## Goal
