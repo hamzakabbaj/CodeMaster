@@ -46,3 +46,5 @@ Run the same gates CI runs, before you push:
 ```sh
 scripts/ci.sh
 ```
+
+The lint rung uses **shellcheck**. Install it to fully mirror CI (`brew install shellcheck`); without it, `ci.sh` falls back to a `sh -n` syntax check and warns.

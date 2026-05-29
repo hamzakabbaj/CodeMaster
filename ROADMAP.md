@@ -15,7 +15,7 @@
 |---|---|---|---|
 | 0 | Delivery Infrastructure | A | ✅ |
 | 1 | Capabilities Proving Ground | A | ✅ |
-| 2 | Robust-Code Loop | A | ⬜ |
+| 2 | Robust-Code Loop | A | 🟦 |
 | 3 | Subagent Fleet | A | ⬜ |
 | 4 | Orchestration | A | ⬜ |
 | 5 | Package as Plugin | B | ⬜ |
@@ -52,7 +52,7 @@
 ## Phase 2 — Robust-Code Loop
 *Make [doc 02](docs/02-robust-code-process.md) executable.*
 
-- [ ] `CM-12` — Verification-ladder scripts (lint → typecheck → test) wired as hooks/commands
+- [x] `CM-12` — Verification ladder: shellcheck lint rung + 4-rung fail-fast `ci.sh`/CI (typecheck/test = extension point for real repos)
 - [ ] `CM-13` — `/spec` + plan-review flow
 - [ ] `CM-14` — Checkpoint/rollback helper
 - [ ] `CM-15` — DoD checklist template
