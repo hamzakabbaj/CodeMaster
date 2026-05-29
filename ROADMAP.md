@@ -45,6 +45,7 @@
 - [x] `CM-34` (fix, from CM-8) — harden `--no-verify` guard: token-aware (shlex) detection, kills false positives; 7-case pipe-test
 - [x] `CM-10` — `new-ticket` skill (+ bundled `next-number.sh`); deterministic core verified live (auto-trigger pending reload)
 - [x] `CM-11` — `/start-ticket <CM-n>` slash command (branch + status flip); explicit-only counterpart to the `new-ticket` skill
+- [x] `CM-36` (fix, from CM-11) — `/start-ticket` arg substitution (`$ARGUMENTS`) + composable guard; verified live
 
 **Exit:** ✅ one of each primitive built; mechanics confirmed live (and corrected doc 01: hooks/agents/skills/commands all register only at session start).
 
