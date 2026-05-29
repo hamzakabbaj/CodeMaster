@@ -17,7 +17,7 @@
 | 1 | Capabilities Proving Ground | A | ✅ |
 | 2 | Robust-Code Loop | A | ✅ |
 | 3 | Subagent Fleet | A | ✅ |
-| 4 | Orchestration | A | ⬜ |
+| 4 | Orchestration | A | ✅ |
 | 5 | Package as Plugin | B | ⬜ |
 | 6 | Pilot in Real Repo | C | ⬜ |
 
@@ -76,11 +76,13 @@
 ## Phase 4 — Orchestration
 *Materialize [doc 05](docs/05-orchestration.md).*
 
-- [ ] `CM-23` — Review-board workflow: dev → tester → security/perf/correctness → reviewer pipeline
-- [ ] `CM-24` — Adversarial-verify pattern baked in
-- [ ] `CM-25` — Bounded live workflow run; observe structured output
+- [x] `CM-23` — `review-board.mjs`: multi-dimension review pipeline (self-contained, cost-routed, bounded)
+- [x] `CM-24` — Adversarial-verify: N haiku skeptics refute each finding; survivors only
+- [x] `CM-25` — Bounded live run (11 agents): 4 considered → 3 confirmed; **found a real bug** unit tests missed (→ CM-38)
 
-**Exit:** orchestration demonstrated; review board runs as a pipeline.
+- [ ] `CM-38` (fix, from CM-25) — `roadmap_stats.py`: `is_file()` + `try/except OSError`; add directory/permission test
+
+**Exit:** ✅ orchestration demonstrated live; review board ran as a pipeline with adversarial verification and surfaced a genuine correctness bug.
 
 ## Phase 5 — Package as Plugin *(Track B)*
 
