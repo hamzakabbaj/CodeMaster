@@ -11,7 +11,7 @@ set -e
 ROOT=$(git rev-parse --show-toplevel)
 cd "$ROOT"
 
-echo "▸ 1/4 Shell lint"
+echo "▸ 1/5 Shell lint"
 sh_files=$(git ls-files --cached --others --exclude-standard -- '*.sh' '.githooks/*')
 if [ -z "$sh_files" ]; then
   echo "  (no shell files)"
@@ -24,7 +24,15 @@ else
   echo "  ✓ syntax ok"
 fi
 
-echo "▸ 2/4 JSON validity"
+echo "▸ 2/5 Unit tests"
+if [ -d tests ]; then
+  python3 -m unittest discover -s tests -p 'test_*.py'
+  echo "  ✓ tests pass"
+else
+  echo "  (no tests yet)"
+fi
+
+echo "▸ 3/5 JSON validity"
 json_files=$(git ls-files --cached --others --exclude-standard -- '*.json')
 if [ -z "$json_files" ]; then
   echo "  (no JSON files yet)"
@@ -35,10 +43,10 @@ else
   done
 fi
 
-echo "▸ 3/4 Markdown links"
+echo "▸ 4/5 Markdown links"
 python3 scripts/check_links.py
 
-echo "▸ 4/4 Commit message (HEAD) conforms to Conventional Commits"
+echo "▸ 5/5 Commit message (HEAD) conforms to Conventional Commits"
 git log -1 --format='%B' > /tmp/cm_head_msg
 .githooks/commit-msg /tmp/cm_head_msg
 echo "  ✓ HEAD commit message OK"

@@ -22,6 +22,9 @@ jobs:
       - name: Shell lint (shellcheck)
         run: git ls-files '*.sh' '.githooks/*' | xargs shellcheck
 
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+
       - name: JSON validity
         run: |
           files=$(git ls-files '*.json')

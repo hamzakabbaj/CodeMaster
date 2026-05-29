@@ -15,7 +15,7 @@
 |---|---|---|---|
 | 0 | Delivery Infrastructure | A | ✅ |
 | 1 | Capabilities Proving Ground | A | ✅ |
-| 2 | Robust-Code Loop | A | 🟦 |
+| 2 | Robust-Code Loop | A | ✅ |
 | 3 | Subagent Fleet | A | ⬜ |
 | 4 | Orchestration | A | ⬜ |
 | 5 | Package as Plugin | B | ⬜ |
@@ -57,9 +57,9 @@
 - [x] `CM-13` — `/spec` command: spec + plan-review gate before code
 - [x] `CM-14` — `scripts/checkpoint.sh`: green-gated checkpoint commit (rollback documented)
 - [x] `CM-15` — DoD checklist as `.github/pull_request_template.md`
-- [ ] `CM-16` — Run the full loop on a tiny sample feature (with tests)
+- [x] `CM-16` — `roadmap_stats.py` + unittest tests; activates the ladder's test rung; loop run end-to-end
 
-**Exit:** full loop demonstrated end-to-end inside CodeMaster.
+**Exit:** ✅ full loop demonstrated end-to-end inside CodeMaster (spec → verify → critique; test rung live).
 
 ## Phase 3 — Subagent Fleet
 *Materialize [doc 04](docs/04-team-profiles.md).*
