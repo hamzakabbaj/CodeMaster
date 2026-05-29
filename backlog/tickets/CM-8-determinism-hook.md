@@ -11,7 +11,7 @@ Prove the determinism boundary inside a Claude session: block a protected action
 ## Acceptance criteria
 - [x] PreToolUse hook denies `git commit --no-verify` / `-n` (logic pipe-tested across 5 cases)
 - [x] Configured in project `.claude/settings.json`; structure validated via `jq -e`
-- [~] Live in-session proof deferred to user: requires `/hooks` reload or restart (settings watcher caveat — file didn't exist at session start)
+- [x] Live in-session proof: after session restart, a real `git commit --no-verify` was blocked by the hook with the expected message (settings-watcher caveat confirmed — needed the reload)
 
 ## Scope note
 Narrowed to the PreToolUse deny-gate only. A PostToolUse logger/formatter was dropped to avoid noisy false alarms (e.g. warning on links to not-yet-created files); easy follow-up if wanted.
