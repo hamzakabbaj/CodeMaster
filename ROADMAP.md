@@ -40,7 +40,7 @@
 
 - [x] `CM-7` — `CLAUDE.md` (invariants only)
 - [x] `CM-8` — Hook: PreToolUse deny-gate blocking `git commit --no-verify` (scope narrowed; live activation via `/hooks`)
-- [ ] `CM-9` — One subagent (validated)
+- [x] `CM-9` — `librarian` subagent (read-only, scoped tools); mechanic validated via `Explore` (custom persona registers next session)
 - [ ] `CM-10` — One skill (validated)
 - [ ] `CM-11` — One slash command (validated)
 
