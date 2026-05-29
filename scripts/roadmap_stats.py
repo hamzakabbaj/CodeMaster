@@ -30,10 +30,17 @@ def summary(text):
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
     path = Path(argv[0]) if argv else Path(__file__).resolve().parent.parent / "ROADMAP.md"
-    if not path.exists():
-        print(f"ROADMAP not found: {path}", file=sys.stderr)
+    # is_file() (not exists()) so a directory takes the clean error path instead
+    # of raising IsADirectoryError from read_text() (CM-38, found by CM-25).
+    if not path.is_file():
+        print(f"not a readable file: {path}", file=sys.stderr)
         return 1
-    print(summary(path.read_text(encoding="utf-8")))
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as err:  # PermissionError and friends — keep the error contract
+        print(f"could not read {path}: {err}", file=sys.stderr)
+        return 1
+    print(summary(text))
     return 0
 
 
