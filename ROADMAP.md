@@ -32,6 +32,7 @@
 - [x] `CM-4` — Filed **Phase 1** tickets (CM-7…CM-11) just-in-time; Phases 2–5 stay as roadmap line-items until pulled
 - [x] `CM-5` — `.github/workflows/ci.yml` + `scripts/ci.sh` (JSON, md-links, commit-msg) + `scripts/setup.sh`
 - [x] `CM-6` — Baseline commit on `feat/CM-0-delivery-infrastructure`
+- [ ] `CM-35` — Enable branch protection on main ⏸️ blocked (needs Pro/public; script ready, deferred to public/plugin stage)
 
 **Exit:** ✅ repo conventions + hooks + CI + backlog in place; CI is *real* (live remote).
 
@@ -101,4 +102,5 @@
 
 ## Decisions log
 - **2026-05-29** — Endgame = Both-in-sequence (standalone → plugin → install). Pilot = CodeMaster only. Ceremony = full Big-Tech.
+- **2026-05-29** — CM-35 branch protection deferred: blocked by GitHub plan (private + free → 403 on protection & rulesets). Local hooks + CI enforce meanwhile; apply the ready script when repo goes public or upgrades.
 - **2026-05-29** — Phase 0: discovered repo already existed (`main` + GitHub remote `hamzakabbaj/CodeMaster`) → CI is real, not theoretical. Chose dependency-free shell hook over commitlint (docs repo, no Node). Phase 0 ships as one PR (interdependent bootstrap); finer-grained branches from Phase 1. Backlog refined just-in-time.
