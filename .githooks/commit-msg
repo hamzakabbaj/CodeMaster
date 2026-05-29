@@ -7,6 +7,10 @@ msg_file="$1"
 # First non-empty, non-comment line is the subject.
 subject=$(grep -vE '^\s*#' "$msg_file" | grep -vE '^\s*$' | head -n1)
 
+# Strip a trailing GitHub PR reference like " (#123)" — squash-merges append it
+# automatically (CM-37). It is metadata, so it must not count toward the limit.
+subject=$(printf '%s' "$subject" | sed -E 's/ \(#[0-9]+\)$//')
+
 # Allow merge/revert/fixup commits to pass through untouched.
 case "$subject" in
   "Merge "*|"Revert "*|"fixup!"*|"squash!"*) exit 0 ;;
