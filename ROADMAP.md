@@ -14,7 +14,7 @@
 | Phase | Epic | Track | Status |
 |---|---|---|---|
 | 0 | Delivery Infrastructure | A | ✅ |
-| 1 | Capabilities Proving Ground | A | 🟦 |
+| 1 | Capabilities Proving Ground | A | ✅ |
 | 2 | Robust-Code Loop | A | ⬜ |
 | 3 | Subagent Fleet | A | ⬜ |
 | 4 | Orchestration | A | ⬜ |
@@ -43,9 +43,9 @@
 - [x] `CM-9` — `librarian` subagent (read-only, scoped tools); mechanic validated via `Explore` (custom persona registers next session)
 - [x] `CM-34` (fix, from CM-8) — harden `--no-verify` guard: token-aware (shlex) detection, kills false positives; 7-case pipe-test
 - [x] `CM-10` — `new-ticket` skill (+ bundled `next-number.sh`); deterministic core verified live (auto-trigger pending reload)
-- [ ] `CM-11` — One slash command (validated)
+- [x] `CM-11` — `/start-ticket <CM-n>` slash command (branch + status flip); explicit-only counterpart to the `new-ticket` skill
 
-**Exit:** each primitive demonstrably fires; mechanics confirmed (corrects any stale assumptions in doc 01).
+**Exit:** ✅ one of each primitive built; mechanics confirmed live (and corrected doc 01: hooks/agents/skills/commands all register only at session start).
 
 ## Phase 2 — Robust-Code Loop
 *Make [doc 02](docs/02-robust-code-process.md) executable.*
