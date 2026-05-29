@@ -80,7 +80,7 @@
 - [x] `CM-24` — Adversarial-verify: N haiku skeptics refute each finding; survivors only
 - [x] `CM-25` — Bounded live run (11 agents): 4 considered → 3 confirmed; **found a real bug** unit tests missed (→ CM-38)
 
-- [ ] `CM-38` (fix, from CM-25) — `roadmap_stats.py`: `is_file()` + `try/except OSError`; add directory/permission test
+- [x] `CM-38` (fix, from CM-25) — `roadmap_stats.py`: `is_file()` + `try/except OSError`; +3 CLI tests (8 total). Closes the loop the review board opened.
 
 **Exit:** ✅ orchestration demonstrated live; review board ran as a pipeline with adversarial verification and surfaced a genuine correctness bug.
 
