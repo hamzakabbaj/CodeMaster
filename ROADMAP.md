@@ -39,7 +39,7 @@
 *Validate [doc 01](docs/01-claude-capabilities.md) live — build one of each primitive and run it.*
 
 - [x] `CM-7` — `CLAUDE.md` (invariants only)
-- [ ] `CM-8` — Hook: PreToolUse deny-gate + PostToolUse formatter (determinism boundary)
+- [x] `CM-8` — Hook: PreToolUse deny-gate blocking `git commit --no-verify` (scope narrowed; live activation via `/hooks`)
 - [ ] `CM-9` — One subagent (validated)
 - [ ] `CM-10` — One skill (validated)
 - [ ] `CM-11` — One slash command (validated)
