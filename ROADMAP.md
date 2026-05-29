@@ -14,7 +14,7 @@
 | Phase | Epic | Track | Status |
 |---|---|---|---|
 | 0 | Delivery Infrastructure | A | ✅ |
-| 1 | Capabilities Proving Ground | A | ⬜ |
+| 1 | Capabilities Proving Ground | A | 🟦 |
 | 2 | Robust-Code Loop | A | ⬜ |
 | 3 | Subagent Fleet | A | ⬜ |
 | 4 | Orchestration | A | ⬜ |
@@ -38,7 +38,7 @@
 ## Phase 1 — Capabilities Proving Ground
 *Validate [doc 01](docs/01-claude-capabilities.md) live — build one of each primitive and run it.*
 
-- [ ] `CM-7` — `CLAUDE.md` (invariants only)
+- [x] `CM-7` — `CLAUDE.md` (invariants only)
 - [ ] `CM-8` — Hook: PreToolUse deny-gate + PostToolUse formatter (determinism boundary)
 - [ ] `CM-9` — One subagent (validated)
 - [ ] `CM-10` — One skill (validated)
