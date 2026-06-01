@@ -9,6 +9,7 @@ window.CM.site = {
     { label: "The Loop", href: "loop.html" },
     { label: "Delivery", href: "delivery.html" },
     { label: "The Fleet", href: "fleet.html" },
+    { label: "Inside Big Tech", href: "bigtech.html" },
     { label: "Roadmap", href: "roadmap.html" },
   ],
   footer: "CodeMaster — built by dogfooding its own process.",
