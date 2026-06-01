@@ -11,7 +11,7 @@ set -e
 ROOT=$(git rev-parse --show-toplevel)
 cd "$ROOT"
 
-echo "▸ 1/5 Shell lint"
+echo "▸ 1/6 Shell lint"
 sh_files=$(git ls-files --cached --others --exclude-standard -- '*.sh' '.githooks/*')
 if [ -z "$sh_files" ]; then
   echo "  (no shell files)"
@@ -24,7 +24,21 @@ else
   echo "  ✓ syntax ok"
 fi
 
-echo "▸ 2/5 Unit tests"
+echo "▸ 2/6 JS syntax (site)"
+# Scope to docs/site only: workflow scripts (.claude/workflows/*.mjs) run inside
+# the Workflow runtime's function wrapper (top-level await/return, injected
+# globals) and are NOT standalone modules — node --check rightly rejects them.
+js_files=$(git ls-files --cached --others --exclude-standard -- docs/site | grep -E '\.js$' || true)
+if [ -z "$js_files" ]; then
+  echo "  (no site JS)"
+elif command -v node >/dev/null 2>&1; then
+  printf '%s\n' "$js_files" | while IFS= read -r f; do node --check "$f" || exit 1; done
+  echo "  ✓ node --check clean"
+else
+  echo "  ! node not found — skipping JS syntax (install node to mirror CI)"
+fi
+
+echo "▸ 3/6 Unit tests"
 if [ -d tests ]; then
   python3 -m unittest discover -s tests -p 'test_*.py'
   echo "  ✓ tests pass"
@@ -32,7 +46,7 @@ else
   echo "  (no tests yet)"
 fi
 
-echo "▸ 3/5 JSON validity"
+echo "▸ 4/6 JSON validity"
 json_files=$(git ls-files --cached --others --exclude-standard -- '*.json')
 if [ -z "$json_files" ]; then
   echo "  (no JSON files yet)"
@@ -43,10 +57,10 @@ else
   done
 fi
 
-echo "▸ 4/5 Markdown links"
+echo "▸ 5/6 Markdown links"
 python3 scripts/check_links.py
 
-echo "▸ 5/5 Commit message (HEAD) conforms to Conventional Commits"
+echo "▸ 6/6 Commit message (HEAD) conforms to Conventional Commits"
 git log -1 --format='%B' > /tmp/cm_head_msg
 .githooks/commit-msg /tmp/cm_head_msg
 echo "  ✓ HEAD commit message OK"

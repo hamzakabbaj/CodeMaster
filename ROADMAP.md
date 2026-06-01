@@ -20,7 +20,7 @@
 | 4 | Orchestration | A | ✅ |
 | 5 | Package as Plugin | B | ⬜ |
 | 6 | Pilot in Real Repo | C | ⬜ |
-| D | Docs Site (reference showcase) | A | 🟦 |
+| D | Docs Site (reference showcase) | A | ✅ |
 
 ---
 
@@ -108,7 +108,7 @@
 
 - [x] `CM-39` — Site engine: `style.css` design system, `render.js` component renderer, `data/site.js`, `file://`-safe data pattern + Overview page
 - [x] `CM-40` — Content pages (capabilities, loop, delivery, fleet, roadmap); all 6 pages render `file://` with no console errors (shipped with CM-39)
-- [ ] `CM-41` — `node --check` JS rung in `ci.sh` + CI (graceful degrade)
+- [x] `CM-41` — `node --check` JS rung (rung 2/6, site-scoped, graceful degrade) in `ci.sh` + CI
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 
