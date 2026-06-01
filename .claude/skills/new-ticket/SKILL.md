@@ -10,8 +10,8 @@ Create a well-formed CodeMaster ticket so every item meets our Definition of Rea
 ## Steps
 1. **Get the next number.** Run `.claude/skills/new-ticket/next-number.sh` — it prints the next free `CM-<n>`.
 2. **Gather inputs** (ask only for what's missing): title, epic/phase, type (`task|story|spike|fix`), goal (one sentence), acceptance criteria.
-3. **Create the file** `backlog/tickets/CM-<n>-<short-slug>.md` from `backlog/templates/ticket.md`, filling every placeholder. Slug = kebab-case of the title. Status starts `⬜ todo`.
-4. **Register in ROADMAP.md**: add `- [ ] \`CM-<n>\` — <title>` under the correct phase's ticket list. ROADMAP is the index/status board; the ticket file holds the detail.
+3. **Create the ticket folder** `backlog/tickets/CM-<n>-<short-slug>/` and write its `README.md` from `backlog/templates/ticket.md`, filling every placeholder. Slug = kebab-case of the title. Status starts `⬜ todo`. (`plan.md` and `evidence.md` are optional siblings, added later when the ticket is built — see `backlog/README.md`.)
+4. **Register in ROADMAP.md**: add `- [ ] \`CM-<n>\` — <title>` under the correct phase's ticket list. ROADMAP is the index/status board; the ticket folder holds the detail.
 5. **Confirm** the new path and number back to the user. Do not start work — creating ≠ starting (that's `/start-ticket`).
 
 ## Guardrails
