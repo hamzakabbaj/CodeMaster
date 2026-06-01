@@ -20,6 +20,7 @@
 | 4 | Orchestration | A | ✅ |
 | 5 | Package as Plugin | B | ⬜ |
 | 6 | Pilot in Real Repo | C | ⬜ |
+| D | Docs Site (reference showcase) | A | 🟦 |
 
 ---
 
@@ -102,9 +103,19 @@
 
 **Exit:** real feature shipped end-to-end via CodeMaster.
 
+## Epic D — Docs Site (reference showcase)
+*Data-driven static site, `file://`-openable, modern dark product. Site JS data is its own curated source; markdowns stay the canonical spec.*
+
+- [x] `CM-39` — Site engine: `style.css` design system, `render.js` component renderer, `data/site.js`, `file://`-safe data pattern + Overview page
+- [x] `CM-40` — Content pages (capabilities, loop, delivery, fleet, roadmap); all 6 pages render `file://` with no console errors (shipped with CM-39)
+- [ ] `CM-41` — `node --check` JS rung in `ci.sh` + CI (graceful degrade)
+
+**Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
+
 ---
 
 ## Decisions log
+- **2026-06-01** — Docs site: chose data-driven client-rendered site (JS data + component renderer) over a markdown generator — user wants flexible layouts (cards) + Claude-editable content. `file://` forces classic `<script>` globals (no fetch/ESM). Site content is a separate curated source from the markdowns (accepted tradeoff). Aesthetic: modern dark product.
 - **2026-05-29** — Endgame = Both-in-sequence (standalone → plugin → install). Pilot = CodeMaster only. Ceremony = full Big-Tech.
 - **2026-05-29** — CM-35 branch protection deferred: blocked by GitHub plan (private + free → 403 on protection & rulesets). Local hooks + CI enforce meanwhile; apply the ready script when repo goes public or upgrades.
 - **2026-05-29** — Phase 0: discovered repo already existed (`main` + GitHub remote `hamzakabbaj/CodeMaster`) → CI is real, not theoretical. Chose dependency-free shell hook over commitlint (docs repo, no Node). Phase 0 ships as one PR (interdependent bootstrap); finer-grained branches from Phase 1. Backlog refined just-in-time.
