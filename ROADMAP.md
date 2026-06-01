@@ -113,6 +113,7 @@
 - [x] `CM-43` — "Playbooks" page: the process applied to 7 real scenarios (greenfield, brownfield, refactor, hotfix, spike, migration, incident)
 - [x] `CM-44` — Greenfield deep-dive page: Step 1 (Design Thinking) fully detailed; Steps 2–5 to follow incrementally
 - [x] `CM-45` — Greenfield deep-dive: Steps 2–5 (/spec & plan-review, Backlog, Build loop, Ship)
+- [x] `CM-46` — Reference artifact set `examples/etikets/` (design → spec → backlog, worked example)
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 
