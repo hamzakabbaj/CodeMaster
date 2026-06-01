@@ -114,6 +114,7 @@
 - [x] `CM-44` — Greenfield deep-dive page: Step 1 (Design Thinking) fully detailed; Steps 2–5 to follow incrementally
 - [x] `CM-45` — Greenfield deep-dive: Steps 2–5 (/spec & plan-review, Backlog, Build loop, Ship)
 - [x] `CM-46` — Reference artifact set `examples/etikets/` (design → spec → backlog, worked example)
+- [x] `CM-47` — Greenfield Step 4: add "Pull & refine to Ready" substep + Build→Backlog feedback
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 

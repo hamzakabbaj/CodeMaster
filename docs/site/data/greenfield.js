@@ -173,13 +173,14 @@ window.CM.pages.greenfield = {
       kicker: "Step 4 · implement · verify · repeat",
       title: "Build — the robust-code loop",
       intro:
-        "Per ticket: branch, then loop <strong>generate → verify → critique</strong> until green. <strong>Exit:</strong> a ticket whose acceptance criteria are met and demonstrated, on a branch, ladder green.",
+        "Per ticket: pull &amp; refine to Ready, branch, then loop <strong>generate → verify → critique</strong> until green. <strong>Exit:</strong> a ticket whose acceptance criteria are met and demonstrated, on a branch, ladder green.",
     },
     {
       type: "steps",
       kicker: "The sub-flow",
-      title: "Branch → (maybe spec) → loop → checkpoint on green",
+      title: "Pull & refine → branch → (maybe spec) → loop → checkpoint on green",
       items: [
+        { title: "Pull the next ticket & refine it to Ready", body: "This is where Step 3's <em>just-in-time refinement</em> actually happens — there's no planning ceremony in continuous flow, so you refine at the pull. Take the next ticket by dependency order; flesh the rough line-item against the epic spec — sharpen the <strong>testable AC</strong>, confirm it's <strong>one concern</strong>, confirm deps are done/unblocked, split if it grew too big. That's <strong>Definition of Ready</strong> applied as the gate. Can't reach Ready because of unknowns? <strong>Spike it</strong> instead of starting blind. (Light for planned tickets — the epic spec did the thinking; heavier for emergent ones.)" },
         { title: "Branch with /start-ticket", body: "<code>/start-ticket CM-n</code> checks you're on an up-to-date <code>main</code>, cuts <code>feat/CM-n-&lt;slug&gt;</code>, and flips the ticket + ROADMAP status to 🟦 in progress. One ticket → one branch." },
         { title: "(Optional) focused /spec for gnarly tickets", body: "Most tickets inherit the epic plan from Step 2. A genuinely tricky one earns its own ticket-altitude <code>/spec CM-n</code> first." },
         { title: "Loop: generate → verify → critique", body: "Generate against the plan; <strong>verify</strong> with the ladder (<code>scripts/ci.sh</code>: shell · JS · tests · JSON · links · commit — cheapest first, fail-fast); <strong>critique</strong> as the discriminator — design/security/perf, not just “does it run.” Lean on <code>tester</code> for edge cases, <code>security</code> for surface." },
@@ -204,6 +205,12 @@ window.CM.pages.greenfield = {
       title: "The gate that matters: the green ladder",
       html:
         "Local <em>is</em> CI. Nothing advances on red, and the cheapest rung fails first — so you learn you're wrong in seconds, not in a ten-minute remote build.",
+    },
+    {
+      type: "callout",
+      title: "The feedback arrow: Build → Backlog",
+      html:
+        "Building ticket N is where you discover ticket N+3 — the edge case, the missing concern. The discipline when that happens: <strong>don't scope-creep the current branch.</strong> Park the discovery as a <em>new</em> ticket (one concern!), refined just-in-time when <em>it's</em> pulled. That's how the loop keeps the current PR focused <em>and</em> drives the backlog toward exhaustive — the cage catching what up-front slicing missed.",
     },
     { type: "divider" },
 
