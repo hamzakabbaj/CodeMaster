@@ -152,10 +152,10 @@ window.CM.pages.greenfield = {
       kicker: "The sub-flow",
       title: "Scaffold → slice vertically → meet DoR → refine just-in-time",
       items: [
-        { title: "Scaffold each ticket with new-ticket", body: "The <code>new-ticket</code> skill takes the next id from <code>next-number.sh</code>, writes <code>backlog/tickets/CM-n-&lt;slug&gt;.md</code> from the template (goal · acceptance criteria · verification), and registers <code>- [ ] CM-n</code> under the epic in <code>ROADMAP.md</code>." },
+        { title: "Scaffold each ticket with new-ticket", body: "The <code>new-ticket</code> skill takes the next id from <code>next-number.sh</code>, writes the ticket <strong>folder</strong> <code>backlog/tickets/CM-n-&lt;slug&gt;/README.md</code> from the template (goal · acceptance criteria · verification), and registers <code>- [ ] CM-n</code> under the epic in <code>ROADMAP.md</code>. The folder also carries optional siblings — <code>plan.md</code> (the Plan beat) and <code>evidence.md</code> (proof of done: pointers to the CI run / PR / tests)." },
         { title: "Slice vertically, one concern each", body: "Each ticket is finishable in one short-lived branch and delivers something verifiable end to end. Order them by the plan's dependency sequence. If a ticket's AC span unrelated changes, split it." },
         { title: "Meet the Definition of Ready", body: "Clear single-sentence goal · testable AC · deps known &amp; unblocked · small enough for one branch · verification approach identified. A ticket that can't state testable AC isn't ready to start." },
-        { title: "Refine just-in-time", body: "Only elaborate a ticket when it's pulled into work — speculative over-specification is waste. <code>ROADMAP.md</code> is the index/status; the ticket file holds the detail. The <code>librarian</code> can check the two stay consistent." },
+        { title: "Refine just-in-time", body: "Only elaborate a ticket when it's pulled into work — speculative over-specification is waste. <code>ROADMAP.md</code> is the index/status; the ticket folder holds the detail. The <code>librarian</code> can check the two stay consistent." },
       ],
     },
     {

@@ -7,8 +7,8 @@
 - **Epic:** Daily-pick MVP loop
 - **Type:** story
 - **Status:** ⬜ todo
-- **Depends on:** [ETK-100](ETK-100-data-model.md), [ETK-2](ETK-2-daily-pick.md)
-- **Spec:** [EPIC-daily-pick-loop](../../specs/EPIC-daily-pick-loop.spec.md)
+- **Depends on:** [ETK-100](../ETK-100-data-model/README.md), [ETK-2](../ETK-2-daily-pick/README.md)
+- **Spec:** [EPIC-daily-pick-loop](../../../specs/EPIC-daily-pick-loop.spec.md)
 
 ## Story
 **As a** user, **I want** to mark today's drawn task as done and see my streak grow,

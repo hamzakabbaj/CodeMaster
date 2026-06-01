@@ -11,11 +11,11 @@
 
 | Ticket | Type | Title | Status |
 |---|---|---|---|
-| [`ETK-100`](tickets/ETK-100-data-model.md) | task (enabler) | Data model — Task / DailyPick / Streak | ⬜ |
-| [`ETK-101`](tickets/ETK-101-pick-engine.md) | task (enabler) | Pick engine + day-boundary rule | ⬜ |
-| [`ETK-1`](tickets/ETK-1-add-task.md) | story | Add a micro-task by title | ⬜ |
-| [`ETK-2`](tickets/ETK-2-daily-pick.md) | story | One random task per day | ⬜ |
-| [`ETK-3`](tickets/ETK-3-mark-done-streak.md) | story | Mark done & grow the streak | ⬜ |
+| [`ETK-100`](tickets/ETK-100-data-model/README.md) | task (enabler) | Data model — Task / DailyPick / Streak | ⬜ |
+| [`ETK-101`](tickets/ETK-101-pick-engine/README.md) | task (enabler) | Pick engine + day-boundary rule | ⬜ |
+| [`ETK-1`](tickets/ETK-1-add-task/README.md) | story | Add a micro-task by title | ⬜ |
+| [`ETK-2`](tickets/ETK-2-daily-pick/README.md) | story | One random task per day | ⬜ |
+| [`ETK-3`](tickets/ETK-3-mark-done-streak/README.md) | story | Mark done & grow the streak | ⬜ |
 
 **Exit:** all tickets ✅ → the MVP loop is shippable; begin measuring the success
 metrics from the [design](../design/etikets-design.md).

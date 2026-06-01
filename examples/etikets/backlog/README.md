@@ -13,12 +13,16 @@
 | **Task** | an `ETK-n` ticket, `Type: task` | technical/**enabler** unit no single story owns |
 | **Spike** | an `ETK-n` ticket, `Type: spike` | timeboxed research (none in this example) |
 
+**Each ticket is a folder** — `tickets/ETK-n-slug/` with `README.md` (the body) plus
+optional `plan.md` (the loop's Plan beat) and `evidence.md` (proof of done: pointers to
+the CI run / PR / tests, no committed binaries). Same convention as CodeMaster's own backlog.
+
 ## Stories vs. enabler tasks (vertical vs. horizontal)
 - **Stories** are *vertical* slices — each delivers something a user can observe.
-  ([ETK-1](tickets/ETK-1-add-task.md), [ETK-2](tickets/ETK-2-daily-pick.md), [ETK-3](tickets/ETK-3-mark-done-streak.md))
+  ([ETK-1](tickets/ETK-1-add-task/README.md), [ETK-2](tickets/ETK-2-daily-pick/README.md), [ETK-3](tickets/ETK-3-mark-done-streak/README.md))
 - **Enabler tasks** are *horizontal* foundations — the data model and pick engine that
   the stories stand on, owned by no single story.
-  ([ETK-100](tickets/ETK-100-data-model.md), [ETK-101](tickets/ETK-101-pick-engine.md))
+  ([ETK-100](tickets/ETK-100-data-model/README.md), [ETK-101](tickets/ETK-101-pick-engine/README.md))
 
 Good backlogs mix both: pure story-slicing leaves the plumbing homeless; pure
 task-slicing loses the *why*. ETK-100/101 are numbered separately (100+) to read at a

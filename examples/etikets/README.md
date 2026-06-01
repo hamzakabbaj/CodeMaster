@@ -45,12 +45,14 @@ examples/etikets/
   backlog/
     README.md               the epic/story/task hierarchy + DoR/DoD
     ROADMAP.md              the status board (the epic + its tickets)
-    tickets/
-      ETK-1-add-task.md          STORY
-      ETK-2-daily-pick.md        STORY
-      ETK-3-mark-done-streak.md  STORY
-      ETK-100-data-model.md      enabler TASK
-      ETK-101-pick-engine.md     enabler TASK (carries the day-boundary decision)
+    tickets/                       a folder per ticket (README.md + optional plan.md/evidence.md)
+      ETK-1-add-task/README.md          STORY
+      ETK-2-daily-pick/README.md        STORY
+      ETK-3-mark-done-streak/README.md  STORY
+      ETK-100-data-model/README.md      enabler TASK
+      ETK-101-pick-engine/                enabler TASK (carries the day-boundary decision)
+        README.md
+        plan.md                          the loop's Plan beat, persisted
 ```
 
 ## Reading order
@@ -59,5 +61,5 @@ examples/etikets/
 3. [backlog/ROADMAP.md](backlog/ROADMAP.md) → the `ETK-n` tickets — the work, sliced and ordered.
 
 Watch one thread the whole way down: the **"one pick per day" timezone rule** appears
-as a *risk* in the spec, then becomes its **own foundational ticket** ([ETK-101](backlog/tickets/ETK-101-pick-engine.md)) —
+as a *risk* in the spec, then becomes its **own foundational ticket** ([ETK-101](backlog/tickets/ETK-101-pick-engine/README.md)) —
 the concrete payoff of speccing before slicing.

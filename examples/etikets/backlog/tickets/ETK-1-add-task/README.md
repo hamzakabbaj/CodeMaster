@@ -3,13 +3,13 @@
 > **What this file is.** A **user story** ticket — a *vertical* slice that delivers
 > something the user can observe. Stories use the *As a… I want… so that…* form and
 > carry testable acceptance criteria. Detail lives here; status lives in the
-> [ROADMAP](../ROADMAP.md).
+> [ROADMAP](../../ROADMAP.md).
 
 - **Epic:** Daily-pick MVP loop
 - **Type:** story
 - **Status:** ⬜ todo
-- **Depends on:** [ETK-100](ETK-100-data-model.md)
-- **Spec:** [EPIC-daily-pick-loop](../../specs/EPIC-daily-pick-loop.spec.md) · **Design:** [etikets-design](../../design/etikets-design.md)
+- **Depends on:** [ETK-100](../ETK-100-data-model/README.md)
+- **Spec:** [EPIC-daily-pick-loop](../../../specs/EPIC-daily-pick-loop.spec.md) · **Design:** [etikets-design](../../../design/etikets-design.md)
 
 ## Story
 **As a** user, **I want** to add a micro-task by typing just a title, **so that** it
