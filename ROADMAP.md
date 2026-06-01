@@ -115,6 +115,7 @@
 - [x] `CM-45` — Greenfield deep-dive: Steps 2–5 (/spec & plan-review, Backlog, Build loop, Ship)
 - [x] `CM-46` — Reference artifact set `examples/etikets/` (design → spec → backlog, worked example)
 - [x] `CM-47` — Greenfield Step 4: add "Pull & refine to Ready" substep + Build→Backlog feedback
+- [x] `CM-48` — Fix loop/ladder doc fidelity: restore the Plan beat; correct stale 5→6 rung counts
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 

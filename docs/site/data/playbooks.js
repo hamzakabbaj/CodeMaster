@@ -54,7 +54,7 @@ window.CM.pages.playbooks = {
         { title: "Design thinking — diverge, then converge", body: "Frame the problem and the user. Sketch 2–3 options with tradeoffs. Converge to a <strong>one-page design doc</strong>: problem, constraints, the chosen option, and <em>why</em>. Output is an approved design — not code." },
         { title: "/spec — turn design into a plan, gate it", body: "Run <code>/spec</code> to produce a spec + implementation plan, and stop at the <strong>plan-review gate</strong>. This is the cheapest place on earth to catch a wrong approach — before a single line exists." },
         { title: "Backlog — slice into tickets", body: "Break the plan into an epic → tickets via <code>new-ticket</code>, each with acceptance criteria and a Definition of Ready. The ticket ID becomes the thread linking commit → branch → PR." },
-        { title: "Build — the robust-code loop per ticket", body: "<code>/start-ticket</code> branches; then generate → <strong>verify against the ladder</strong> → critique. You are the discriminator: review for design/security/perf, not just “does it run.”" },
+        { title: "Build — the robust-code loop per ticket", body: "<code>/start-ticket</code> branches; then <strong>plan</strong> the change (which layers/files/tests) → generate → <strong>verify against the ladder</strong> → critique. You are the discriminator: review for design/security/perf, not just “does it run.”" },
         { title: "Ship — PR → review → green CI → merge", body: "Squash-merge on green. Repeat per ticket until the epic is done. The design doc stays as the rationale of record." },
       ],
     },

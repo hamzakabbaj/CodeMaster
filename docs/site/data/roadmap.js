@@ -23,7 +23,7 @@ window.CM.pages.roadmap = {
       items: [
         { name: "0 · Delivery Infrastructure", status: "done", note: "Hooks, ladder, CI, backlog — the deterministic cage." },
         { name: "1 · Capabilities Proving Ground", status: "done", note: "One of each primitive, mechanics confirmed live." },
-        { name: "2 · Robust-Code Loop", status: "done", note: "shellcheck + tests + the 5-rung fail-fast ladder." },
+        { name: "2 · Robust-Code Loop", status: "done", note: "shellcheck + tests + the 6-rung fail-fast ladder." },
         { name: "3 · Subagent Fleet", status: "done", note: "Six doctrine-aware role agents, scoped + routed." },
         { name: "4 · Orchestration", status: "done", note: "Review-board workflow with adversarial verification." },
         { name: "5 · Package as Plugin", status: "todo", note: "Bundle the whole substrate into one installable unit." },
