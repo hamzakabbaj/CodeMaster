@@ -21,7 +21,7 @@ window.CM.pages.loop = {
     {
       type: "steps",
       kicker: "The loop",
-      title: "Spec → verify → critique",
+      title: "Spec → plan → generate → verify → critique",
       items: [
         { title: "Spec", body: "Write intent, constraints, acceptance criteria <em>before</em> any code. Vague spec → plausible-but-wrong output." },
         { title: "Plan", body: "Use plan mode; attack the plan before code exists. Cheapest place to catch design error." },
@@ -35,12 +35,12 @@ window.CM.pages.loop = {
       type: "flow",
       kicker: "The verification ladder",
       title: "Cheapest first, fail fast",
-      nodes: ["lint", "tests", "typecheck", "integration", "e2e", "human review", "prod observability"],
+      nodes: ["lint", "typecheck", "tests", "integration", "e2e", "human review", "prod observability"],
     },
     {
       type: "code",
       caption: "this repo's concrete ladder — scripts/ci.sh, mirrored in CI",
-      text: "▸ 1/5  Shell lint      (shellcheck)\n▸ 2/5  Unit tests      (python -m unittest)\n▸ 3/5  JSON validity\n▸ 4/5  Markdown links\n▸ 5/5  Commit message   (Conventional Commits)\n\nset -e — one red rung stops the ladder. A gate that false-greens is worse than none.",
+      text: "▸ 1/6  Shell lint      (shellcheck)\n▸ 2/6  JS syntax       (node --check, docs/site)\n▸ 3/6  Unit tests      (python -m unittest)\n▸ 4/6  JSON validity\n▸ 5/6  Markdown links\n▸ 6/6  Commit message   (Conventional Commits)\n\nset -e — one red rung stops the ladder. A gate that false-greens is worse than none.",
     },
     {
       type: "table",
