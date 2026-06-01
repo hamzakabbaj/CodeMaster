@@ -46,7 +46,7 @@ window.CM.pages.playbooks = {
       kicker: "Playbook 01 · uncertainty",
       title: "Greenfield — a project (or feature) from zero",
       intro:
-        "Example: <em>“Add a CSV-export feature to a brand-new analytics dashboard.”</em> Nothing exists yet, so the expensive mistake is building the wrong thing. Invest before code.",
+        "Example: <em>“Add a CSV-export feature to a brand-new analytics dashboard.”</em> Nothing exists yet, so the expensive mistake is building the wrong thing. Invest before code. &nbsp;<strong><a href=\"greenfield.html\">Full step-by-step walkthrough →</a></strong>",
     },
     {
       type: "steps",

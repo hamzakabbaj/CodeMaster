@@ -111,6 +111,7 @@
 - [x] `CM-41` — `node --check` JS rung (rung 2/6, site-scoped, graceful degrade) in `ci.sh` + CI
 - [x] `CM-42` — "How Big Tech Engineering Works" page (team topology, roles, ceremonies, career ladder) as context/inspiration
 - [x] `CM-43` — "Playbooks" page: the process applied to 7 real scenarios (greenfield, brownfield, refactor, hotfix, spike, migration, incident)
+- [ ] `CM-44` — Greenfield deep-dive page: Step 1 (Design Thinking) fully detailed; Steps 2–5 to follow incrementally
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 
