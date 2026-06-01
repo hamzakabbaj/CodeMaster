@@ -110,6 +110,7 @@
 - [x] `CM-40` — Content pages (capabilities, loop, delivery, fleet, roadmap); all 6 pages render `file://` with no console errors (shipped with CM-39)
 - [x] `CM-41` — `node --check` JS rung (rung 2/6, site-scoped, graceful degrade) in `ci.sh` + CI
 - [x] `CM-42` — "How Big Tech Engineering Works" page (team topology, roles, ceremonies, career ladder) as context/inspiration
+- [x] `CM-43` — "Playbooks" page: the process applied to 7 real scenarios (greenfield, brownfield, refactor, hotfix, spike, migration, incident)
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 

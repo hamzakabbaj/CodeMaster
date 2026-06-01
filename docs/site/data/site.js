@@ -8,6 +8,7 @@ window.CM.site = {
     { label: "Capabilities", href: "capabilities.html" },
     { label: "The Loop", href: "loop.html" },
     { label: "Delivery", href: "delivery.html" },
+    { label: "Playbooks", href: "playbooks.html" },
     { label: "The Fleet", href: "fleet.html" },
     { label: "Inside Big Tech", href: "bigtech.html" },
     { label: "Roadmap", href: "roadmap.html" },
