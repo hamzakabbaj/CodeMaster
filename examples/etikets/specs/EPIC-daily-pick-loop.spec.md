@@ -54,12 +54,12 @@ Each numbered step becomes a ticket. Note the slicing:
 
 | Plan step | Becomes | Type |
 |---|---|---|
-| 1 | [`ETK-100`](../backlog/tickets/ETK-100-data-model.md) | enabler **task** |
-| 2 | [`ETK-101`](../backlog/tickets/ETK-101-pick-engine.md) (carries the day-boundary decision) | enabler **task** |
-| 3 + 4 (mark-done + streak UI) | [`ETK-3`](../backlog/tickets/ETK-3-mark-done-streak.md) | **story** |
-| 4 (add-task UI) | [`ETK-1`](../backlog/tickets/ETK-1-add-task.md) | **story** |
-| 4 (daily-pick UI) | [`ETK-2`](../backlog/tickets/ETK-2-daily-pick.md) | **story** |
+| 1 | [`ETK-100`](../backlog/tickets/ETK-100-data-model/README.md) | enabler **task** |
+| 2 | [`ETK-101`](../backlog/tickets/ETK-101-pick-engine/README.md) (carries the day-boundary decision) | enabler **task** |
+| 3 + 4 (mark-done + streak UI) | [`ETK-3`](../backlog/tickets/ETK-3-mark-done-streak/README.md) | **story** |
+| 4 (add-task UI) | [`ETK-1`](../backlog/tickets/ETK-1-add-task/README.md) | **story** |
+| 4 (daily-pick UI) | [`ETK-2`](../backlog/tickets/ETK-2-daily-pick/README.md) | **story** |
 
 The riskiest assumption (the timezone rule) was **promoted to its own foundational
-ticket** ([ETK-101](../backlog/tickets/ETK-101-pick-engine.md)) — the concrete reason
+ticket** ([ETK-101](../backlog/tickets/ETK-101-pick-engine/README.md)) — the concrete reason
 you spec *before* you slice.

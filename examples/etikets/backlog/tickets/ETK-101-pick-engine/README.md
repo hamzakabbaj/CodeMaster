@@ -9,8 +9,8 @@
 - **Epic:** Daily-pick MVP loop
 - **Type:** task (enabler)
 - **Status:** ⬜ todo
-- **Depends on:** [ETK-100](ETK-100-data-model.md) · **Blocks:** [ETK-2](ETK-2-daily-pick.md)
-- **Spec:** [EPIC-daily-pick-loop](../../specs/EPIC-daily-pick-loop.spec.md) (plan step 2, riskiest assumption)
+- **Depends on:** [ETK-100](../ETK-100-data-model/README.md) · **Blocks:** [ETK-2](../ETK-2-daily-pick/README.md)
+- **Spec:** [EPIC-daily-pick-loop](../../../specs/EPIC-daily-pick-loop.spec.md) (plan step 2, riskiest assumption)
 
 ## Goal
 Implement the deterministic-per-day random pick, and **decide & pin the day-boundary

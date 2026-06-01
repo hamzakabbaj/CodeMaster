@@ -36,6 +36,7 @@
 - [x] `CM-37` (fix, from CM-12) — `commit-msg` strips squash `(#n)` suffix before length check; fixes post-merge main CI
 - [ ] `CM-35` — Enable branch protection on main ⏸️ blocked (needs Pro/public; script ready, deferred to public/plugin stage)
 - [x] `CM-49` — Folder-per-ticket model (ticket + plan + evidence); migrate tooling + existing tickets
+- [x] `CM-50` — Propagate folder-per-ticket to examples/etikets + the site greenfield doc
 
 **Exit:** ✅ repo conventions + hooks + CI + backlog in place; CI is *real* (live remote).
 
