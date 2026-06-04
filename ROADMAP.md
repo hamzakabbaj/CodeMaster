@@ -114,6 +114,7 @@
 - [x] `CM-42` — "How Big Tech Engineering Works" page (team topology, roles, ceremonies, career ladder) as context/inspiration
 - [x] `CM-43` — "Playbooks" page: the process applied to 7 real scenarios (greenfield, brownfield, refactor, hotfix, spike, migration, incident)
 - [x] `CM-44` — Greenfield deep-dive page: Step 1 (Design Thinking) fully detailed; Steps 2–5 to follow incrementally
+- [x] `CM-51` — Greenfield page: explicit input/output/location per step (artifact chain) + collapsible steps
 - [x] `CM-45` — Greenfield deep-dive: Steps 2–5 (/spec & plan-review, Backlog, Build loop, Ship)
 - [x] `CM-46` — Reference artifact set `examples/etikets/` (design → spec → backlog, worked example)
 - [x] `CM-47` — Greenfield Step 4: add "Pull & refine to Ready" substep + Build→Backlog feedback

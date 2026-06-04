@@ -212,6 +212,25 @@
     },
 
     divider: function () { return el("hr", { class: "divider" }); },
+
+    // Collapsible group: native <details>/<summary> (file://-safe, no JS).
+    // Holds nested blocks rendered via the same BLOCK map.
+    stepgroup: function (b) {
+      var d = el("details", { class: "step-group", open: b.open ? "open" : null });
+      d.appendChild(el("summary", { class: "sg-summary" }, [
+        b.kicker ? el("span", { class: "sg-kicker", text: b.kicker }) : null,
+        el("span", { class: "sg-title", text: b.title }),
+      ]));
+      var body = el("div", { class: "sg-body" }, [
+        b.intro ? el("p", { class: "sg-intro", html: b.intro }) : null,
+      ]);
+      (b.blocks || []).forEach(function (cb) {
+        var node = (BLOCK[cb.type] || unknown)(cb);
+        if (node) body.appendChild(node);
+      });
+      d.appendChild(body);
+      return d;
+    },
   };
 
   function unknown(b) {
