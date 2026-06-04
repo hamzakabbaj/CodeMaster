@@ -1,0 +1,21 @@
+# CM-52: Greenfield Build — document element-level mini-wireframes
+
+- **Epic:** D — Docs Site (reference showcase)
+- **Type:** task
+- **Status:** ✅ done
+- **Branch:** `feat/CM-52-build-mini-wireframes`
+
+## Goal
+Document the element-altitude wireframe loop in Step 4 (Build) — exploring 2–3 UI variants in a throwaway gallery to pick a design — and surface `prototypes/` in Step 4's outputs (currently missing).
+
+## Acceptance criteria
+- [ ] Step 4 I/O output table includes the throwaway UI-variant gallery in gitignored `prototypes/` (not versioned)
+- [ ] A "mini-wireframes" callout in Step 4: explore variants → pick → record decision in `plan.md`; prototype ≠ implementation
+- [ ] The "design altitude follows work altitude" principle extended to **three** altitudes (global / ticket-scoped / element-level)
+- [ ] Renders over `file://` with zero console errors; CI ladder green
+
+## Verification
+chrome-devtools MCP on `greenfield.html` → no console errors; Step 4 shows the gallery output + mini-wireframe callout; altitudes card shows 3. Full ladder green.
+
+## Notes
+Same throwaway mechanism as Step 1 (gitignored `prototypes/`, `file://`, frontend-design skill) — only the scope shrinks to a single element. Decision is durable (`plan.md`); the gallery is discarded.
