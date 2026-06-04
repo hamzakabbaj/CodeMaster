@@ -93,11 +93,11 @@ window.CM.pages.greenfield = {
           type: "cards",
           kicker: "A resolved principle",
           title: "Design altitude follows work altitude",
-          intro: "The same wireframe-and-review loop runs at two scales. Only where the durable rationale is filed changes.",
-          columns: 2,
+          intro: "The same wireframe-and-pick loop runs at <strong>three</strong> scales — only the scope and where the decision is filed change. The prototype is always thrown away.",
           items: [
             { tag: "this playbook · greenfield", title: "Global design", body: "Whole-project shape: IA, primary screens, the main flows, the architectural skeleton. Lives in <code>design/&lt;project&gt;.md</code> and exists <strong>before any ticket</strong>." },
             { tag: "see: brownfield", title: "Ticket-scoped design", body: "The same loop in miniature, for a change to an existing project. The design note rides <strong>with the ticket</strong> (a <code>## Design</code> section) — no project-level <code>design.md</code> needed." },
+            { tag: "during build · Step 4", title: "Element-level", body: "Exploring one component's look — 2–3 variants of a button in a throwaway gallery, pick, record in <code>plan.md</code>. The loop scaled to a single element." },
           ],
         },
         {
@@ -218,7 +218,7 @@ window.CM.pages.greenfield = {
           headers: ["", "What", "Where it lives"],
           rows: [
             ["<strong>Input</strong>", "a Ready ticket + the epic plan", "<code>backlog/tickets/CM-n-&lt;slug&gt;/README.md</code>"],
-            ["<strong>Output</strong>", "working code + tests; the ticket's implementation plan", "code on branch <code>feat/CM-n-&lt;slug&gt;</code>; <code>…/CM-n-&lt;slug&gt;/plan.md</code>; green-gated commits"],
+            ["<strong>Output</strong>", "working code + tests; the implementation plan; <em>(UI tickets)</em> a throwaway variant gallery", "code on branch <code>feat/CM-n-&lt;slug&gt;</code>; <code>…/CM-n-&lt;slug&gt;/plan.md</code>; green-gated commits — plus, for UI, a gallery in gitignored <code>prototypes/</code> (not versioned)"],
           ],
         },
         {
@@ -228,10 +228,16 @@ window.CM.pages.greenfield = {
           items: [
             { title: "Pull the next ticket & refine it to Ready", body: "This is where Step 3's <em>just-in-time refinement</em> actually happens — there's no planning ceremony in continuous flow, so you refine at the pull. Take the next ticket by dependency order; flesh the rough line-item against the epic spec — sharpen the <strong>testable AC</strong>, confirm it's <strong>one concern</strong>, confirm deps are done/unblocked, split if it grew too big. That's <strong>Definition of Ready</strong> applied as the gate. Can't reach Ready because of unknowns? <strong>Spike it</strong> instead of starting blind. (Light for planned tickets — the epic spec did the thinking; heavier for emergent ones.)" },
             { title: "Branch with /start-ticket", body: "<code>/start-ticket CM-n</code> checks you're on an up-to-date <code>main</code>, cuts <code>feat/CM-n-&lt;slug&gt;</code>, and flips the ticket + ROADMAP status to 🟦 in progress. One ticket → one branch." },
-            { title: "Plan the implementation", body: "The loop's <strong>Plan</strong> beat — <em>always</em>, even if it's a sentence in your head. Sketch the change across the stack: which <strong>backend / frontend / data</strong> layers, which files, in what order, verified by which tests (often test-first). Use <strong>plan mode</strong> to attack it before code exists. Fidelity scales with risk × uncertainty: a trivial ticket plans in-head; a gnarly one earns a written ticket-altitude <code>/spec CM-n</code> saved as <code>plan.md</code>. Most tickets inherit the epic plan from Step 2." },
+            { title: "Plan the implementation", body: "The loop's <strong>Plan</strong> beat — <em>always</em>, even if it's a sentence in your head. Sketch the change across the stack: which <strong>backend / frontend / data</strong> layers, which files, in what order, verified by which tests (often test-first). Use <strong>plan mode</strong> to attack it before code exists. Fidelity scales with risk × uncertainty: a trivial ticket plans in-head; a gnarly one earns a written ticket-altitude <code>/spec CM-n</code> saved as <code>plan.md</code>. Most tickets inherit the epic plan from Step 2. For <strong>UI work</strong>, this is also where you settle the <em>look</em> — see <em>Mini-wireframes</em> below." },
             { title: "Loop: generate → verify → critique", body: "Generate against the plan; <strong>verify</strong> with the ladder (<code>scripts/ci.sh</code>: shell · JS · tests · JSON · links · commit — cheapest first, fail-fast); <strong>critique</strong> as the discriminator — design/security/perf, not just “does it run.” Lean on <code>tester</code> for edge cases, <code>security</code> for surface." },
             { title: "Checkpoint on green", body: "<code>scripts/checkpoint.sh</code> makes a green-gated commit — it <em>refuses</em> if the ladder is red, so every safe point is revertible. Conventional Commits are enforced by the <code>commit-msg</code> hook." },
           ],
+        },
+        {
+          type: "callout",
+          title: "Mini-wireframes — exploring UI variants (the element altitude)",
+          html:
+            "For a UI ticket, planning the implementation can include a <em>visual</em> choice. Generate 2–3 variants of the element — a button, a card — as a throwaway <strong>options gallery</strong> (<code>prototypes/CM-n-&lt;slug&gt;/index.html</code>, <code>file://</code>-openable, via the <code>frontend-design</code> skill), open it, <strong>pick</strong>, and record the decision in <code>plan.md</code>. It's the Step-1 wireframe loop scaled down to a single element. The gallery is thrown away (gitignored <code>prototypes/</code>); the chosen variant is then built <em>for real</em> with the project's components and runs the loop. <strong>The prototype is a decision aid, never the implementation.</strong>",
         },
         {
           type: "code",
