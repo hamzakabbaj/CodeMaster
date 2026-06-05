@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 14 \u2014 Close-Up Storyboard",
+  "description": "Zoom into specific interactions within the product. Detail the screen-by-screen or moment-by-moment experience for key user flows.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "storyboards"
+      ],
+      "properties": {
+        "storyboards": {
+          "type": "array",
+          "description": "Detailed storyboards of critical interactions.",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "flow",
+              "frames"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Name of the interaction being storyboarded."
+              },
+              "flow": {
+                "type": "string",
+                "description": "Which user flow this zooms into."
+              },
+              "frames": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "number": {
+                      "type": "integer"
+                    },
+                    "screen": {
+                      "type": "string",
+                      "description": "Screen or UI state description."
+                    },
+                    "user_action": {
+                      "type": "string",
+                      "description": "What the user does."
+                    },
+                    "system_response": {
+                      "type": "string",
+                      "description": "How the system responds."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Architecture",
+  "description": "High-level technical architecture: tech stack choices, system layers, and key architectural decisions. Also serves as the index for all technical design documents.",
+  "type": "object",
+  "required": [
+    "documents"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "description": "Architecture philosophy and guiding principles."
+    },
+    "tech_stack": {
+      "type": "array",
+      "description": "Technology choices and their rationale.",
+      "items": {
+        "type": "object",
+        "required": [
+          "category",
+          "technology"
+        ],
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Category (e.g., 'frontend', 'backend', 'database', 'deployment', 'tooling')."
+          },
+          "technology": {
+            "type": "string",
+            "description": "Technology name (e.g., 'React', 'PostgreSQL')."
+          },
+          "rationale": {
+            "type": "string",
+            "description": "Why this technology was chosen."
+          }
+        }
+      }
+    },
+    "layers": {
+      "type": "array",
+      "description": "System layers or major components.",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "description"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Layer name (e.g., 'Presentation', 'Business Logic', 'Data')."
+          },
+          "description": {
+            "type": "string",
+            "description": "What this layer does."
+          },
+          "responsibilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What this layer is responsible for."
+          },
+          "technologies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Technologies used in this layer."
+          }
+        }
+      }
+    },
+    "key_decisions": {
+      "type": "array",
+      "description": "Significant architectural decisions and their rationale.",
+      "items": {
+        "type": "object",
+        "required": [
+          "title",
+          "decision"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Decision title (e.g., 'Local-first architecture')."
+          },
+          "context": {
+            "type": "string",
+            "description": "What problem or constraint this addresses."
+          },
+          "decision": {
+            "type": "string",
+            "description": "What was decided."
+          },
+          "rationale": {
+            "type": "string",
+            "description": "Why this decision was made."
+          },
+          "trade_offs": {
+            "type": "string",
+            "description": "What trade-offs come with this decision."
+          }
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "description": "Index of all technical design documents in this directory.",
+      "items": {
+        "type": "object",
+        "required": [
+          "file",
+          "title"
+        ],
+        "properties": {
+          "file": {
+            "type": "string",
+            "description": "Relative path to the document."
+          },
+          "schema": {
+            "type": "string",
+            "description": "Relative path to the schema file (if applicable)."
+          },
+          "title": {
+            "type": "string",
+            "description": "Document title."
+          },
+          "description": {
+            "type": "string",
+            "description": "What this document covers."
+          }
+        }
+      }
+    }
+  }
+}

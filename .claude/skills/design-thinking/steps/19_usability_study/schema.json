@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 18 \u2014 Usability Study",
+  "description": "Execute test scenarios against wireframes. Record walkthrough sessions with observations and confusion points, then synthesize into prioritized usability findings linked to specific screens and components.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "sessions",
+        "findings"
+      ],
+      "properties": {
+        "sessions": {
+          "type": "array",
+          "description": "Individual walkthrough sessions \u2014 one per participant per scenario.",
+          "items": {
+            "type": "object",
+            "required": [
+              "participant_id",
+              "scenario_id",
+              "observations",
+              "completion"
+            ],
+            "properties": {
+              "participant_id": {
+                "type": "string"
+              },
+              "scenario_id": {
+                "type": "string"
+              },
+              "observations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "What was observed during the walkthrough."
+              },
+              "confusion_points": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Where the participant hesitated, misunderstood, or got stuck."
+              },
+              "completion": {
+                "type": "string",
+                "enum": [
+                  "completed",
+                  "partial",
+                  "abandoned"
+                ],
+                "description": "Whether the scenario walkthrough was completed successfully."
+              }
+            }
+          }
+        },
+        "findings": {
+          "type": "array",
+          "description": "Synthesized usability issues across all sessions.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "screen",
+              "observation",
+              "severity",
+              "recommendation"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "screen": {
+                "type": "string",
+                "description": "Which wireframe screen this finding applies to."
+              },
+              "component": {
+                "type": "string",
+                "description": "Which UI component is affected (optional)."
+              },
+              "observation": {
+                "type": "string"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "critical",
+                  "major",
+                  "minor"
+                ]
+              },
+              "recommendation": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

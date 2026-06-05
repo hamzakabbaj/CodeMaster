@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 3 \u2014 Pain Points",
+  "description": "Identify and categorize the specific problems, frustrations, and obstacles users face. Classify them by type and severity.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "pain_points",
+        "summary"
+      ],
+      "properties": {
+        "pain_points": {
+          "type": "array",
+          "description": "Prioritized list of user pain points.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "description",
+              "type",
+              "severity"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "Sequential pain point number."
+              },
+              "title": {
+                "type": "string",
+                "description": "Short scannable label (2-4 words) for the pain point."
+              },
+              "description": {
+                "type": "string",
+                "description": "Clear description of the pain point."
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "process",
+                  "emotional",
+                  "resource",
+                  "product",
+                  "support",
+                  "financial"
+                ],
+                "description": "Category of pain point."
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ],
+                "description": "How severe this pain point is for the user."
+              }
+            }
+          }
+        },
+        "summary": {
+          "type": "string",
+          "description": "Overall analysis of pain point patterns and their relationships."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 17 \u2014 Test Planning",
+  "description": "Define what to test, how, and who tests. Focused on validating wireframe prototypes \u2014 not built software. Establishes scenarios, scope boundaries, and success signals for cognitive walkthroughs of the HTML wireframes.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "method",
+        "scope",
+        "participants",
+        "scenarios"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "How testing will be conducted (e.g., cognitive walkthrough, think-aloud protocol, guided exploration)."
+        },
+        "scope": {
+          "type": "object",
+          "required": [
+            "included",
+            "excluded"
+          ],
+          "properties": {
+            "included": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "What this round of testing validates using wireframes alone."
+            },
+            "excluded": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "What requires running software and is deferred to post-build QA."
+            }
+          }
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "profile"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "profile": {
+                "type": "string",
+                "description": "Who this person is and why they are relevant for testing."
+              }
+            }
+          }
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "description",
+              "screens",
+              "success_signal"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string",
+                "description": "What the participant does during this scenario."
+              },
+              "screens": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Which wireframe HTML files to walk through."
+              },
+              "success_signal": {
+                "type": "string",
+                "description": "What indicates the design communicates successfully."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

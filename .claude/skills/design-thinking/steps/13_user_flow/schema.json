@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 12 \u2014 User Flow",
+  "description": "Map the step-by-step paths users will take through the solution to accomplish their goals. Define entry points, decision points, and success states.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "flows",
+        "mvp_scope_notes"
+      ],
+      "properties": {
+        "flows": {
+          "type": "array",
+          "description": "User flows as structured sequences with entry/exit conditions and typed steps.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "trigger",
+              "success_state",
+              "steps"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "Flow number."
+              },
+              "title": {
+                "type": "string",
+                "description": "Flow name (e.g., 'Create New Project', 'Work Through a Step')."
+              },
+              "trigger": {
+                "type": "string",
+                "description": "What initiates this flow \u2014 the entry point."
+              },
+              "success_state": {
+                "type": "string",
+                "description": "What 'done' looks like \u2014 the exit condition for the happy path."
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "description"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "action",
+                        "system",
+                        "screen",
+                        "decision"
+                      ],
+                      "description": "action = user does something, system = app/AI processes, screen = what the user sees, decision = a branching point."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "What happens in this step."
+                    }
+                  }
+                },
+                "description": "Ordered sequence from trigger to success state."
+              },
+              "alternate_paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Non-happy-path branches \u2014 error states, rejections, edge cases."
+              }
+            }
+          }
+        },
+        "mvp_scope_notes": {
+          "type": "string",
+          "description": "Notes on what is in/out of MVP scope for user flows."
+        }
+      }
+    }
+  }
+}

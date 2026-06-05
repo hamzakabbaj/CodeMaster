@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 9 \u2014 Competitive Audits",
+  "description": "Analyze existing solutions in the market \u2014 their strengths, weaknesses, features, and gaps. Identify opportunities to differentiate.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "competitors",
+        "key_takeaway",
+        "differentiators"
+      ],
+      "properties": {
+        "competitors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "description",
+              "strengths",
+              "weaknesses",
+              "gap"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Competitor name."
+              },
+              "description": {
+                "type": "string",
+                "description": "Brief description of the competitor's offering."
+              },
+              "strengths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "What the competitor does well."
+              },
+              "weaknesses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Where the competitor falls short."
+              },
+              "gap": {
+                "type": "string",
+                "description": "The opportunity this gap creates for our product."
+              }
+            }
+          },
+          "description": "Competitive landscape analysis."
+        },
+        "key_takeaway": {
+          "type": "string",
+          "description": "Overall insight from the competitive analysis."
+        },
+        "differentiators": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Our key differentiators vs. the competition."
+        }
+      }
+    }
+  }
+}
