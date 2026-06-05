@@ -20,7 +20,7 @@
 | 4 | Orchestration | A | ✅ |
 | 5 | Package as Plugin | B | ⬜ |
 | 6 | Pilot in Real Repo | C | ⬜ |
-| D | Docs Site (reference showcase) | A | ✅ |
+| D | Docs Site (reference showcase) | A | 🟦 |
 
 ---
 
@@ -120,6 +120,7 @@
 - [x] `CM-46` — Reference artifact set `examples/etikets/` (design → spec → backlog, worked example)
 - [x] `CM-47` — Greenfield Step 4: add "Pull & refine to Ready" substep + Build→Backlog feedback
 - [x] `CM-48` — Fix loop/ladder doc fidelity: restore the Plan beat; correct stale 5→6 rung counts
+- [ ] `CM-53` — Greenfield: add Step 2 **System Design** (6-step arc) + the `blueprint/` structured project record
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 
