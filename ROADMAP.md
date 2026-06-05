@@ -121,7 +121,7 @@
 - [x] `CM-47` — Greenfield Step 4: add "Pull & refine to Ready" substep + Build→Backlog feedback
 - [x] `CM-48` — Fix loop/ladder doc fidelity: restore the Plan beat; correct stale 5→6 rung counts
 - [x] `CM-53` — Greenfield: add Step 2 **System Design** (6-step arc) + the `blueprint/` structured project record
-- [ ] `CM-54` — Adapt `design-thinking` + `technical-design` skills: prune React layer, add `Write`, repoint output to `blueprint/`
+- [x] `CM-54` — Adapt `design-thinking` + `technical-design` skills: prune React layer, add `Write`, repoint output to `blueprint/`
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 
