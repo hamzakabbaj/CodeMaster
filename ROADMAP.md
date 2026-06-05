@@ -20,7 +20,7 @@
 | 4 | Orchestration | A | ✅ |
 | 5 | Package as Plugin | B | ⬜ |
 | 6 | Pilot in Real Repo | C | ⬜ |
-| D | Docs Site (reference showcase) | A | ✅ |
+| D | Docs Site (reference showcase) | A | 🟦 |
 
 ---
 
@@ -120,12 +120,14 @@
 - [x] `CM-46` — Reference artifact set `examples/etikets/` (design → spec → backlog, worked example)
 - [x] `CM-47` — Greenfield Step 4: add "Pull & refine to Ready" substep + Build→Backlog feedback
 - [x] `CM-48` — Fix loop/ladder doc fidelity: restore the Plan beat; correct stale 5→6 rung counts
+- [x] `CM-53` — Greenfield: add Step 2 **System Design** (6-step arc) + the `blueprint/` structured project record
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 
 ---
 
 ## Decisions log
+- **2026-06-05** — Greenfield model evolved (CM-53): the arc is now **6 steps** with **System Design** as its own step between Design Thinking and `/spec` (architecture decides ticket boundaries, so it precedes slicing — the big-tech PRD+TDD split). Upstream planning artifacts live in one versioned per-project folder, **`blueprint/`** (`design-thinking/`, `system-design/`, `specs/`, `backlog/`), kept **structured/JSON** to unlock future tooling. Two imported skills (`design-thinking`, `technical-design`) are the engines for Steps 1–2. Reconciliation: a project built *via* CodeMaster uses the JSON `blueprint/` model (to be demonstrated in `examples/etikets/`); CodeMaster's own meta-repo keeps the markdown `new-ticket` backlog for now (avoids ripping up `next-number.sh`/`roadmap_stats.py`/`new-ticket`/`/start-ticket`). Follow-ups: **Ticket B** rewire skills to write into `blueprint/`; **Ticket C** convert `examples/etikets/` to the JSON blueprint.
 - **2026-06-01** — Docs site: chose data-driven client-rendered site (JS data + component renderer) over a markdown generator — user wants flexible layouts (cards) + Claude-editable content. `file://` forces classic `<script>` globals (no fetch/ESM). Site content is a separate curated source from the markdowns (accepted tradeoff). Aesthetic: modern dark product.
 - **2026-05-29** — Endgame = Both-in-sequence (standalone → plugin → install). Pilot = CodeMaster only. Ceremony = full Big-Tech.
 - **2026-05-29** — CM-35 branch protection deferred: blocked by GitHub plan (private + free → 403 on protection & rulesets). Local hooks + CI enforce meanwhile; apply the ready script when repo goes public or upgrades.
