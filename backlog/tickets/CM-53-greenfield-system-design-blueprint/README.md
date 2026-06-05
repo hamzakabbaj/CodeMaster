@@ -2,7 +2,7 @@
 
 - **Epic:** D — Docs Site (reference showcase)
 - **Type:** task
-- **Status:** 🟦 in progress
+- **Status:** ✅ done
 - **Branch:** `feat/CM-53-greenfield-system-design-blueprint`
 
 ## Goal
