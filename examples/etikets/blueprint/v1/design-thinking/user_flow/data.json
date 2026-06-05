@@ -1,0 +1,91 @@
+{
+  "content": {
+    "flows": [
+      {
+        "id": 1,
+        "title": "Pioche quotidienne",
+        "trigger": "L'utilisateur ouvre l'app (via notif push ou manuellement) et n'a pas encore pioche aujourd'hui",
+        "success_state": "La tache du jour est revelee et affichee. L'utilisateur sait ce qu'il doit faire.",
+        "steps": [
+          { "type": "screen", "description": "Ecran principal : carte face cachee au centre, streak counter en haut, compteur pool en haut a droite" },
+          { "type": "action", "description": "L'utilisateur tape sur la carte" },
+          { "type": "system", "description": "Le systeme selectionne aleatoirement une tache du pool et declenche l'animation flip" },
+          { "type": "screen", "description": "La carte se retourne (~0.5s). La face visible affiche le titre de la tache" },
+          { "type": "decision", "description": "L'utilisateur a-t-il un streak >= 7 jours ?" },
+          { "type": "screen", "description": "Si oui : un petit bouton 'Changer' apparait sous la carte (utilisable 1 fois). Si non : pas de bouton, la tache est definitive." }
+        ],
+        "alternate_paths": [
+          "Pool vide : au lieu de la carte, un ecran invite l'utilisateur a ajouter des taches avec un message motivant et le bouton '+'",
+          "Tache deja piochee aujourd'hui : l'app affiche directement la tache en cours (pas de carte a retourner)",
+          "Utilisation du bonus 'Changer' : le systeme repioche une autre tache, l'animation flip rejoue, le bonus est consomme pour la journee"
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Completion de la tache",
+        "trigger": "L'utilisateur a fait la tache piochee et revient dans l'app pour la valider",
+        "success_state": "La tache est marquee comme faite, le streak est incremente, l'animation de celebration joue.",
+        "steps": [
+          { "type": "screen", "description": "Ecran principal : la tache du jour est affichee (carte deja retournee), bouton 'Fait !' en bas" },
+          { "type": "action", "description": "L'utilisateur appuie sur 'Fait !'" },
+          { "type": "system", "description": "Le systeme marque la tache comme completee, incremente le streak, calcule l'XP gagnee" },
+          { "type": "screen", "description": "Animation de celebration : confettis, XP +N, streak counter s'incremente avec animation, message positif aleatoire" },
+          { "type": "screen", "description": "Retour a l'ecran principal : message 'Bien joue ! Reviens demain' avec le streak mis a jour" }
+        ],
+        "alternate_paths": [
+          "L'utilisateur ne valide pas avant minuit : le streak est casse, l'app affiche le lendemain un message 'Streak perdu' avec encouragement a repartir",
+          "Achievement debloque : un badge supplementaire apparait dans l'animation de celebration"
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Ajout d'une tache",
+        "trigger": "L'utilisateur pense a une tache a faire et veut l'ajouter au pool",
+        "success_state": "La tache est ajoutee au pool invisible, le compteur de pool s'incremente.",
+        "steps": [
+          { "type": "action", "description": "L'utilisateur appuie sur le bouton '+' (floating action button, visible depuis tous les ecrans)" },
+          { "type": "screen", "description": "Un champ texte apparait (bottom sheet ou modal simple) avec le placeholder 'Qu'est-ce que tu dois faire ?'" },
+          { "type": "action", "description": "L'utilisateur tape le titre de la tache (ex: 'Changer ampoule salon')" },
+          { "type": "action", "description": "L'utilisateur valide (bouton ou touche entree)" },
+          { "type": "system", "description": "La tache est ajoutee au pool. Le compteur de pool s'incremente. Micro-animation de confirmation." },
+          { "type": "screen", "description": "Le champ se vide, pret pour une autre tache. L'utilisateur peut enchainer ou fermer." }
+        ],
+        "alternate_paths": [
+          "Ajout en serie : l'utilisateur peut enchainer plusieurs taches sans fermer le modal",
+          "Champ vide : le bouton valider est grise, pas d'envoi possible"
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Consultation du pool",
+        "trigger": "L'utilisateur veut verifier ou gerer ses taches en attente",
+        "success_state": "L'utilisateur voit la liste de ses taches et peut en supprimer.",
+        "steps": [
+          { "type": "action", "description": "L'utilisateur tape sur l'onglet 'Pool' dans la tab bar" },
+          { "type": "screen", "description": "Liste des taches en attente (titres visibles ici — la zone de gestion). Chaque tache a un bouton de suppression (swipe ou icone)." },
+          { "type": "decision", "description": "L'utilisateur veut-il supprimer une tache ?" },
+          { "type": "action", "description": "Si oui : swipe gauche sur la tache, confirmation, suppression" },
+          { "type": "system", "description": "La tache est retiree du pool, le compteur se decremente" }
+        ],
+        "alternate_paths": [
+          "Pool vide : ecran avec message 'Ton pool est vide ! Ajoute des taches pour pouvoir piocher demain' + bouton '+'",
+          "L'utilisateur peut aussi ajouter une tache depuis cet ecran via le FAB"
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Consultation du profil",
+        "trigger": "L'utilisateur veut voir ses stats et ses achievements",
+        "success_state": "L'utilisateur visualise son streak, son historique et ses badges.",
+        "steps": [
+          { "type": "action", "description": "L'utilisateur tape sur l'onglet 'Profil' dans la tab bar" },
+          { "type": "screen", "description": "Ecran profil : streak actuel (grand, central), streak max, nombre total de taches completees, calendrier de completion (heatmap type GitHub), badges/achievements debloques" }
+        ],
+        "alternate_paths": [
+          "Aucun achievement : la section badges montre les badges verrouilles avec les conditions pour les debloquer"
+        ]
+      }
+    ],
+    "mvp_scope_notes": "MVP = flows 1, 2, 3 (pioche, completion, ajout). Le flow 4 (pool) est necessaire pour la gestion mais simplifie au maximum (liste + suppression, pas d'edition). Le flow 5 (profil) est MVP-light : streak + total + calendrier, pas d'achievements complexes. Pas de flow d'onboarding elabore en MVP — un ecran d'accueil qui demande d'ajouter 5 taches pour commencer."
+  }
+}

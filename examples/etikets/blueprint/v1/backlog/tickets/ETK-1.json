@@ -1,0 +1,19 @@
+{
+  "id": "ETK-1",
+  "title": "Add a micro-task by title",
+  "epic": "daily-pick-loop",
+  "type": "story",
+  "status": "todo",
+  "spec": "specs/EPIC-daily-pick-loop.spec.md",
+  "depends_on": ["ETK-100"],
+  "blocks": [],
+  "story": "As a user, I want to add a micro-task by typing just a title, so that it joins my pool of tasks that can be drawn.",
+  "acceptance_criteria": [
+    "A single text field adds a task with a title (no other fields — title-only per scope)",
+    "The new task immediately becomes eligible for the daily draw",
+    "Adding is fast and frictionless (supports the '3+ tasks/week' metric)",
+    "Empty/whitespace titles are rejected"
+  ],
+  "verification": "Component test for the add flow; unit test that a new task enters the draw pool. (Ladder: test rung.)",
+  "notes": "Deliberately minimal — categories, priority, and editing are non-goals in V1."
+}

@@ -1,0 +1,102 @@
+{
+  "step": 17,
+  "title": "Wireframing & Prototyping",
+  "phase": {
+    "number": 5,
+    "name": "Prototype"
+  },
+  "content": {
+    "concepts": [
+      {
+        "name": "La Roulette",
+        "description": "Ecran principal avec une grande roue de loterie. L'utilisateur fait tourner la roue qui s'arrete sur une tache. Animation elaboree type jeu TV. Les taches sont reparties visuellement sur la roue.",
+        "verdict": "Rejete — l'animation de la roue est fun la premiere fois mais devient lente et repetitive au quotidien. Contredit l'objectif de friction < 30 secondes. Rend les taches visibles (casse l'invisibilite du pool).",
+        "selected": false
+      },
+      {
+        "name": "Le Ticket a Gratter",
+        "description": "Ecran principal qui affiche un ticket opaque. L'utilisateur gratte avec son doigt pour reveler sa tache du jour. Effet visuel satisfaisant de grattage.",
+        "verdict": "Rejete — le grattage ajoute 3-5 secondes de friction. L'ecran est vide avant le geste. L'utilisateur pourrait fermer l'app en voyant un mot qui ne lui plait pas.",
+        "selected": false
+      },
+      {
+        "name": "La Carte Retournee (EtiKet)",
+        "description": "Ecran principal minimaliste. Une carte face cachee au centre avec le branding EtiKets. Un tap retourne la carte avec une animation flip revelatrice. La tache apparait sur la face visible. Metaphore directe du nom de l'app.",
+        "verdict": "Selectionne — geste simple (1 tap), animation rapide (< 1s), compatible avec l'invisibilite des taches. Le nom EtiKets prend tout son sens. Ecran epure : une carte, un streak, un bouton. Friction minimale. Implemente en 10 wireframes couvrant tous les etats.",
+        "selected": true
+      },
+      {
+        "name": "Le Distributeur / Gacha",
+        "description": "Interface type machine a capsules (gashapon). L'utilisateur appuie sur un levier, une capsule tombe, s'ouvre et revele la tache. Systeme de rarete possible.",
+        "verdict": "Rejete — trop complexe pour un MVP. Le systeme de rarete ajoute une couche de game design non necessaire. Bon candidat pour un theme deblocable en V2.",
+        "selected": false
+      },
+      {
+        "name": "Le Feed Quotidien",
+        "description": "Pas de pioche explicite. L'app affiche directement la tache du jour au lancement, comme un feed a une seule carte.",
+        "verdict": "Rejete — trop passif, l'utilisateur ne fait rien pour 'piocher'. Le moment du retournement est le moment d'engagement cle. Sans geste actif, l'experience est celle d'une simple notification.",
+        "selected": false
+      }
+    ],
+    "selected_concept": {
+      "name": "La Carte Retournee (EtiKet)",
+      "how_it_works": [
+        "L'utilisateur ouvre l'app et voit une carte face cachee au centre de l'ecran, avec le logo EtiKets et une icone shuffle",
+        "Il tape sur la carte — animation flip qui retourne la carte en ~0.5s",
+        "La face visible revele la tache du jour (titre + temps estime)",
+        "Sous la carte : un bouton 'Changer' discret (uniquement si streak >= 7 jours, bonus)",
+        "En dessous : un gros bouton 'Fait !' pour valider la completion",
+        "A la validation : overlay celebration avec confettis, XP gain, streak update, message positif",
+        "Apres celebration : etat 'done today' avec message 'Bien joue ! Reviens demain'",
+        "Le streak est toujours visible en haut de l'ecran comme ancrage de retention",
+        "Un bouton '+' flottant (FAB) permet d'ajouter une tache via bottom sheet en < 5 secondes",
+        "Tab bar 3 onglets : Pioche (home) | Pool (gestion) | Profil (stats + achievements)"
+      ],
+      "key_mechanisms": [
+        {
+          "name": "Le Flip",
+          "description": "Un seul tap retourne la carte. Moment de micro-tension et de curiosite qui cree l'engagement quotidien. Rapide, satisfaisant, ritualise."
+        },
+        {
+          "name": "La Contrainte",
+          "description": "Une fois la carte retournee, pas de retour en arriere. La tache est revelee et definitive. Le bouton 'Changer' n'apparait que si le streak depasse 7 jours (bonus)."
+        },
+        {
+          "name": "Le Streak Counter",
+          "description": "Affiche permanent en haut de l'ecran. Flamme + nombre de jours. Ancrage visuel de retention present sur tous les ecrans."
+        },
+        {
+          "name": "La Celebration",
+          "description": "Overlay fullscreen a la completion : confettis colores, XP gain en gradient, streak update anime, message positif aleatoire. Feedback sensoriel = gratification immediate."
+        },
+        {
+          "name": "L'Ajout Eclair",
+          "description": "Bottom sheet avec champ texte unique. Tap '+', taper le titre, valider. < 5 secondes. Le texte 'glisse' vers le haut comme s'il rejoint le pool. Enchainement possible sans fermer."
+        },
+        {
+          "name": "Terminologie ludique",
+          "description": "Le mot 'tache' n'apparait jamais dans l'UI. Tout est 'quete' — cadrage jeu plutot que corvee."
+        },
+        {
+          "name": "Pioche Bonus",
+          "description": "Apres la premiere quete completee (streak securise), l'ecran 'done today' propose une pioche bonus optionnelle. Le bouton est outline (pas primary) pour signaler que c'est facultatif. Un tag '+15 XP' indique la recompense reduite par rapport a la pioche principale (+25 XP). Le hint 'Optionnel — ton streak est deja sauve' rassure l'utilisateur. La pioche bonus relance le cycle flip → tache → Fait ! → celebration. Le compteur '1 quete completee aujourd'hui' s'incremente. Pas de limite sur le nombre de bonus par jour."
+        }
+      ],
+      "ui_elements": {
+        "desktop": [],
+        "mobile": [
+          "01 — Pioche Pre : carte face cachee avec logo EtiKets, icone shuffle, hint 'Tape pour piocher', streak 12, pool 8 quetes",
+          "02 — Pioche Post : carte retournee 'Detartrer la bouilloire', ~10 min, bouton 'Changer (bonus streak)', bouton 'Fait !'",
+          "03 — Celebration : overlay confettis, +25 XP en gradient, streak 13, message 'Machine ! 13 jours d'affilee'",
+          "04 — Done Today : icone check vert, 'Bien joue !', 'Ton streak est securise', compteur '1 quete completee', separateur 'Envie d'en faire plus ?', bouton outline 'Pioche bonus +15 XP', hint 'Optionnel — ton streak est deja sauve'",
+          "05 — Pool : liste de 7 quetes en attente avec titres reels, bouton supprimer par swipe, header 'Ton Pool'",
+          "06 — Profil : streak hero 13 en grand, 3 stat cards (streak max 23, quetes faites 47, XP 1175), heatmap 90 jours, 6 achievements (3 debloques, 3 verrouilles)",
+          "07 — Ajout Rapide : bottom sheet avec champ 'Qu'est-ce que tu dois faire ?', valeur 'Racheter du sopalin', bouton 'Ajouter'",
+          "08 — Onboarding : ecran 2/3 'Pioche au hasard', icone shuffle, description du concept, dots de progression",
+          "09 — Onboarding Ajout : compteur 3/5, 3 quetes deja ajoutees, champ d'ajout, bouton grise tant que < 5",
+          "10 — Pool Vide : icone box ouverte, 'Ton pool est vide !', CTA 'Ajouter une quete', streak 13, pool 0"
+        ]
+      }
+    }
+  }
+}

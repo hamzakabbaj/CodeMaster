@@ -1,0 +1,42 @@
+{
+  "content": {
+    "personas": [
+      {
+        "name": "Karim",
+        "archetype": "Le procrastinateur lucide",
+        "demographics": {
+          "age": 26,
+          "role": "Developpeur web en CDI",
+          "location": "Lyon, France"
+        },
+        "bio": "Karim vit seul dans un T2 depuis un an. Au travail, il est organise et productif — sprints, tickets, deadlines. Chez lui, c'est l'inverse : les taches s'accumulent parce que personne ne les lui assigne. Il sait exactement ce qu'il devrait faire mais repousse systematiquement. Il a essaye Todoist, Apple Reminders, des post-its — rien ne tient plus de 2 semaines. En revanche, il maintient un streak Duolingo de 200+ jours sans effort. Il est convaincu que la gamification pourrait l'aider mais n'a trouve aucune app qui l'applique correctement aux taches du quotidien.",
+        "goals": [
+          "Faire les petites taches avant qu'elles deviennent des problemes",
+          "Ne plus avoir cette charge mentale de trucs non faits qui traine",
+          "Trouver un systeme qui tient dans la duree, pas juste 2 semaines",
+          "Ressentir de la satisfaction au quotidien, pas juste du soulagement quand c'est urgent"
+        ],
+        "frustrations": [
+          "Les to-do lists lui donnent trop de choix et il finit par ne rien faire",
+          "Il se sent capable au travail mais incompetent chez lui",
+          "Les apps de productivite sont concues pour les gens deja organises",
+          "La gratification arrive trop tard — seulement quand le probleme est visible"
+        ],
+        "behaviors": [
+          "Ouvre ses apps de taches, scroll, referme sans rien cocher",
+          "Fait les taches menageres en mode 'rush' quand des gens viennent chez lui",
+          "Maintient des streaks sur 3 apps differentes sans effort",
+          "Passe 15 min a choisir quelle tache faire puis abandonne",
+          "Accomplit les taches en 10 min une fois qu'il s'y met reellement"
+        ],
+        "key_patterns": [
+          "La decision de commencer est 10x plus dure que l'execution elle-meme",
+          "Il performe bien sous contrainte externe (travail) mais echoue en autonomie totale (perso)",
+          "Les mecaniques de jeu (streak, XP, progression) bypassen completement sa procrastination",
+          "La peur de perdre un streak est plus motivante que la promesse d'un benefice futur"
+        ],
+        "quote": "Au travail on me donne un ticket, je le fais. Chez moi, je suis mon propre backlog et j'ai zero discipline pour le traiter."
+      }
+    ]
+  }
+}

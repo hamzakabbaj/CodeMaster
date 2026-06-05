@@ -1,0 +1,63 @@
+{
+  "content": {
+    "empathy_maps": [
+      {
+        "segment": "Jeune adulte vivant seul",
+        "summary": "Sait exactement ce qu'il devrait faire mais n'arrive pas a franchir le pas — la liberte de choix le paralyse au lieu de l'aider.",
+        "say": [
+          "Je ferai ca ce week-end.",
+          "C'est pas urgent, ca peut attendre.",
+          "J'ai pas le temps la, j'ai d'autres priorites.",
+          "Faut que je fasse ma liste de trucs a faire... un jour."
+        ],
+        "think": [
+          "Ca fait 3 semaines que je repousse ce truc, c'est ridicule.",
+          "Si seulement quelqu'un me forcait a le faire, ce serait deja fini.",
+          "Par ou je commence ? Y'a tellement de choses...",
+          "Les autres gens arrivent a gerer ca comment ?"
+        ],
+        "do": [
+          "Ouvre une app de notes, ecrit 2 taches, referme sans rien faire",
+          "Reporte les taches a 'demain' tous les jours",
+          "Fait les taches uniquement quand elles deviennent urgentes ou visibles",
+          "Scroll son telephone au lieu de s'attaquer a sa liste",
+          "Fait les taches les plus faciles et ignore les corvees"
+        ],
+        "feel": [
+          { "emotion": "Culpabilite", "context": "Quand il voit sa liste de taches en retard qui s'allonge" },
+          { "emotion": "Soulagement", "context": "Quand une tache repoussee est enfin accomplie" },
+          { "emotion": "Overwhelm", "context": "Quand il essaie de prioriser et ne sait pas par ou commencer" },
+          { "emotion": "Fierte", "context": "Quand il enchaine plusieurs taches d'affilee — rare mais puissant" }
+        ]
+      },
+      {
+        "segment": "Etudiant gamer procrastinateur",
+        "summary": "Conditionne par les boucles de recompense instantanee des jeux, il trouve les taches du quotidien insupportablement ennuyeuses faute de feedback.",
+        "say": [
+          "Ca me saoule, j'ai zero motivation pour faire ca.",
+          "Dans un jeu je le ferais sans reflechir.",
+          "Mes to-do lists c'est de la deco.",
+          "Si y'avait un streak je le perdrais pas, c'est sur."
+        ],
+        "think": [
+          "Pourquoi c'est si dur de faire un truc qui prend 10 minutes ?",
+          "Si ca me rapportait quelque chose, je le ferais direct.",
+          "Mon appart est un bordel mais j'ai la flemme de m'y mettre.",
+          "Les corvees c'est du temps vole sur mes trucs fun."
+        ],
+        "do": [
+          "Maintient des streaks Snapchat/Duolingo quotidiennement sans effort",
+          "Joue 2h par jour mais ne fait pas 15 min de rangement",
+          "Ecrit des to-do lists qu'il ne relit jamais",
+          "Attend que les consequences soient visibles pour agir (plus de vaisselle propre, frigo vide)"
+        ],
+        "feel": [
+          { "emotion": "Ennui", "context": "A l'idee de commencer une tache menagere sans stimulation" },
+          { "emotion": "Excitation", "context": "Quand il recoit une recompense inattendue dans un jeu — meme petite" },
+          { "emotion": "Honte", "context": "Quand quelqu'un vient chez lui et voit le desordre" },
+          { "emotion": "Satisfaction", "context": "Quand il voit son streak monter sur une app gamifiee" }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "content": {
+    "screens": [
+      {
+        "id": "pioche",
+        "name": "Pioche",
+        "purpose": "Ecran principal. Piocher la tache du jour, la visualiser, et la valider comme faite.",
+        "layout": "Vertical centree : status bar en haut, carte au centre (60% ecran), bouton action en bas",
+        "regions": [
+          {
+            "name": "Status Bar",
+            "content": "Streak counter (flamme + nombre de jours) a gauche, compteur pool ('N quetes') a droite",
+            "interactions": ["Tap sur streak → navigation vers Profil"]
+          },
+          {
+            "name": "Zone Carte",
+            "content": "Carte EtiKet face cachee (avant pioche) ou face visible avec titre de tache (apres pioche)",
+            "interactions": ["Tap sur carte face cachee → pioche (flip animation)", "Tap sur bouton 'Changer' si bonus streak disponible"]
+          },
+          {
+            "name": "Zone Action",
+            "content": "Bouton 'Fait !' (apres pioche) ou texte d'invitation (avant pioche)",
+            "interactions": ["Tap sur 'Fait !' → validation + celebration"]
+          },
+          {
+            "name": "FAB",
+            "content": "Bouton flottant '+' en bas a droite pour ajout rapide",
+            "interactions": ["Tap → ouverture bottom sheet d'ajout"]
+          }
+        ],
+        "states": [
+          { "state": "pre_pioche", "description": "Carte face cachee, pulsation subtile. Pas de bouton 'Fait !'. Message 'Tape pour piocher ta quete du jour'." },
+          { "state": "post_pioche", "description": "Carte retournee avec le titre de la tache. Bouton 'Fait !' visible. Bouton 'Changer' si streak >= 7." },
+          { "state": "done_today", "description": "Message 'Bien joue ! Reviens demain'. Streak mis a jour. Pas de carte ni de bouton d'action." },
+          { "state": "pool_vide", "description": "Pas de carte. Message 'Ton pool est vide ! Ajoute des quetes pour piocher demain'. Bouton '+' mis en avant." },
+          { "state": "streak_perdu", "description": "Message 'Ton streak est reparti a 0. C'est pas grave, on recommence !' avec carte face cachee pour la nouvelle pioche." }
+        ]
+      },
+      {
+        "id": "pool",
+        "name": "Pool",
+        "purpose": "Gerer les taches en attente : voir, ajouter, supprimer.",
+        "layout": "Liste verticale scrollable avec header fixe",
+        "regions": [
+          {
+            "name": "Header",
+            "content": "Titre 'Ton Pool' + compteur de taches",
+            "interactions": []
+          },
+          {
+            "name": "Liste des taches",
+            "content": "Chaque tache affichee en tant que ligne avec le titre. Ordonnee par date d'ajout (plus recente en haut).",
+            "interactions": ["Swipe gauche sur une tache → bouton supprimer", "Tap sur supprimer → confirmation → suppression"]
+          },
+          {
+            "name": "FAB",
+            "content": "Bouton flottant '+' pour ajout rapide",
+            "interactions": ["Tap → ouverture bottom sheet d'ajout"]
+          }
+        ],
+        "states": [
+          { "state": "avec_taches", "description": "Liste des taches affichee. Swipe pour supprimer." },
+          { "state": "pool_vide", "description": "Illustration vide + message 'Rien ici ! Ajoute des quetes pour alimenter ta pioche.' + bouton '+' central." }
+        ]
+      },
+      {
+        "id": "profil",
+        "name": "Profil",
+        "purpose": "Visualiser sa progression : streak, historique, achievements.",
+        "layout": "Vertical scrollable : stats en haut, calendrier au milieu, badges en bas",
+        "regions": [
+          {
+            "name": "Stats Hero",
+            "content": "Streak actuel (grand, central, avec flamme), streak max, total de taches completees",
+            "interactions": []
+          },
+          {
+            "name": "Calendrier de Completion",
+            "content": "Heatmap type GitHub sur les 90 derniers jours. Jours verts = tache completee, gris = rate, vide = pas encore.",
+            "interactions": ["Tap sur un jour → tooltip avec le nom de la tache completee ce jour-la"]
+          },
+          {
+            "name": "Achievements",
+            "content": "Grille de badges. Debloques en couleur, verrouilles en grise avec condition affichee.",
+            "interactions": ["Tap sur un badge → detail de l'achievement (nom, description, date d'obtention)"]
+          }
+        ],
+        "states": [
+          { "state": "nouveau_user", "description": "Stats a 0, calendrier vide, tous les badges verrouilles. Message motivant 'Pioche ta premiere quete !'" },
+          { "state": "user_actif", "description": "Stats remplies, calendrier avec activite, certains badges debloques." }
+        ]
+      },
+      {
+        "id": "ajout_bottom_sheet",
+        "name": "Ajout Rapide (Bottom Sheet)",
+        "purpose": "Ajouter une tache au pool en moins de 5 secondes.",
+        "layout": "Bottom sheet modal : champ texte + bouton, clavier natif",
+        "regions": [
+          {
+            "name": "Champ de saisie",
+            "content": "Input texte avec placeholder 'Qu'est-ce que tu dois faire ?'. Bouton 'Ajouter' inline a droite.",
+            "interactions": ["Saisie texte → bouton actif", "Tap 'Ajouter' ou touche entree → ajout au pool", "Champ se vide pour enchainer"]
+          },
+          {
+            "name": "Poignee de fermeture",
+            "content": "Handle en haut du bottom sheet pour drag-to-close",
+            "interactions": ["Swipe vers le bas → fermeture"]
+          }
+        ],
+        "states": [
+          { "state": "vide", "description": "Champ vide, bouton 'Ajouter' grise/inactif." },
+          { "state": "en_saisie", "description": "Texte dans le champ, bouton 'Ajouter' actif (couleur primaire)." },
+          { "state": "apres_ajout", "description": "Animation de confirmation (texte glisse vers le haut), champ se vide, pret pour la prochaine." }
+        ]
+      },
+      {
+        "id": "onboarding",
+        "name": "Onboarding",
+        "purpose": "Premier lancement : expliquer le concept et amorcer le pool avec 5 taches.",
+        "layout": "Ecrans en swipe horizontal (3 etapes) + ecran d'ajout initial",
+        "regions": [
+          {
+            "name": "Ecrans explicatifs",
+            "content": "3 ecrans illustres : (1) 'Ajoute tes taches', (2) 'Pioche au hasard', (3) 'Garde ton streak'. Chaque ecran a une illustration + un titre + une phrase.",
+            "interactions": ["Swipe horizontal pour avancer", "Bouton 'Passer' pour skip"]
+          },
+          {
+            "name": "Ecran d'ajout initial",
+            "content": "Champ texte identique a l'ajout rapide mais avec compteur '0/5 quetes ajoutees'. Message 'Ajoute au moins 5 quetes pour commencer'.",
+            "interactions": ["Ajout sequentiel de taches", "Bouton 'C'est parti !' apparait quand >= 5 taches"]
+          }
+        ],
+        "states": [
+          { "state": "explication", "description": "Ecrans swipables avec illustrations." },
+          { "state": "ajout_initial", "description": "Champ d'ajout avec compteur progressif." },
+          { "state": "pret", "description": "5+ taches ajoutees. Bouton 'C'est parti !' actif. Transition vers ecran Pioche." }
+        ]
+      }
+    ],
+    "navigation": [
+      { "from": "pioche", "to": "pool", "trigger": "Tap sur onglet 'Pool' dans la tab bar" },
+      { "from": "pioche", "to": "profil", "trigger": "Tap sur onglet 'Profil' dans la tab bar ou tap sur le streak counter" },
+      { "from": "pool", "to": "pioche", "trigger": "Tap sur onglet 'Pioche' dans la tab bar" },
+      { "from": "pool", "to": "profil", "trigger": "Tap sur onglet 'Profil' dans la tab bar" },
+      { "from": "profil", "to": "pioche", "trigger": "Tap sur onglet 'Pioche' dans la tab bar" },
+      { "from": "profil", "to": "pool", "trigger": "Tap sur onglet 'Pool' dans la tab bar" },
+      { "from": "pioche", "to": "ajout_bottom_sheet", "trigger": "Tap sur FAB '+'" },
+      { "from": "pool", "to": "ajout_bottom_sheet", "trigger": "Tap sur FAB '+'" },
+      { "from": "profil", "to": "ajout_bottom_sheet", "trigger": "Tap sur FAB '+'" },
+      { "from": "onboarding", "to": "pioche", "trigger": "Completion de l'onboarding (5+ taches ajoutees + tap 'C'est parti !')" }
+    ],
+    "content_hierarchy": [
+      {
+        "section": "Pioche (Home)",
+        "description": "Le coeur de l'app. Un seul element de contenu a la fois : la carte du jour. Pas de liste, pas de scroll, pas de complexite. Un ecran = une action.",
+        "groups": [
+          { "name": "Etat du jour", "items": ["Carte face cachee", "Tache revelee", "Tache completee"] },
+          { "name": "Indicateurs", "items": ["Streak counter", "Compteur de pool"] }
+        ]
+      },
+      {
+        "section": "Pool",
+        "description": "Liste plate de toutes les taches en attente. Pas de categories, pas de sous-groupes, pas de priorites. L'ordre est chronologique (ajout le plus recent en haut).",
+        "groups": [
+          { "name": "Taches en attente", "items": ["Titre de la tache", "Action supprimer"] }
+        ]
+      },
+      {
+        "section": "Profil",
+        "description": "Dashboard de progression personnelle. Organise en 3 blocs visuels empiles.",
+        "groups": [
+          { "name": "Stats", "items": ["Streak actuel", "Streak max", "Total completees"] },
+          { "name": "Calendrier", "items": ["Heatmap 90 jours"] },
+          { "name": "Achievements", "items": ["Badges debloques", "Badges verrouilles"] }
+        ]
+      }
+    ],
+    "terminology": [
+      { "term": "Quete", "definition": "Une tache ajoutee par l'utilisateur. On n'utilise jamais le mot 'tache' dans l'UI — toujours 'quete' pour le cadrage ludique." },
+      { "term": "Pool", "definition": "L'ensemble des quetes en attente de pioche. Invisible depuis l'ecran principal, consultable depuis l'onglet Pool." },
+      { "term": "Pioche", "definition": "L'action quotidienne de retourner la carte pour reveler la quete du jour. 1 pioche par jour maximum." },
+      { "term": "Streak", "definition": "Nombre de jours consecutifs ou l'utilisateur a complete sa quete piochee. Reset a 0 si une journee est ratee." },
+      { "term": "Flip", "definition": "L'animation de retournement de carte qui revele la quete." },
+      { "term": "Bonus Changer", "definition": "Recompense de streak (>= 7 jours) permettant de repiocher une quete si celle tiree ne convient pas. Utilisable 1 fois par jour." },
+      { "term": "EtiKet", "definition": "La carte elle-meme — l'element visuel central de l'app. Le nom du produit vient de la." }
+    ],
+    "platform": {
+      "type": "mobile",
+      "framework": "React Native ou Flutter (a determiner)",
+      "min_width": 320,
+      "breakpoints": [
+        { "range": "320px - 375px", "behavior": "Layout compact : carte plus petite, texte reduit. Cible iPhone SE / petits Android." },
+        { "range": "376px - 428px", "behavior": "Layout standard : taille de carte optimale. Cible iPhone 14/15, Galaxy S series. Reference de design." },
+        { "range": "429px+", "behavior": "Layout large : marges supplementaires, carte ne grandit pas au-dela de 428px. Cible tablettes en mode portrait (non prioritaire)." }
+      ]
+    }
+  }
+}

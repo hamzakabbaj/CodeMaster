@@ -1,0 +1,19 @@
+{
+  "id": "ETK-2",
+  "title": "One random task per day",
+  "epic": "daily-pick-loop",
+  "type": "story",
+  "status": "todo",
+  "spec": "specs/EPIC-daily-pick-loop.spec.md",
+  "depends_on": ["ETK-101"],
+  "blocks": [],
+  "story": "As a user, I want the app to draw exactly one random task for me each day, so that I don't have to choose and can't procrastinate by picking the easy one.",
+  "acceptance_criteria": [
+    "On the first open of a calendar day, one task is drawn at random from the pool",
+    "Reopening the app the same day shows the same drawn task (idempotent per day)",
+    "The drawn task cannot be swapped — unless the user has an active streak (then: one swap)",
+    "If the pool is empty, the user is prompted to add a task (graceful empty state)"
+  ],
+  "verification": "Unit tests on the pick engine (same-pick-on-reopen, day rollover, streak-swap path); component test for the draw screen + empty state. (Ladder: test rung.)",
+  "notes": "The why behind 'no swap' is the anti-procrastination bet (see design). The day-boundary rule this story relies on is decided and tested in ETK-101 — this story consumes it rather than re-deciding it."
+}
