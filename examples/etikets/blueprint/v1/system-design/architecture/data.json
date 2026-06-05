@@ -1,0 +1,162 @@
+{
+  "description": "Architecture 100% offline, zero backend, pour une app mobile gratuite de pioche de taches gamifiee. Philosophie : tout tourne sur le device, zero cout serveur, zero compte utilisateur, zero friction. L'app est une boite fermee autonome — toutes les donnees vivent en local (MMKV). Pas de sync, pas d'auth, pas d'API. La V1 valide le concept avec le minimum de complexite technique. Le backend (auth, sync, leaderboard) est un sujet V2 conditionne par la traction.",
+  "tech_stack": [
+    {
+      "category": "mobile",
+      "technology": "React Native (Expo)",
+      "rationale": "Cross-platform iOS/Android avec un seul codebase. Expo simplifie le build, les notifications locales, et les OTA updates. Ecosysteme React familier, large communaute, compatible solo dev. Expo Router pour la navigation file-based."
+    },
+    {
+      "category": "animations",
+      "technology": "React Native Reanimated + Moti",
+      "rationale": "Animations performantes sur le thread natif pour le flip de carte, les confettis de celebration, et les micro-interactions du streak counter. Moti fournit une API declarative simple par-dessus Reanimated."
+    },
+    {
+      "category": "state",
+      "technology": "Zustand",
+      "rationale": "Store leger, zero boilerplate, parfait pour un state simple (tache du jour, streak, pool). Pas besoin de la complexite de Redux pour une app avec 5 ecrans. Middleware persist pour sauvegarder automatiquement dans MMKV."
+    },
+    {
+      "category": "storage",
+      "technology": "MMKV (react-native-mmkv)",
+      "rationale": "Stockage local ultra-rapide (10x AsyncStorage), synchrone. C'est LA base de donnees de la V1. Tout y vit : pool de taches, historique, streak, achievements, XP. Lecture synchrone = lancement instantane, pas de spinner."
+    },
+    {
+      "category": "notifications",
+      "technology": "Expo Notifications (local)",
+      "rationale": "Notifications locales programmees (pas de serveur push). Suffisant pour le rappel quotidien de pioche et l'alerte streak en danger. Pas besoin d'APNs/FCM cote serveur — tout est programme sur le device."
+    },
+    {
+      "category": "haptics",
+      "technology": "Expo Haptics",
+      "rationale": "Retour haptique natif pour le flip de carte, la celebration, et la validation. Contribue au feedback sensoriel qui rend la gamification satisfaisante."
+    },
+    {
+      "category": "deployment",
+      "technology": "EAS (Expo Application Services)",
+      "rationale": "Build cloud, OTA updates, et soumission App Store / Play Store automatisee. Pipeline CI/CD sans infrastructure a gerer."
+    }
+  ],
+  "layers": [
+    {
+      "name": "Presentation",
+      "description": "Interface utilisateur mobile : ecrans, composants, animations, et navigation.",
+      "responsibilities": [
+        "Rendu des 5 ecrans principaux (Pioche, Pool, Profil, Ajout, Onboarding)",
+        "Animations : flip de carte (Reanimated), confettis (Moti), streak counter pulse, micro-interactions",
+        "Navigation tab bar (Expo Router) : Pioche | Pool | Profil",
+        "Gestion des etats d'ecran (pre-pioche, post-pioche, done + bonus, pool vide, streak perdu)",
+        "Bottom sheet d'ajout rapide",
+        "Notification locale handling (tap → ouverture sur ecran pioche)",
+        "Haptics : vibration legere au flip, celebration au 'Fait !'"
+      ],
+      "technologies": ["React Native", "Expo Router", "React Native Reanimated", "Moti", "Expo Haptics"]
+    },
+    {
+      "name": "State & Persistence",
+      "description": "Source de verite unique : Zustand store persiste dans MMKV. Pas de backend, pas de sync. MMKV EST la base de donnees.",
+      "responsibilities": [
+        "Store Zustand avec middleware persist → MMKV",
+        "Donnees persistees : pool de taches, tache du jour, streak (current + max), XP, achievements, historique de completions, preferences",
+        "Hydratation instantanee au lancement (MMKV est synchrone, pas d'async loading)",
+        "Gestion du cycle quotidien : detection du changement de jour via timestamp de derniere completion",
+        "Aucune migration de schema complexe — structure JSON simple evoluable"
+      ],
+      "technologies": ["Zustand", "MMKV"]
+    },
+    {
+      "name": "Domain Logic",
+      "description": "Regles metier de l'app : pioche aleatoire, gestion du streak, achievements, XP. Pure functions testables, zero dependance externe.",
+      "responsibilities": [
+        "Pioche : selection aleatoire uniforme dans le pool, exclusion de la tache en cours",
+        "Streak : incrementation a la completion, reset si aucune completion hier, calcul du max, detection du bonus changer (>= 7 jours)",
+        "Pioche bonus : XP reduit (+15 vs +25), compteur de quetes du jour, pas de limite",
+        "Achievements : conditions de debloquage (premier pas, semaine complete, 30 jours, 100 quetes, etc.), verification apres chaque completion",
+        "XP : +25 pioche principale, +15 pioche bonus, total cumule",
+        "Cycle jour : comparaison de la date de derniere completion avec aujourd'hui (timezone locale du device)",
+        "Validation : empecher la double pioche principale, empecher la completion sans pioche"
+      ],
+      "technologies": ["TypeScript (pure functions)"]
+    },
+    {
+      "name": "Scheduling",
+      "description": "Programmation des notifications locales et gestion du timing quotidien.",
+      "responsibilities": [
+        "Notification quotidienne : programmee chaque jour a l'heure choisie par l'utilisateur (defaut 9h)",
+        "Alerte streak en danger : notification le soir (20h) si la tache du jour n'est pas encore completee",
+        "Reprogrammation apres completion : annuler l'alerte du soir si la tache est faite",
+        "Reprogrammation au lancement : recalculer les notifs si l'app a ete fermee longtemps"
+      ],
+      "technologies": ["Expo Notifications (local scheduling)"]
+    }
+  ],
+  "key_decisions": [
+    {
+      "title": "100% offline, zero backend en V1",
+      "context": "Solo founder, budget zero, objectif de valider le concept le plus vite possible. L'app est single-user, single-device — il n'y a aucune raison d'avoir un serveur en V1.",
+      "decision": "Toutes les donnees vivent en local sur le device (MMKV). Pas de backend, pas de base de donnees distante, pas d'auth, pas de sync. L'app fonctionne sans internet.",
+      "rationale": "Un backend ajoute de la complexite (auth, sync, hosting, securite, couts) sans apporter de valeur en V1. Les features qui necessitent un backend (multi-device, social, leaderboard) sont des features V2. Le concept se valide sans serveur.",
+      "trade_offs": "Pas de backup des donnees (si l'utilisateur desinstalle, tout est perdu). Pas de multi-device. Pas d'anti-triche sur le streak (l'utilisateur peut changer l'heure du telephone). Acceptable en V1 — le produit cible des gens qui veulent s'ameliorer, pas tricher."
+    },
+    {
+      "title": "App gratuite sans monetisation en V1",
+      "context": "L'objectif de la V1 est de valider le concept et de mesurer la retention. Monetiser trop tot ajoute de la friction a l'adoption.",
+      "decision": "L'app est 100% gratuite, sans pub, sans in-app purchase, sans abonnement. Toutes les features sont accessibles.",
+      "rationale": "Maximiser les downloads et la retention pour valider le product-market fit. La monetisation (premium themes, achievements speciaux, backup cloud) est un sujet V2 conditionne par la traction.",
+      "trade_offs": "Zero revenu en V1. Le modele economique n'est pas valide. Acceptable — le cout de run est zero (pas de serveur) et le seul investissement est le temps du fondateur."
+    },
+    {
+      "title": "MMKV comme unique base de donnees",
+      "context": "Sans backend, il faut un stockage local performant, fiable, et simple. Les donnees d'EtiKets sont simples (listes, compteurs, dates).",
+      "decision": "Utiliser MMKV comme seul stockage persistant. Pas de SQLite, pas de Realm, pas de WatermelonDB. Les donnees sont stockees comme des objets JSON serialises.",
+      "rationale": "MMKV est synchrone (pas d'async/await au lancement), ultra-rapide, et suffisant pour des donnees simples. Le volume est negligeable (quelques Ko meme avec 1000 taches). Pas besoin de queries SQL complexes — on lit tout en memoire au lancement via Zustand persist.",
+      "trade_offs": "Pas de requetes complexes (filtres, tris, aggregations). Tout est en memoire — si le pool atteint des dizaines de milliers de taches, ca pourrait poser probleme. Largement acceptable pour l'usage reel (pool de 10-100 taches)."
+    },
+    {
+      "title": "Notifications locales plutot que push serveur",
+      "context": "Les rappels quotidiens et alertes de streak sont essentiels a la retention. Sans backend, pas de push notifications serveur.",
+      "decision": "Utiliser les notifications locales programmees (Expo Notifications). Le device programme lui-meme les rappels.",
+      "rationale": "Les notifications locales suffisent pour les rappels a heure fixe et les alertes conditionnelles. Pas besoin d'un serveur pour dire 'il est 9h, pioche ta quete'. Le device le sait tout seul.",
+      "trade_offs": "Les notifications locales peuvent etre moins fiables sur Android (Doze mode, battery optimization). Pas de notification trigger a distance (ex: 'ton ami a complete sa quete'). Suffisant pour la V1 single-user."
+    },
+    {
+      "title": "Expo managed workflow",
+      "context": "Cross-platform iOS + Android avec un solo dev. Besoin de notifications locales, haptics, OTA updates, et soumission store automatisee.",
+      "decision": "Rester en Expo managed workflow (pas d'eject).",
+      "rationale": "EAS gere les builds, les certificats, les soumissions store, et les OTA updates. Le managed workflow couvre 100% des besoins de la V1 (notifications locales, haptics, animations, MMKV sont tous compatibles).",
+      "trade_offs": "Si un besoin natif emerge (ex: widget iOS), il faudra passer en dev client. Acceptable — la V1 n'a pas besoin de widgets."
+    },
+    {
+      "title": "Pas de categories, pas de priorites",
+      "context": "Le competitive audit montre que la complexite contribue a la procrastination. Le brief definit la simplicite comme differenciateur.",
+      "decision": "Une tache = un titre. Pas de categorie, pas de priorite, pas de date, pas de description. Le pool est une liste plate.",
+      "rationale": "La pioche aleatoire rend les metadonnees inutiles. Keep it stupid simple.",
+      "trade_offs": "Les taches infaisables a un moment donne seront piochees quand meme. Post-V1 : possibilite de 'passer' une tache sans casser le streak (consomme le bonus changer)."
+    },
+    {
+      "title": "Pioche aleatoire uniforme",
+      "context": "L'algorithme de pioche doit etre simple et imprevisible.",
+      "decision": "Selection aleatoire uniforme. Pas de ponderation, pas d'historique, pas d'algo intelligent.",
+      "rationale": "La simplicite est un feature. Le hasard pur est le mecanisme central du produit.",
+      "trade_offs": "Biais du hasard (repetitions possibles). Le pool tourne naturellement car les taches completees sont retirees."
+    }
+  ],
+  "documents": [
+    {
+      "file": "data.json",
+      "schema": "schema.json",
+      "title": "Architecture",
+      "description": "Tech stack, system layers, et decisions architecturales pour EtiKets V1 (100% offline, gratuit)."
+    },
+    {
+      "file": "../database_schema/schema.dbml",
+      "title": "Database Schema",
+      "description": "Structure des donnees locales (MMKV/Zustand) : taches, streak, achievements, historique."
+    },
+    {
+      "file": "../design_system/styles.css",
+      "title": "Design System",
+      "description": "Tokens CSS, composants, et langage visuel de l'app."
+    }
+  ]
+}

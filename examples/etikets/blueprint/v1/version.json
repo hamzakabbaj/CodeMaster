@@ -1,0 +1,26 @@
+{
+  "project": "EtiKets",
+  "version": "v1",
+  "summary": "A mobile app that draws exactly one random micro-task per day to beat procrastination through a streak loop.",
+  "modules": {
+    "design-thinking": {
+      "status": "completed",
+      "steps": "20/20",
+      "note": "Imported from a real design-thinking run. Throwaway wireframe HTML (step 17 'mobile/') is intentionally not versioned — per CodeMaster doctrine, prototypes are disposable; the structured record is what's kept."
+    },
+    "system-design": {
+      "status": "partial",
+      "steps": "architecture, api_design, design_system",
+      "note": "database_schema was not produced in v1 — blueprint steps are completed as the work warrants, not ritually. The design_system carries real tokens (styles.css) + a component gallery (components.html, foundations.html)."
+    },
+    "specs": {
+      "status": "authored",
+      "note": "Epic-level /spec plan (Step 3), with plan-review, sliced into the backlog."
+    },
+    "backlog": {
+      "status": "sliced",
+      "tickets": "5 (2 enabler tasks + 3 stories)",
+      "note": "Step-4 output. The riskiest assumption (the day-boundary rule) was promoted to its own foundational ticket, ETK-101."
+    }
+  }
+}

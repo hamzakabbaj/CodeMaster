@@ -1,0 +1,87 @@
+{
+  "content": {
+    "questions": [
+      {
+        "id": 1,
+        "question": "How might we supprimer la decision de 'quelle tache faire' pour que l'utilisateur passe directement a l'action ?",
+        "category": "core_mechanic"
+      },
+      {
+        "id": 2,
+        "question": "How might we rendre l'experience de pioche aleatoire excitante plutot que frustrante, meme quand la tache tiree est desagreable ?",
+        "category": "core_mechanic"
+      },
+      {
+        "id": 3,
+        "question": "How might we empecher l'utilisateur de contourner le systeme (changer de tache, fermer l'app) sans que ca devienne punitif ?",
+        "category": "core_mechanic"
+      },
+      {
+        "id": 4,
+        "question": "How might we transformer le streak en un mecanisme de retention aussi puissant que celui de Duolingo ou Snapchat ?",
+        "category": "gamification"
+      },
+      {
+        "id": 5,
+        "question": "How might we fournir une gratification immediate des la completion d'une tache pour creer une boucle dopaminergique ?",
+        "category": "gamification"
+      },
+      {
+        "id": 6,
+        "question": "How might we utiliser la peur de perdre (loss aversion) comme moteur de retention sans generer d'anxiete ?",
+        "category": "gamification"
+      },
+      {
+        "id": 7,
+        "question": "How might we rendre le bonus streak (possibilite de changer la tache) suffisamment rare pour etre desirable mais suffisamment accessible pour ne pas frustrer ?",
+        "category": "gamification"
+      },
+      {
+        "id": 8,
+        "question": "How might we rendre l'ajout de taches si rapide que l'utilisateur le fait spontanement au fil de la journee ?",
+        "category": "ux"
+      },
+      {
+        "id": 9,
+        "question": "How might we reduire le temps entre l'ouverture de l'app et le debut de l'action a moins de 30 secondes ?",
+        "category": "ux"
+      },
+      {
+        "id": 10,
+        "question": "How might we garder les taches invisibles avant la pioche tout en donnant a l'utilisateur assez de confiance que son pool est bien alimente ?",
+        "category": "ux"
+      },
+      {
+        "id": 11,
+        "question": "How might we encourager l'utilisateur a alimenter regulierement son pool de taches sans que ca devienne une corvee en soi ?",
+        "category": "retention"
+      },
+      {
+        "id": 12,
+        "question": "How might we gerer le cas ou le pool de taches est vide ou ne contient que des taches infaisables au moment de la pioche ?",
+        "category": "edge_cases"
+      },
+      {
+        "id": 13,
+        "question": "How might we calibrer la difficulte des taches piochees pour eviter que l'utilisateur tombe sur une tache de 2h un mardi soir ?",
+        "category": "edge_cases"
+      },
+      {
+        "id": 14,
+        "question": "How might we creer un sentiment de progression long terme au-dela du streak quotidien (semaine, mois, accomplissements) ?",
+        "category": "gamification"
+      },
+      {
+        "id": 15,
+        "question": "How might we utiliser la planification hebdomadaire comme un moment engageant de 'preparation de quetes' plutot qu'une contrainte de plus ?",
+        "category": "retention"
+      },
+      {
+        "id": 16,
+        "question": "How might we faire en sorte que l'app soit le premier reflexe du matin sans etre intrusive ou agacante via les notifications ?",
+        "category": "retention"
+      }
+    ],
+    "priority": "Les questions #1 (suppression du choix), #2 (pioche excitante), #4 (streak puissant) et #9 (friction < 30s) sont les plus critiques pour le MVP. Elles definissent le coeur de l'experience : piocher vite, accepter la tache, la faire, garder le streak. Si ces 4 mecaniques fonctionnent, le produit tient. Les questions #12 et #13 (pool vide, calibrage difficulte) sont les edge cases les plus risques a resoudre avant le lancement. Tout le reste (planning hebdo, achievements avances, notifications) peut etre itere post-MVP."
+  }
+}

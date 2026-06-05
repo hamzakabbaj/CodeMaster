@@ -1,0 +1,102 @@
+{
+  "content": {
+    "storyboards": [
+      {
+        "title": "La Pioche du Jour",
+        "flow": "Flow 1 — Pioche quotidienne",
+        "frames": [
+          {
+            "number": 1,
+            "screen": "Ecran de verrouillage — notification push : 'Ta quete du jour t'attend !' avec l'icone EtiKets",
+            "user_action": "Tape sur la notification",
+            "system_response": "L'app s'ouvre directement sur l'ecran principal"
+          },
+          {
+            "number": 2,
+            "screen": "Ecran principal — fond sobre, carte face cachee au centre (design EtiKets avec pattern geometrique), streak '12' avec flamme en haut, '8 quetes en attente' en haut a droite",
+            "user_action": "Regarde l'ecran, anticipe la pioche",
+            "system_response": "La carte a une micro-animation de pulsation subtile qui invite au tap"
+          },
+          {
+            "number": 3,
+            "screen": "L'utilisateur pose son doigt sur la carte",
+            "user_action": "Tape sur la carte",
+            "system_response": "Animation flip 3D (~0.5s) — la carte se retourne avec un son satisfaisant de 'woosh'. La face visible apparait avec la tache : 'Detartrer la bouilloire'"
+          },
+          {
+            "number": 4,
+            "screen": "Carte retournee affichant 'Detartrer la bouilloire' en grand. En dessous : bouton 'Fait !' (large, couleur primaire). Petit texte 'Streak 12 — bonus changer disponible' avec un bouton discret 'Changer'",
+            "user_action": "Lit la tache. Hesite une seconde. Voit le bonus changer mais decide de garder la tache.",
+            "system_response": "Le bouton 'Changer' reste visible mais secondaire. Le bouton 'Fait !' domine l'ecran."
+          },
+          {
+            "number": 5,
+            "screen": "L'utilisateur quitte l'app pour aller faire la tache. Plus tard, il revient.",
+            "user_action": "Rouvre l'app",
+            "system_response": "L'ecran affiche directement la tache en cours (pas de carte a retourner) avec le bouton 'Fait !' toujours present"
+          }
+        ]
+      },
+      {
+        "title": "La Celebration",
+        "flow": "Flow 2 — Completion de la tache",
+        "frames": [
+          {
+            "number": 1,
+            "screen": "Ecran principal — tache du jour affichee : 'Detartrer la bouilloire'. Bouton 'Fait !' en bas.",
+            "user_action": "Appuie sur 'Fait !'",
+            "system_response": "Vibration haptic courte. Le bouton pulse et change de couleur."
+          },
+          {
+            "number": 2,
+            "screen": "Overlay fullscreen — animation de confettis colores tombant depuis le haut. Au centre : '+25 XP' en grand avec animation de compteur qui monte.",
+            "user_action": "Regarde l'animation (ne peut pas skip pendant 1.5s)",
+            "system_response": "Les confettis durent 1.5s. Un son de celebration joue (style 'ding' satisfaisant)."
+          },
+          {
+            "number": 3,
+            "screen": "Le streak counter en haut s'anime : '12' devient '13' avec un effet de flame qui grandit. Message aleatoire : 'Machine ! 13 jours d'affilee'",
+            "user_action": "Sourit (hopefully). Voit son streak monter.",
+            "system_response": "Si un palier est atteint (7, 14, 30...), un badge apparait en overlay supplementaire avec haptic + son special"
+          },
+          {
+            "number": 4,
+            "screen": "Ecran post-completion : 'Bien joue ! Reviens demain pour ta prochaine quete.' Streak 13 affiche en grand. Bouton 'Ajouter une quete' discret en dessous.",
+            "user_action": "Peut ajouter une tache ou fermer l'app",
+            "system_response": "L'app est en etat 'done for today'. Si l'utilisateur revient plus tard, il voit cet ecran."
+          }
+        ]
+      },
+      {
+        "title": "L'Ajout Eclair",
+        "flow": "Flow 3 — Ajout d'une tache",
+        "frames": [
+          {
+            "number": 1,
+            "screen": "N'importe quel ecran de l'app. Le bouton '+' flottant est visible en bas a droite.",
+            "user_action": "Tape sur le bouton '+'",
+            "system_response": "Un bottom sheet glisse depuis le bas avec un champ texte et le clavier qui s'ouvre automatiquement"
+          },
+          {
+            "number": 2,
+            "screen": "Bottom sheet : champ texte avec placeholder 'Qu'est-ce que tu dois faire ?' et bouton 'Ajouter' a droite du champ",
+            "user_action": "Tape 'Racheter du sopalin'",
+            "system_response": "Le bouton 'Ajouter' devient actif (couleur primaire)"
+          },
+          {
+            "number": 3,
+            "screen": "L'utilisateur valide",
+            "user_action": "Tape sur 'Ajouter' (ou touche entree du clavier)",
+            "system_response": "Micro-animation : le texte 'glisse' vers le haut et disparait comme s'il rejoignait le pool. Le compteur en haut s'incremente (8 → 9). Le champ se vide, pret pour une autre saisie."
+          },
+          {
+            "number": 4,
+            "screen": "Le champ est vide a nouveau, le clavier reste ouvert",
+            "user_action": "L'utilisateur peut enchainer une autre tache ou swiper le bottom sheet vers le bas pour fermer",
+            "system_response": "Fermeture smooth du bottom sheet. Retour a l'ecran precedent."
+          }
+        ]
+      }
+    ]
+  }
+}

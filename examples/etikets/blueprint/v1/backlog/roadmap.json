@@ -1,0 +1,15 @@
+{
+  "project": "EtiKets",
+  "version": "v1",
+  "spec": "specs/EPIC-daily-pick-loop.spec.md",
+  "epics": [
+    {
+      "id": "daily-pick-loop",
+      "name": "Daily-pick MVP loop",
+      "status": "todo",
+      "goal": "Add micro-tasks and complete exactly one randomly-picked task per day, building a streak — EtiKets' single validating loop.",
+      "tickets": ["ETK-100", "ETK-101", "ETK-1", "ETK-2", "ETK-3"]
+    }
+  ],
+  "_note": "Dependency-ordered: enabler tasks (100s) first, then the stories. Paths in tickets are relative to blueprint/v1/. This is the Step-4 output, sliced from specs/EPIC-daily-pick-loop.spec.md."
+}

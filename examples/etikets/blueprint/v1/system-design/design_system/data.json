@@ -1,0 +1,144 @@
+{
+  "description": "Design system d'EtiKets : dark theme premium avec accent violet (#6C5CE7) et streak flame orange (#FF9F43). Langage visuel concu pour une app mobile gamifiee — surfaces sombres qui elevent le contenu, animations satisfaisantes, feedback sensoriel (haptics + visuels). Le DS definit les tokens fondamentaux et 12 composants reutilisables couvrant 100% des ecrans wireframes.",
+  "theme": "dark",
+  "tokens": {
+    "surfaces": [
+      { "name": "--bg-app", "value": "#0F0F14", "usage": "Fond general de l'app" },
+      { "name": "--bg-panel", "value": "#1A1A24", "usage": "Conteneurs, cartes, tab bar" },
+      { "name": "--bg-elevated", "value": "#24243A", "usage": "Elements sureleves, inputs, code blocks" },
+      { "name": "--bg-hover", "value": "#2E2E4A", "usage": "Etat hover sur elements interactifs" },
+      { "name": "--bg-active", "value": "#38385A", "usage": "Etat active / pressed" }
+    ],
+    "text": [
+      { "name": "--text-primary", "value": "#F0F0F5", "usage": "Titres, contenu principal" },
+      { "name": "--text-secondary", "value": "#8888A0", "usage": "Labels, descriptions" },
+      { "name": "--text-tertiary", "value": "#55556A", "usage": "Hints, placeholders, metadata" },
+      { "name": "--text-disabled", "value": "#3A3A50", "usage": "Etats desactives" }
+    ],
+    "accent": [
+      { "name": "--accent", "value": "#6C5CE7", "usage": "CTA principal, brand color" },
+      { "name": "--accent-hover", "value": "#7D6FF0", "usage": "Hover sur accent" },
+      { "name": "--accent-subtle", "value": "rgba(108, 92, 231, 0.15)", "usage": "Fond subtil accent (badges, highlight)" },
+      { "name": "--accent-muted", "value": "#A29BFE", "usage": "Texte accent lisible sur dark bg" }
+    ],
+    "semantic": [
+      { "name": "--success", "value": "#00D2A0", "usage": "Completion, jours reussis dans le calendrier" },
+      { "name": "--warning", "value": "#FDCB6E", "usage": "Achievements, badge changer" },
+      { "name": "--error", "value": "#FF6B6B", "usage": "Suppression, jours manques" }
+    ],
+    "domain": [
+      { "name": "--streak-flame", "value": "#FF9F43", "usage": "Icone flamme du streak counter" },
+      { "name": "--card-gradient", "value": "linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%)", "usage": "Dos de la carte EtiKet" },
+      { "name": "--celebration-gradient", "value": "linear-gradient(135deg, #6C5CE7 0%, #FF6B6B 50%, #FF9F43 100%)", "usage": "Ecran de celebration" }
+    ],
+    "spacing": {
+      "base": "4px",
+      "scale": [4, 8, 12, 16, 20, 24, 32, 40, 48, 64]
+    },
+    "radii": ["4px (xs)", "8px (sm)", "12px (md)", "20px (lg)", "28px (xl)", "9999px (full)"],
+    "shadows": [
+      { "name": "--shadow-sm", "value": "0 2px 8px rgba(0,0,0,0.2)", "usage": "Elevation legere" },
+      { "name": "--shadow-md", "value": "0 8px 32px rgba(108,92,231,0.15)", "usage": "Cartes, elevation moyenne" },
+      { "name": "--shadow-lg", "value": "0 16px 48px rgba(0,0,0,0.4)", "usage": "Modales, bottom sheets" },
+      { "name": "--shadow-glow", "value": "0 4px 16px rgba(108,92,231,0.4)", "usage": "FAB, glow accent" }
+    ],
+    "typography": {
+      "font_sans": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      "font_mono": "'SF Mono', 'Fira Code', monospace",
+      "scale": ["0.75rem (xs/12px)", "0.875rem (sm/14px)", "1rem (md/16px)", "1.25rem (lg/20px)", "1.5rem (xl/24px)", "2rem (2xl/32px)", "3rem (3xl/48px)", "4.5rem (hero/72px)"],
+      "weights": ["400 (normal)", "500 (medium)", "600 (semibold)", "700 (bold)"]
+    }
+  },
+  "components": [
+    {
+      "name": "Button",
+      "group": "primitives",
+      "variants": ["primary", "outline", "ghost"],
+      "sizes": ["lg", "md", "sm"],
+      "description": "3 variantes pour 3 niveaux d'importance. Primary = action principale (Fait!, Continue), Outline = action secondaire (Pioche bonus), Ghost = tertiaire (Ajouter une quete)."
+    },
+    {
+      "name": "Badge",
+      "group": "primitives",
+      "variants": ["streak", "xp", "change"],
+      "description": "Badges informatifs. Streak = flamme + compteur, XP = gain d'experience, Change = compteur de changements restants."
+    },
+    {
+      "name": "Input",
+      "group": "primitives",
+      "variants": ["default", "focus"],
+      "description": "Champ texte pour l'ajout rapide de quetes. Border focus accent violet."
+    },
+    {
+      "name": "FAB",
+      "group": "primitives",
+      "variants": ["default"],
+      "description": "Floating Action Button pour l'ajout rapide. Accent + glow shadow, positionne au-dessus de la tab bar."
+    },
+    {
+      "name": "EtiKet Card",
+      "group": "components",
+      "variants": ["back", "front"],
+      "description": "L'element central de l'app. Dos = gradient accent avec logo, mystere. Face = fond elevated avec label, titre de la quete, timestamp."
+    },
+    {
+      "name": "Tab Bar",
+      "group": "components",
+      "variants": ["default"],
+      "description": "Navigation principale a 3 onglets : Pioche (actif par defaut), Pool, Profil. Icones + labels."
+    },
+    {
+      "name": "Bottom Sheet",
+      "group": "components",
+      "variants": ["default"],
+      "description": "Sheet d'ajout rapide avec handle, input + bouton Ajouter. Se superpose au contenu."
+    },
+    {
+      "name": "Bonus Divider",
+      "group": "components",
+      "variants": ["default"],
+      "description": "Separateur horizontal avec label central 'Envie d'en faire plus ?'. Delimite la zone bonus optionnelle."
+    },
+    {
+      "name": "Pool Item",
+      "group": "domain",
+      "variants": ["default"],
+      "description": "Ligne de quete dans le pool : titre + bouton suppression. Fond panel, hover pour delete."
+    },
+    {
+      "name": "Stat Card",
+      "group": "domain",
+      "variants": ["default"],
+      "description": "Carte de statistique : valeur prominente + label. Utilisee dans le profil (streak actuel, quetes completees, XP total)."
+    },
+    {
+      "name": "Achievement Badge",
+      "group": "domain",
+      "variants": ["unlocked", "locked"],
+      "description": "Badge d'achievement avec icone + nom. Unlocked = dore, Locked = grise 35% opacite."
+    },
+    {
+      "name": "Calendar Heatmap",
+      "group": "domain",
+      "variants": ["default"],
+      "description": "Grille 7 colonnes representant les jours. Vert = complete, rouge = manque, gris = vide. Vue mensuelle dans le profil."
+    }
+  ],
+  "documents": [
+    {
+      "file": "styles.css",
+      "title": "Design Tokens & DS Layout",
+      "description": "CSS custom properties (70+ tokens) et styles de mise en page du design system."
+    },
+    {
+      "file": "foundations.html",
+      "title": "Foundations",
+      "description": "Documentation visuelle des tokens : couleurs (5 groupes), typographie, spacing, radii, shadows."
+    },
+    {
+      "file": "components.html",
+      "title": "Components",
+      "description": "12 composants documentes avec specimens visuels : 4 primitives, 4 composants, 4 domain-specific."
+    }
+  ]
+}
