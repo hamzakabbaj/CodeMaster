@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 1 \u2014 Interviews",
+  "description": "Conduct qualitative interviews with potential users to gather firsthand insights about their experiences, frustrations, and goals. Each interview has two layers: a Guide (context for the AI to conduct the interview) and an Analysis (synthesized findings).",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "interviews"
+      ],
+      "properties": {
+        "interviews": {
+          "type": "array",
+          "description": "List of interviews, each with a guide and analysis.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "type",
+              "guide",
+              "analysis"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "Unique interview number."
+              },
+              "title": {
+                "type": "string",
+                "description": "Short label for the interview (e.g., 'Solo Technical Founder \u2014 Self-Interview')."
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "self",
+                  "real",
+                  "synthesized"
+                ],
+                "description": "Interview type: 'self' (founder interviews themselves), 'real' (actual user interview), 'synthesized' (AI-generated proxy based on research)."
+              },
+              "guide": {
+                "type": "object",
+                "description": "Pre-interview context that gives the AI enough direction to conduct a meaningful research conversation.",
+                "required": [
+                  "target_profile",
+                  "research_objectives",
+                  "key_topics"
+                ],
+                "properties": {
+                  "target_profile": {
+                    "type": "string",
+                    "description": "Who this interview targets \u2014 role, background, relevant context."
+                  },
+                  "research_objectives": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "What we're trying to learn from this interview."
+                  },
+                  "key_topics": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Specific areas or themes to explore during the interview."
+                  },
+                  "context_from_brief": {
+                    "type": "string",
+                    "description": "Key context from the project brief that informs this interview's direction."
+                  }
+                }
+              },
+              "analysis": {
+                "type": "object",
+                "description": "Synthesized findings from the interview \u2014 the actionable output.",
+                "required": [
+                  "key_quotes",
+                  "recurring_themes",
+                  "key_insights"
+                ],
+                "properties": {
+                  "key_quotes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Notable verbatim quotes from the interview."
+                  },
+                  "recurring_themes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "theme",
+                        "description"
+                      ],
+                      "properties": {
+                        "theme": {
+                          "type": "string",
+                          "description": "Theme name."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Explanation of the recurring theme."
+                        }
+                      }
+                    },
+                    "description": "Patterns and themes that emerged from the interview."
+                  },
+                  "key_insights": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Actionable insights derived from the interview data."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

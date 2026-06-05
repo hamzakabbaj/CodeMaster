@@ -1,0 +1,274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "API Design",
+  "description": "API design document defining endpoints grouped by feature, with routes, parameters, and response contracts.",
+  "type": "object",
+  "required": [
+    "groups"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "base_url": {
+      "type": "string",
+      "description": "Base URL for the API (e.g., '/api/v1')."
+    },
+    "authentication": {
+      "type": "object",
+      "description": "Authentication mechanism.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Auth type (e.g., 'JWT', 'session', 'API key', 'OAuth2')."
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "groups": {
+      "type": "object",
+      "description": "Endpoints grouped by feature or resource. Each key is the group name (e.g., 'Users', 'Projects', 'Auth').",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "endpoints"
+        ],
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "What this group covers."
+          },
+          "endpoints": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "method",
+                "path",
+                "description"
+              ],
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "enum": [
+                    "GET",
+                    "POST",
+                    "PUT",
+                    "PATCH",
+                    "DELETE",
+                    "WS"
+                  ],
+                  "description": "HTTP method, or 'WS' for WebSocket endpoints."
+                },
+                "path": {
+                  "type": "string",
+                  "description": "Route path (e.g., '/users/{id}')."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "What this endpoint does."
+                },
+                "auth_required": {
+                  "type": "boolean",
+                  "description": "Whether authentication is required."
+                },
+                "path_params": {
+                  "type": "array",
+                  "description": "URL path parameters.",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "type"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "query_params": {
+                  "type": "array",
+                  "description": "URL query parameters.",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "type"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "required": {
+                        "type": "boolean"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "request_body": {
+                  "type": "object",
+                  "description": "Request body schema.",
+                  "properties": {
+                    "content_type": {
+                      "type": "string"
+                    },
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "required": {
+                            "type": "boolean"
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "type": "array",
+                  "description": "Possible responses by status code. Used for REST endpoints.",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "status",
+                      "description"
+                    ],
+                    "properties": {
+                      "status": {
+                        "type": "integer",
+                        "description": "HTTP status code."
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "fields": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "client_messages": {
+                  "type": "array",
+                  "description": "Message types the client can send. Used for WebSocket endpoints.",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "description"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "Message type identifier."
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "fields": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "required": {
+                              "type": "boolean"
+                            },
+                            "description": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "server_messages": {
+                  "type": "array",
+                  "description": "Message types the server can send. Used for WebSocket endpoints.",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "description"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "Message type identifier."
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "fields": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

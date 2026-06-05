@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 2 \u2014 Empathy Maps",
+  "description": "Visualize what users Say, Think, Do, and Feel based on interview data. Helps develop a shared understanding of the user's inner world.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "empathy_maps"
+      ],
+      "properties": {
+        "empathy_maps": {
+          "type": "array",
+          "description": "One empathy map per user segment.",
+          "items": {
+            "type": "object",
+            "required": [
+              "segment",
+              "summary",
+              "say",
+              "think",
+              "do",
+              "feel"
+            ],
+            "properties": {
+              "segment": {
+                "type": "string",
+                "description": "Name of the user segment (e.g., 'Solo Technical Creator')."
+              },
+              "summary": {
+                "type": "string",
+                "description": "One-liner takeaway \u2014 the core tension or insight for this segment."
+              },
+              "say": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Things the user says out loud \u2014 direct quotes or paraphrased statements."
+              },
+              "think": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Inner thoughts and concerns the user has but may not express openly."
+              },
+              "do": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Observable actions and behaviors the user exhibits."
+              },
+              "feel": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "emotion": {
+                      "type": "string",
+                      "description": "The emotion label (e.g., 'Frustrated')."
+                    },
+                    "context": {
+                      "type": "string",
+                      "description": "When or why this emotion arises."
+                    }
+                  }
+                },
+                "description": "Emotions the user experiences with situational context."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

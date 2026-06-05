@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 0 — Project Brief",
+  "description": "Define the high-level vision, motivation, target audience, initial problem hypothesis, known constraints, and success criteria. This document serves as the anchor that every subsequent step refers back to.",
+  "type": "object",
+  "required": ["content"],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": ["what", "why", "who", "problem", "constraints", "success_criteria"],
+      "properties": {
+        "what": {
+          "type": "object",
+          "description": "What are we building?",
+          "properties": {
+            "summary": { "type": "string", "description": "One-sentence description of what the product is." },
+            "details": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Key characteristics, scope decisions, and platform considerations."
+            }
+          }
+        },
+        "why": {
+          "type": "object",
+          "description": "Why are we building it?",
+          "properties": {
+            "summary": { "type": "string", "description": "Core motivation behind the project." },
+            "details": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Expanded reasoning — why this approach, what the end goal is."
+            }
+          }
+        },
+        "who": {
+          "type": "object",
+          "description": "Who is it for?",
+          "properties": {
+            "primary_user": { "type": "string", "description": "Primary target user profile for the MVP." },
+            "details": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Additional notes on audience segmentation, secondary users, and optimization focus."
+            }
+          }
+        },
+        "problem": {
+          "type": "object",
+          "description": "What problem does it aim to solve?",
+          "properties": {
+            "user_perspective": { "type": "string", "description": "The problem stated from the user's point of view (verbatim or paraphrased)." },
+            "core_problems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              },
+              "description": "Broken-down list of the core problems the product addresses."
+            }
+          }
+        },
+        "constraints": {
+          "type": "object",
+          "description": "Known constraints for the project.",
+          "properties": {
+            "tech_stack": { "type": "string" },
+            "platform": { "type": "string" },
+            "timeline": { "type": "string" },
+            "budget": { "type": "string" },
+            "team": { "type": "string" }
+          }
+        },
+        "success_criteria": {
+          "type": "array",
+          "description": "What does success look like?",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string", "description": "Category of success (e.g., product, personal, measurable)." },
+              "description": { "type": "string", "description": "What this success criterion means concretely." }
+            }
+          }
+        }
+      }
+    }
+  }
+}

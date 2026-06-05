@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 7 \u2014 Value Proposition",
+  "description": "Define the unique value the solution will provide. Articulate why users would choose this solution over alternatives and what differentiates it.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "for",
+        "who",
+        "product",
+        "that",
+        "unlike",
+        "differentiators",
+        "result"
+      ],
+      "properties": {
+        "for": {
+          "type": "string",
+          "description": "Target audience (e.g., 'solo technical creators')."
+        },
+        "who": {
+          "type": "string",
+          "description": "What characterizes them (e.g., 'have ideas but struggle to structure them')."
+        },
+        "product": {
+          "type": "string",
+          "description": "What the product is."
+        },
+        "that": {
+          "type": "string",
+          "description": "What the product does for them."
+        },
+        "unlike": {
+          "type": "string",
+          "description": "Positioning against the primary alternative (e.g., 'Unlike [competitor], our product...')."
+        },
+        "differentiators": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Key differentiators vs. alternatives."
+        },
+        "result": {
+          "type": "string",
+          "description": "The end result for the user \u2014 the transformation."
+        }
+      }
+    }
+  }
+}

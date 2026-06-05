@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 5 \u2014 User Journey Map",
+  "description": "Map the end-to-end experience of a persona interacting with the problem space. Document each stage, touchpoint, action, thought, and emotion across the journey.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "persona",
+        "current_journey",
+        "opportunity_areas",
+        "desired_journey",
+        "summary"
+      ],
+      "properties": {
+        "persona": {
+          "type": "string",
+          "description": "Name of the persona this journey map is for."
+        },
+        "current_journey": {
+          "type": "object",
+          "description": "The user's current experience without the solution.",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Label for the current journey (e.g., 'From Idea to Abandonment')."
+            },
+            "stages": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "number",
+                  "name",
+                  "action",
+                  "thinking",
+                  "feeling",
+                  "pain_points"
+                ],
+                "properties": {
+                  "number": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Stage name (e.g., 'Spark', 'Complexity wall')."
+                  },
+                  "action": {
+                    "type": "string",
+                    "description": "What the user does at this stage."
+                  },
+                  "thinking": {
+                    "type": "string",
+                    "description": "What the user is thinking."
+                  },
+                  "feeling": {
+                    "type": "string",
+                    "description": "What the user is feeling."
+                  },
+                  "pain_points": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Pain points experienced at this stage."
+                  }
+                }
+              }
+            },
+            "emotional_arc": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Sequence of dominant emotions across the journey."
+            }
+          }
+        },
+        "opportunity_areas": {
+          "type": "array",
+          "description": "Where the product can intervene to improve the journey.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "Where in the journey this opportunity exists."
+              },
+              "description": {
+                "type": "string",
+                "description": "What the product can do at this point."
+              }
+            }
+          }
+        },
+        "desired_journey": {
+          "type": "object",
+          "description": "The ideal journey with the solution in place.",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "stages": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "number",
+                  "name",
+                  "action",
+                  "thinking",
+                  "feeling"
+                ],
+                "properties": {
+                  "number": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "action": {
+                    "type": "string"
+                  },
+                  "thinking": {
+                    "type": "string"
+                  },
+                  "feeling": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "emotional_arc": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Sequence of dominant emotions across the desired journey."
+            }
+          }
+        },
+        "summary": {
+          "type": "string",
+          "description": "Key insight from comparing the current and desired journeys \u2014 what must change and why."
+        }
+      }
+    }
+  }
+}

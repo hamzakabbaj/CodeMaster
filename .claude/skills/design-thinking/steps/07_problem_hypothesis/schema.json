@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 6 \u2014 Problem Hypothesis / Statement",
+  "description": "Craft a focused problem statement that frames the core challenge from the user's perspective. Use formats like '[User] needs [need] because [insight]'.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "problem_statement",
+        "breakdown",
+        "assumptions"
+      ],
+      "properties": {
+        "problem_statement": {
+          "type": "string",
+          "description": "The full problem statement as a single sentence."
+        },
+        "breakdown": {
+          "type": "object",
+          "description": "Decomposition of the problem statement into its components.",
+          "properties": {
+            "user": {
+              "type": "string",
+              "description": "Who is the user? (e.g., 'Solo technical creator')"
+            },
+            "need": {
+              "type": "string",
+              "description": "What does the user need?"
+            },
+            "insight": {
+              "type": "string",
+              "description": "Why? The underlying insight or cause."
+            }
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Testable assumptions embedded in the hypothesis \u2014 what must be true for the problem statement to hold."
+        }
+      }
+    }
+  }
+}

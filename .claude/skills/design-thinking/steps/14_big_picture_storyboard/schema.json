@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 13 \u2014 Big Picture Storyboard",
+  "description": "Create a broad narrative showing how the user discovers, engages with, and benefits from the solution in their real-world context.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "frames"
+      ],
+      "properties": {
+        "frames": {
+          "type": "array",
+          "description": "6-8 storyboard frames illustrating the overall experience.",
+          "items": {
+            "type": "object",
+            "required": [
+              "number",
+              "scene",
+              "action",
+              "narration"
+            ],
+            "properties": {
+              "number": {
+                "type": "integer",
+                "description": "Frame number."
+              },
+              "scene": {
+                "type": "string",
+                "description": "Visual description of the scene (setting, context)."
+              },
+              "action": {
+                "type": "string",
+                "description": "What the user is doing in this frame."
+              },
+              "narration": {
+                "type": "string",
+                "description": "What the user is thinking or the narrative text."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

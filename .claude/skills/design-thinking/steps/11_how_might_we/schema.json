@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 10 \u2014 How Might We",
+  "description": "Reframe pain points and insights as opportunity questions to spark creative thinking. Each HMW question should be broad enough to allow multiple solutions but narrow enough to be actionable.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "questions",
+        "priority"
+      ],
+      "properties": {
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "question",
+              "category"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "Question number."
+              },
+              "question": {
+                "type": "string",
+                "description": "The HMW question (e.g., 'How might we prevent scope creep by...')."
+              },
+              "category": {
+                "type": "string",
+                "description": "Thematic category (e.g., 'context', 'ux', 'architecture', 'quality')."
+              }
+            }
+          },
+          "description": "Bank of HMW opportunity questions."
+        },
+        "priority": {
+          "type": "string",
+          "description": "Which questions are highest priority for the MVP and why."
+        }
+      }
+    }
+  }
+}

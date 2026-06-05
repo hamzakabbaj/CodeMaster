@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 19 \u2014 Gather Insights",
+  "description": "Synthesize usability findings into categorized insights, prioritized design changes, and an iteration decision. Closes the Design Thinking loop by defining what to rework before moving to Technical Design.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "insights",
+        "design_changes",
+        "next_iteration"
+      ],
+      "properties": {
+        "insights": {
+          "type": "array",
+          "description": "Key learnings from the usability study.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "finding",
+              "category",
+              "impact"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "finding": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "works_well",
+                  "needs_change",
+                  "new_opportunity"
+                ]
+              },
+              "impact": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "evidence": {
+                "type": "string",
+                "description": "Which sessions or findings support this insight."
+              }
+            }
+          }
+        },
+        "design_changes": {
+          "type": "array",
+          "description": "Prioritized changes to make before moving to Technical Design.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "change",
+              "priority",
+              "affects"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "change": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "affects": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Which screens or components this change impacts."
+              },
+              "related_insight_ids": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "next_iteration": {
+          "type": "object",
+          "required": [
+            "loop_back_to",
+            "rationale",
+            "scope"
+          ],
+          "properties": {
+            "loop_back_to": {
+              "type": "string",
+              "description": "Which phase or step to return to for the next iteration."
+            },
+            "rationale": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string",
+              "description": "What specifically to rework in the next iteration."
+            }
+          }
+        }
+      }
+    }
+  }
+}

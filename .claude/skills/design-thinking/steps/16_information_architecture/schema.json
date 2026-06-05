@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 15 \u2014 Information Architecture",
+  "description": "Map the application's screens, regions, navigation patterns, content hierarchy, and platform constraints. Separates UI structure (screens/regions) from content structure (what fills them) and movement patterns (how users navigate).",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "screens",
+        "navigation",
+        "content_hierarchy",
+        "platform"
+      ],
+      "properties": {
+        "screens": {
+          "type": "array",
+          "description": "Every distinct view the user can see. Each screen has layout regions and named states.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "purpose",
+              "regions"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier used in navigation references."
+              },
+              "name": {
+                "type": "string",
+                "description": "Display name of the screen."
+              },
+              "purpose": {
+                "type": "string",
+                "description": "What the user accomplishes on this screen."
+              },
+              "layout": {
+                "type": "string",
+                "description": "Layout structure (e.g. grid areas, panel arrangement)."
+              },
+              "regions": {
+                "type": "array",
+                "description": "Layout zones within this screen.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "content"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Region name (e.g. Top Bar, Left Sidebar)."
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "What this region contains."
+                    },
+                    "interactions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Key user interactions within this region."
+                    }
+                  }
+                }
+              },
+              "states": {
+                "type": "array",
+                "description": "Distinct visual/functional states of this screen.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "state",
+                    "description"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "description": "State name."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "What the user sees in this state."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "navigation": {
+          "type": "array",
+          "description": "How users move between screens and within screens. Structural patterns, not behavioral flows (those are in Step 12).",
+          "items": {
+            "type": "object",
+            "required": [
+              "from",
+              "to",
+              "trigger"
+            ],
+            "properties": {
+              "from": {
+                "type": "string",
+                "description": "Source screen id."
+              },
+              "to": {
+                "type": "string",
+                "description": "Destination screen id."
+              },
+              "trigger": {
+                "type": "string",
+                "description": "What the user does to navigate."
+              }
+            }
+          }
+        },
+        "content_hierarchy": {
+          "type": "array",
+          "description": "Content sections that populate the workspace. Separated from UI structure \u2014 describes what fills the screens, not how the screens are laid out.",
+          "items": {
+            "type": "object",
+            "required": [
+              "section",
+              "description"
+            ],
+            "properties": {
+              "section": {
+                "type": "string",
+                "description": "Section name matching a sidebar panel."
+              },
+              "description": {
+                "type": "string",
+                "description": "What this section contains and how it's structured."
+              },
+              "groups": {
+                "type": "array",
+                "description": "Logical groupings within this section (e.g. phases within Design Thinking).",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Steps or entries within this group."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "terminology": {
+          "type": "array",
+          "description": "Key terms used in the UI and their definitions. Establishes consistent vocabulary.",
+          "items": {
+            "type": "object",
+            "required": [
+              "term",
+              "definition"
+            ],
+            "properties": {
+              "term": {
+                "type": "string"
+              },
+              "definition": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "platform": {
+          "type": "object",
+          "description": "Platform constraints and responsive behavior.",
+          "required": [
+            "type",
+            "min_width"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Application type (e.g. desktop, web, mobile)."
+            },
+            "framework": {
+              "type": "string",
+              "description": "UI framework (e.g. Electron, browser)."
+            },
+            "min_width": {
+              "type": "integer",
+              "description": "Minimum supported window width in pixels."
+            },
+            "breakpoints": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "range": {
+                    "type": "string",
+                    "description": "Pixel range (e.g. '>= 1280px')."
+                  },
+                  "behavior": {
+                    "type": "string",
+                    "description": "Layout behavior at this breakpoint."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

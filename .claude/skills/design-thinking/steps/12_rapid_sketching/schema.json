@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 11 \u2014 Rapid Sketching",
+  "description": "Quick, low-effort visual explorations of potential solutions. Techniques include Crazy 8s, sketch storms, and brainstorming sessions. Converge on the best ideas.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "concepts",
+        "selected_concept"
+      ],
+      "properties": {
+        "concepts": {
+          "type": "array",
+          "description": "Explored solution concepts before converging.",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "description",
+              "verdict",
+              "selected"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Concept name (e.g., 'Chat-first with structured sidebar')."
+              },
+              "description": {
+                "type": "string",
+                "description": "How this concept works."
+              },
+              "verdict": {
+                "type": "string",
+                "description": "Evaluation \u2014 why it was selected or rejected."
+              },
+              "selected": {
+                "type": "boolean",
+                "description": "Whether this concept was chosen."
+              }
+            }
+          }
+        },
+        "selected_concept": {
+          "type": "object",
+          "description": "Deep-dive on the selected concept.",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "how_it_works": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Step-by-step breakdown of how the selected concept works."
+            },
+            "key_mechanisms": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "Core mechanisms that make the concept work (e.g., confirmation mode, version history)."
+            },
+            "ui_elements": {
+              "type": "object",
+              "properties": {
+                "desktop": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Key UI elements for desktop."
+                },
+                "mobile": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Key UI elements for mobile."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

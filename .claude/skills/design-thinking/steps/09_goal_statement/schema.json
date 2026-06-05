@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Step 8 \u2014 Goal Statement",
+  "description": "Define what the product or solution aims to achieve, for whom, and how success will be measured. This anchors ideation in a clear direction.",
+  "type": "object",
+  "required": [
+    "content"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "required": [
+        "goal_statement",
+        "success_metrics",
+        "mvp_scope",
+        "non_goals"
+      ],
+      "properties": {
+        "goal_statement": {
+          "type": "string",
+          "description": "SMART goal statement: 'Our product will [X] that lets [Y] by [Z]'."
+        },
+        "success_metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "metric": {
+                "type": "string",
+                "description": "What is being measured."
+              },
+              "target": {
+                "type": "string",
+                "description": "Target value."
+              },
+              "timeframe": {
+                "type": "string",
+                "description": "When this should be achieved."
+              }
+            }
+          },
+          "description": "Measurable success criteria."
+        },
+        "mvp_scope": {
+          "type": "string",
+          "description": "What is included (and excluded) in the MVP."
+        },
+        "non_goals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Explicit statements of what the product will NOT do \u2014 prevents scope creep."
+        }
+      }
+    }
+  }
+}
