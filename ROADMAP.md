@@ -123,6 +123,7 @@
 - [x] `CM-53` — Greenfield: add Step 2 **System Design** (6-step arc) + the `blueprint/` structured project record
 - [x] `CM-54` — Adapt `design-thinking` + `technical-design` skills: prune React layer, add `Write`, repoint output to `blueprint/`
 - [x] `CM-55` — Convert `examples/etikets/` to a worked JSON `blueprint/` (real import of design-thinking + system-design)
+- [ ] `CM-56` — Harden blueprint skills: fix guide paths (C), align design-thinking step numbering (G), add schema-conformance CI rung (D)
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 
