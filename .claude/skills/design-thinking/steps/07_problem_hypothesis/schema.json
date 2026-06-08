@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 6 \u2014 Problem Hypothesis / Statement",
+  "title": "Step 7 \u2014 Problem Hypothesis / Statement",
   "description": "Craft a focused problem statement that frames the core challenge from the user's perspective. Use formats like '[User] needs [need] because [insight]'.",
   "type": "object",
   "required": [

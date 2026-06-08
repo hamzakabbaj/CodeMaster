@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 14 \u2014 Close-Up Storyboard",
+  "title": "Step 15 \u2014 Close-Up Storyboard",
   "description": "Zoom into specific interactions within the product. Detail the screen-by-screen or moment-by-moment experience for key user flows.",
   "type": "object",
   "required": [

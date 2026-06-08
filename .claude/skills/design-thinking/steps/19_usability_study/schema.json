@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 18 \u2014 Usability Study",
+  "title": "Step 19 \u2014 Usability Study",
   "description": "Execute test scenarios against wireframes. Record walkthrough sessions with observations and confusion points, then synthesize into prioritized usability findings linked to specific screens and components.",
   "type": "object",
   "required": [

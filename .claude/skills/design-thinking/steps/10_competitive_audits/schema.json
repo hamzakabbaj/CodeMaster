@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 9 \u2014 Competitive Audits",
+  "title": "Step 10 \u2014 Competitive Audits",
   "description": "Analyze existing solutions in the market \u2014 their strengths, weaknesses, features, and gaps. Identify opportunities to differentiate.",
   "type": "object",
   "required": [

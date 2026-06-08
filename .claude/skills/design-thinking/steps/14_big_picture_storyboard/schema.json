@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 13 \u2014 Big Picture Storyboard",
+  "title": "Step 14 \u2014 Big Picture Storyboard",
   "description": "Create a broad narrative showing how the user discovers, engages with, and benefits from the solution in their real-world context.",
   "type": "object",
   "required": [

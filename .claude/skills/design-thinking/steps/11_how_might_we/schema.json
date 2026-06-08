@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 10 \u2014 How Might We",
+  "title": "Step 11 \u2014 How Might We",
   "description": "Reframe pain points and insights as opportunity questions to spark creative thinking. Each HMW question should be broad enough to allow multiple solutions but narrow enough to be actionable.",
   "type": "object",
   "required": [

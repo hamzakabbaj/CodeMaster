@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 19 \u2014 Gather Insights",
+  "title": "Step 20 \u2014 Gather Insights",
   "description": "Synthesize usability findings into categorized insights, prioritized design changes, and an iteration decision. Closes the Design Thinking loop by defining what to rework before moving to Technical Design.",
   "type": "object",
   "required": [
