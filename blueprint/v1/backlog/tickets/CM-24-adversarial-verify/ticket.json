@@ -1,0 +1,15 @@
+{
+  "id": "CM-24",
+  "title": "adversarial-verify pattern",
+  "epic": "phase-4-orchestration",
+  "type": "task",
+  "status": "done",
+  "slug": "adversarial-verify",
+  "acceptance_criteria": [
+    "Per finding, N skeptics (haiku) each try to REFUTE; default refuted=true when uncertain",
+    "Finding killed if ≥ majority refute; survivors returned",
+    "Prevents plausible-but-wrong findings from surviving"
+  ],
+  "goal": "Bake the adversarial-verify pattern (docs/05) into the review-board: every finding is challenged by skeptics; only survivors are reported.",
+  "notes": "Nested `parallel` (skeptics) inside the pipeline verify stage. Implemented in `review-board.mjs`."
+}

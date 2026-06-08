@@ -36,6 +36,9 @@ jobs:
       - name: Blueprint schema conformance
         run: node scripts/validate-blueprint.js
 
+      - name: ROADMAP.md in sync with JSON backlog
+        run: python3 scripts/gen_roadmap.py --check
+
       - name: Markdown links
         run: python3 scripts/check_links.py
 

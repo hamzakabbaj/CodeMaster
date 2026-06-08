@@ -1,0 +1,11 @@
+{
+  "id": "CM-27",
+  "title": "Bundle agents + hooks + skills + commands + workflows",
+  "epic": "phase-5-package-as-plugin-track-b",
+  "type": "task",
+  "status": "todo",
+  "slug": "bundle-agents-hooks-skills-commands-workflows",
+  "acceptance_criteria": [],
+  "goal": "Bundle agents + hooks + skills + commands + workflows",
+  "notes": "Roadmap line-item migrated as a stub; never elaborated as a folder ticket."
+}

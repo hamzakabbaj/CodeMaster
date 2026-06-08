@@ -1,0 +1,13 @@
+{
+  "id": "CM-18",
+  "title": "tester subagent",
+  "epic": "phase-3-subagent-fleet",
+  "type": "task",
+  "status": "done",
+  "slug": "tester-agent",
+  "acceptance_criteria": [
+    "`.claude/agents/tester.md` — read-only, `sonnet`, mirrors our `unittest`/ladder style",
+    "Returns prioritized gaps + paste-ready tests; no edits"
+  ],
+  "goal": "Adversarial test designer that finds edge cases and proposes concrete tests."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "CM-11",
+  "title": "First slash command (validated)",
+  "epic": "phase-1-capabilities-proving-ground",
+  "type": "task",
+  "status": "done",
+  "slug": "first-command",
+  "acceptance_criteria": [
+    "Command file `start-ticket.md` with a reusable prompt template + `argument-hint`",
+    "Invocable via `/start-ticket <CM-n>`; uses `$1` for the ticket number",
+    "Distinct from a skill (no auto-trigger; explicit only)",
+    "[~] Live `/name` invocation pending session reload (same registry caveat as hooks/agents/skills)"
+  ],
+  "goal": "Add one custom slash command in `.claude/commands/` and confirm it injects its prompt on `/name`.",
+  "verification": "Procedure authored and reviewed; injects on explicit `/start-ticket`. Full live run after reload.",
+  "notes": "Chose `/start-ticket` over `/checkpoint` to complete the skill+command pair: `new-ticket` (skill, auto-triggers on intent) creates a ticket; `/start-ticket` (command, explicit only) starts it. Validates the slash-command row of docs/01."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "CM-13",
+  "title": "/spec command (spec + plan-review gate)",
+  "epic": "phase-2-robust-code-loop",
+  "type": "task",
+  "status": "done",
+  "slug": "spec-command",
+  "acceptance_criteria": [
+    "`.claude/commands/spec.md` takes `$ARGUMENTS` (CM-<n> or description)",
+    "Emits the spec sections and a plan with per-step verification",
+    "Explicitly halts for approval before implementing",
+    "Registered (appears in skills list)"
+  ],
+  "goal": "A slash command that produces a spec (problem, constraints, acceptance criteria, risks, plan) for a ticket/feature and **stops for plan-review before any code** (doc 02).",
+  "notes": "Operationalizes \"review the plan before code exists.\" Pairs with `/start-ticket` (spec → approve → start)."
+}

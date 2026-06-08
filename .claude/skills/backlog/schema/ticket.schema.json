@@ -3,7 +3,7 @@
   "title": "Backlog — Ticket",
   "description": "One structured, vertically-sliced ticket from the Step-4 backlog. Meets the Definition of Ready: identity, testable acceptance criteria, known dependencies, and a verification approach. A ticket carries either a `goal` (task) or a `story` (story).",
   "type": "object",
-  "required": ["id", "title", "epic", "type", "status", "spec", "depends_on", "blocks", "acceptance_criteria", "verification"],
+  "required": ["id", "title", "epic", "type", "status", "acceptance_criteria"],
   "anyOf": [
     { "required": ["goal"] },
     { "required": ["story"] }
@@ -14,8 +14,8 @@
     "epic": { "type": "string", "description": "The epic id this ticket belongs to (matches roadmap.json)." },
     "type": {
       "type": "string",
-      "enum": ["task", "story", "spike", "fix"],
-      "description": "Ticket type. task -> uses `goal`; story -> uses `story`."
+      "enum": ["task", "story", "spike", "fix", "chore", "docs", "ci", "refactor"],
+      "description": "Ticket type. task -> uses `goal`; story -> uses `story`. (spec / depends_on / blocks / verification are recommended for greenfield tickets but optional, so CodeMaster's own meta-repo tickets validate too.)"
     },
     "subtype": {
       "type": "string",
@@ -52,6 +52,9 @@
       "type": "object",
       "description": "Optional inline Plan beat for gnarly tickets — approach, ordered steps, and risks. Captured early; shape is intentionally loose."
     },
-    "notes": { "type": "string", "description": "Optional supplementary notes, slicing rationale, or non-goals." }
+    "notes": { "type": "string", "description": "Optional supplementary notes, slicing rationale, or non-goals." },
+    "slug": { "type": "string", "description": "Optional kebab-case slug used for the build-time branch/folder name." },
+    "evidence": { "type": "string", "description": "Optional proof-of-done — pointers to the merged PR / green CI run / tests (small text)." },
+    "plan_md": { "type": "string", "description": "Optional inline Plan beat as raw markdown (migrated from a ticket's plan.md)." }
   }
 }

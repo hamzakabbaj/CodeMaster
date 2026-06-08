@@ -1,0 +1,11 @@
+{
+  "id": "CM-3",
+  "title": "`backlog/` structure: epic + ticket templates, DoR/DoD",
+  "epic": "phase-0-delivery-infrastructure",
+  "type": "task",
+  "status": "done",
+  "slug": "backlog-structure-epic-ticket-templates-dor",
+  "acceptance_criteria": [],
+  "goal": "`backlog/` structure: epic + ticket templates, DoR/DoD",
+  "notes": "Roadmap line-item migrated as a stub; never elaborated as a folder ticket."
+}

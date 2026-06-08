@@ -1,0 +1,16 @@
+{
+  "id": "CM-35",
+  "title": "Enable branch protection on main",
+  "epic": "phase-0-delivery-infrastructure",
+  "type": "task",
+  "status": "blocked",
+  "slug": "enable-branch-protection",
+  "acceptance_criteria": [
+    "A versioned, idempotent script applies the protection via `gh api` (`scripts/setup-branch-protection.sh`)",
+    "`main` requires a PR and the `Quality gates` status check before merge — **blocked**",
+    "Direct pushes / force-pushes / deletion of `main` are blocked — **blocked**",
+    "Protection verified by reading it back via `gh api` — **blocked**"
+  ],
+  "goal": "Make the PR + green-CI rule actually enforced by GitHub (block direct pushes to `main`), not just documented in CONTRIBUTING.",
+  "notes": "Solo-dev tuning baked into the script: 0 required approvals (PR required, no second reviewer); `enforce_admins` off so we can recover if CI wedges. Reusable for Track B/C repos."
+}

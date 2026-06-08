@@ -1,0 +1,17 @@
+{
+  "id": "CM-16",
+  "title": "Run the robust-code loop on a tiny sample feature",
+  "epic": "phase-2-robust-code-loop",
+  "type": "task",
+  "status": "done",
+  "slug": "sample-feature",
+  "acceptance_criteria": [
+    "`roadmap_stats.py` with a pure `count_tickets(text)` / `summary(text)` core + CLI",
+    "`tests/test_roadmap_stats.py` covering done/open/empty/non-ticket/summary (5 tests)",
+    "`ci.sh` + CI gained a unit-test rung (now 5 rungs)",
+    "Full ladder green; a deliberately failing test stopped the ladder at rung 2",
+    "Ran the loop spec→implement→verify→critique (live output in PR)"
+  ],
+  "goal": "Exercise the full loop (spec → plan → implement → verify → critique) on a real, tiny feature with unit tests — and fill the ladder's test rung (the CM-12 extension point) with actual tests.",
+  "notes": "First real code in the repo. Proves doc 02 end to end and activates the test rung for Track B/C."
+}

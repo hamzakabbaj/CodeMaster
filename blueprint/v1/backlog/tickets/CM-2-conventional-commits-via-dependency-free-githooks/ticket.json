@@ -1,0 +1,11 @@
+{
+  "id": "CM-2",
+  "title": "Conventional Commits via dependency-free `.githooks/commit-msg` + `core.hooksPath` (no commitlint/Node)",
+  "epic": "phase-0-delivery-infrastructure",
+  "type": "task",
+  "status": "done",
+  "slug": "conventional-commits-via-dependency-free-githooks",
+  "acceptance_criteria": [],
+  "goal": "Conventional Commits via dependency-free `.githooks/commit-msg` + `core.hooksPath` (no commitlint/Node)",
+  "notes": "Roadmap line-item migrated as a stub; never elaborated as a folder ticket."
+}

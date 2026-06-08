@@ -1,0 +1,16 @@
+{
+  "id": "CM-14",
+  "title": "checkpoint helper (green-gated commit)",
+  "epic": "phase-2-robust-code-loop",
+  "type": "task",
+  "status": "done",
+  "slug": "checkpoint",
+  "acceptance_criteria": [
+    "`scripts/checkpoint.sh \"<subject>\"` runs `ci.sh`, then commits on green",
+    "Refuses on `main`; no-ops on a clean tree; requires a subject",
+    "Rollback path documented in the header (restore / reset)",
+    "shellcheck-clean"
+  ],
+  "goal": "A helper that commits the current work as a checkpoint **only if the verification ladder passes** — checkpoint on green, never on red (doc 02).",
+  "notes": "Rollback kept as documented git commands (destructive — prefer explicit over a script)."
+}

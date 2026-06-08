@@ -5,7 +5,7 @@ argument-hint: <CM-number | short feature description>
 
 Produce a spec and plan for: **$ARGUMENTS**. Then STOP for review — do not write code until the plan is approved (doc 02: review the plan before code exists).
 
-1. If `$ARGUMENTS` is a `CM-<n>`, read `backlog/tickets/CM-$ARGUMENTS-*/README.md` for goal + acceptance criteria. Otherwise treat it as a feature description. (A focused per-ticket spec can be saved as `plan.md` in that ticket's folder.)
+1. If `$ARGUMENTS` is a `CM-<n>`, read `blueprint/v1/backlog/tickets/CM-$ARGUMENTS-*/ticket.json` for goal + acceptance criteria. Otherwise treat it as a feature description. (A focused per-ticket spec can be saved as `plan.md` in that ticket's folder.)
 2. Write the spec, concise:
    - **Problem / intent** — what and why, in 1–2 sentences.
    - **Constraints** — invariants from CLAUDE.md/docs that apply; what must NOT change.

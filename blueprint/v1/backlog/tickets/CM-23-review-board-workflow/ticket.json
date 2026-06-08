@@ -1,0 +1,15 @@
+{
+  "id": "CM-23",
+  "title": "review-board workflow",
+  "epic": "phase-4-orchestration",
+  "type": "task",
+  "status": "done",
+  "slug": "review-board-workflow",
+  "acceptance_criteria": [
+    "`.claude/workflows/review-board.mjs` — `pipeline` over review dimensions",
+    "Self-contained (inline role prompts) so it runs without the fleet registered and is portable",
+    "Cost-routed (sonnet review, haiku skeptics), bounded (capped findings/dimension)"
+  ],
+  "goal": "A deterministic workflow that orchestrates a multi-dimension review (the fleet's roles as a pipeline) over a target.",
+  "notes": "Materializes docs/05. Pairs with CM-24 (adversarial verify) and CM-25 (live run)."
+}

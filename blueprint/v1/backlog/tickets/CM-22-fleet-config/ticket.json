@@ -1,0 +1,16 @@
+{
+  "id": "CM-22",
+  "title": "scoped tools + model routing + memory convention",
+  "epic": "phase-3-subagent-fleet",
+  "type": "task",
+  "status": "done",
+  "slug": "fleet-config",
+  "acceptance_criteria": [
+    "Least-privilege tools per agent (only `reviewer` has Bash; none can Edit/Write)",
+    "Model routing per docs/04 (opus: architect, security; sonnet: others)",
+    "Memory **convention** (read-only `.claude/agents/memory/<role>.md`; main thread writes) — honestly labeled as not a built-in feature",
+    "`.claude/agents/README.md` documents the fleet (tools/model/memory) + registration caveat"
+  ],
+  "goal": "Apply the cross-cutting fleet concerns and document them.",
+  "notes": "Memory mechanic unverified in Claude Code → convention, not a claimed feature. Orchestration of the fleet is Phase 4."
+}

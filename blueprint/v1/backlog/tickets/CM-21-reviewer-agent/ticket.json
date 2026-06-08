@@ -1,0 +1,13 @@
+{
+  "id": "CM-21",
+  "title": "reviewer subagent",
+  "epic": "phase-3-subagent-fleet",
+  "type": "task",
+  "status": "done",
+  "slug": "reviewer-agent",
+  "acceptance_criteria": [
+    "`.claude/agents/reviewer.md` — Read/Grep/Glob + Bash (read-only git), `sonnet`",
+    "Returns approve/block + checklist (must-fix vs nit); no edits/commits/pushes"
+  ],
+  "goal": "PR reviewer that checks the diff against our conventions + Definition of Done."
+}
