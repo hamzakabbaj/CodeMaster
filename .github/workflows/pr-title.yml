@@ -1,0 +1,24 @@
+name: PR title
+
+# Squash-merge uses the PR title as the `main` commit subject, where the
+# commit-msg gate validates it on the push event. Validate it here too — on the
+# PR, before merge — by running the SAME hook on the title. Stops a bad title
+# from turning `main` red after merge (the CM-57 / CM-59 failure mode).
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  conventional-title:
+    name: PR title is a Conventional Commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate PR title with the commit-msg hook
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          chmod +x .githooks/commit-msg
+          printf '%s\n' "$PR_TITLE" > /tmp/pr_title
+          .githooks/commit-msg /tmp/pr_title

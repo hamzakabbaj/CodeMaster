@@ -32,7 +32,7 @@ chore(ci): add markdown link checker
 
 - One PR per ticket (Phase 1+). Interdependent bootstrap may batch an epic.
 - PR must: link the ticket, describe what/why, show test/CI evidence, state rollback.
-- **The PR title must itself be a Conventional Commit** (`<type>(<scope>): <subject>`). Squash-merge uses the PR title as the `main` commit subject, where the `commit-msg` gate validates it on the `push` event — a non-conventional title turns `main` red *after* merge even when the PR's own CI was green.
+- **The PR title must itself be a valid Conventional Commit** — `<type>(<scope>): <subject>`, **subject ≤ 72 chars** (the ` (#N)` GitHub appends doesn't count). Squash-merge uses the PR title as the `main` commit subject, so a bad title (wrong type *or* too long) turns `main` red *after* merge even when the PR's own CI was green. Enforced before merge by the **`PR title`** check (`.github/workflows/pr-title.yml`), which runs the same `commit-msg` hook on the title.
 - **Green CI required** before merge. Automated review first, human review second.
 - Squash-merge to keep `main` history linear and readable.
 
