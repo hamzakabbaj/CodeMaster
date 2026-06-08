@@ -15,9 +15,10 @@ This is **greenfield Step 5** — the robust-code loop (doc 02). It runs after `
 - You have the epic plan (`blueprint/v1/specs/`) the ticket was sliced from, and the ticket body (`blueprint/v1/backlog/tickets/CM-<n>-<slug>/ticket.json`).
 
 ## Beat 1 — Plan the implementation (ALWAYS)
-Even if it's a sentence. Fidelity scales with **risk × uncertainty**:
+Even if it's a sentence. Fidelity scales with **risk × uncertainty** — and the plan has two altitudes that can each kick in:
 - **Most tickets** inherit the epic plan from Step 3 — a short in-head sketch is enough.
-- **Gnarly** ticket → run `/spec CM-<n>` at ticket altitude and save it as `plan.md` beside the ticket.
+- **Gnarly** (logic/architecture uncertainty) → run `/spec CM-<n>` at ticket altitude and save it as `plan.md` beside the ticket.
+- **Needs a UI/UX choice** (the ticket sets `needs_design: true`, **or** you judge it implies an open visual/interaction decision) → run `/design-options CM-<n>`: it generates a 2–3 variant `.html` gallery in gitignored `prototypes/` via the `frontend-design` skill, **stops for the user to pick**, and records the choice in `plan.md`. The chosen variant is then built **for real** with the project's components. Skip it when the Step-2 design system already dictates the look.
 
 Sketch the change across layers (backend / frontend / data), the files each touches, the order, and which **ladder rung** verifies each — test-first where it fits. Use **plan mode** to attack the approach before code exists.
 
