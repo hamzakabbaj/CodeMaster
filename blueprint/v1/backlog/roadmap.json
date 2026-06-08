@@ -24,7 +24,8 @@
         "CM-50",
         "CM-62",
         "CM-63",
-        "CM-64"
+        "CM-64",
+        "CM-65"
       ],
       "description": "Dogfood [doc 03](docs/03-delivery-process.md): the process becomes both product and method.",
       "exit": "✅ repo conventions + hooks + CI + backlog in place; CI is *real* (live remote)."
@@ -236,7 +237,8 @@
     "CM-61": "— Add CodeMaster's own `blueprint/` (navigational index mapping docs/ROADMAP/backlog to the 6-step model)",
     "CM-62": "— Migrate the backlog to JSON as the source of truth (folder-per-ticket); generate ROADMAP.md from it",
     "CM-63": "— Generate a synced README.md next to each ticket.json (GitHub-rendered ticket views)",
-    "CM-64": "— Cite the canonical DoR in the backlog skill instead of paraphrasing it"
+    "CM-64": "— Cite the canonical DoR in the backlog skill instead of paraphrasing it",
+    "CM-65": "— Add a feature-intake skill: triage an out-of-the-blue request to the right altitude"
   },
   "decisions_log": [
     "- **2026-06-08** — Backlog migrated to JSON as the source of truth (CM-62): `blueprint/v1/backlog/roadmap.json` + folder-per-ticket `tickets/CM-<n>-<slug>/ticket.json` (README.md → ticket.json; plan/evidence kept as files). `ROADMAP.md` is now **generated** by `scripts/gen_roadmap.py` (pre-commit hook + CI sync rung), and the blueprint conformance gate validates every ticket. Supersedes the 2026-06-05 decision to keep CodeMaster's own backlog in markdown — CodeMaster now fully eats its own dogfood. `new-ticket` / `/start-ticket` / `/spec` rewired to the JSON; `next-number.sh` unchanged (greps `CM-<n>`).",
