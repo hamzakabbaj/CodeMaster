@@ -2,7 +2,7 @@
 
 - **Epic:** Phase 0 — Delivery Infrastructure
 - **Type:** docs
-- **Status:** 🟦 in progress
+- **Status:** ✅ done
 - **Branch:** `feat/CM-57-conventional-pr-titles`
 
 ## Goal
