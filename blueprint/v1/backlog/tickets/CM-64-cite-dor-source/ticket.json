@@ -3,7 +3,7 @@
   "title": "Cite the canonical DoR in the backlog skill instead of paraphrasing it",
   "epic": "phase-0-delivery-infrastructure",
   "type": "chore",
-  "status": "in_progress",
+  "status": "done",
   "slug": "cite-dor-source",
   "goal": "Make the backlog skill's step-5 Definition of Ready defer to its single source (backlog/README.md) so the two cannot drift.",
   "acceptance_criteria": [
