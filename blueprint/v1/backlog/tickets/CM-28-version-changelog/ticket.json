@@ -1,0 +1,11 @@
+{
+  "id": "CM-28",
+  "title": "Version + changelog",
+  "epic": "phase-5-package-as-plugin-track-b",
+  "type": "task",
+  "status": "todo",
+  "slug": "version-changelog",
+  "acceptance_criteria": [],
+  "goal": "Version + changelog",
+  "notes": "Roadmap line-item migrated as a stub; never elaborated as a folder ticket."
+}

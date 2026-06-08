@@ -1,0 +1,18 @@
+{
+  "id": "CM-42",
+  "title": "\"How Big Tech Engineering Works\" page",
+  "epic": "epic-d-docs-site-reference-showcase",
+  "type": "task",
+  "status": "done",
+  "slug": "big-tech-page",
+  "acceptance_criteria": [
+    "New page `docs/site/bigtech.html` (thin shell) + `docs/site/data/bigtech.js` (content blocks)",
+    "Added to global nav in `data/site.js`",
+    "Covers: team topology (squads/platform/enabling), the engineering roles & what each owns, the delivery ceremonies, ownership/on-call, and the IC career ladder — distinct from `fleet.html` (which maps roles → Claude subagents)",
+    "Closes with how this org model inspires CodeMaster's fleet/process (the bridge)",
+    "Renders over `file://` with zero console errors; CI ladder green (incl. JS rung)"
+  ],
+  "goal": "Add a docs-site page documenting how Big-Tech engineering organizations actually work — team topologies, roles, ceremonies, ownership, and the career ladder — as context and inspiration for future CodeMaster improvements.",
+  "verification": "chrome-devtools MCP loads `file://.../docs/site/bigtech.html` → no console errors, nav shows active item, blocks render. `node --check` clean on the new JS. Full 6-rung ladder green.",
+  "notes": "Reuses existing block types (hero, cards, table, steps, flow, ladder, callout) — no renderer changes expected. Source/inspiration: `docs/04-team-profiles.md` plus general Big-Tech org practice. Site data is its own curated source (per Epic D decision)."
+}

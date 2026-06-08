@@ -1,0 +1,17 @@
+{
+  "id": "CM-61",
+  "title": "Add CodeMaster's own blueprint/ (navigational index)",
+  "epic": "epic-d-docs-site-reference-showcase",
+  "type": "docs",
+  "status": "done",
+  "slug": "codemaster-blueprint",
+  "acceptance_criteria": [
+    "`blueprint/` exists with a top `README.md`, `v1/version.json`, and module READMEs for `design-thinking/`, `system-design/`, `specs/`, `backlog/`.",
+    "Each module README points to where CodeMaster's real artifact lives (no fabricated design-thinking content).",
+    "The backlog module is a **pointer** to the markdown backlog (two-serializations decision), not a JSON duplicate.",
+    "`scripts/ci.sh` green — all relative markdown links resolve."
+  ],
+  "goal": "Give CodeMaster's meta-repo its own `blueprint/` folder mapped to the greenfield 6-step model — mostly pointers, because the repo predates the blueprint skills and its design-of-record already lives in `docs/`, `ROADMAP.md`, and `backlog/tickets/`.",
+  "verification": "- `ls blueprint/v1/*/README.md` → four module READMEs.\n- `bash scripts/ci.sh` → green (markdown-links rung resolves the new pointers).",
+  "notes": "Requested: \"add blueprint folder for this project even if we don't have design thinking etc.\" CodeMaster bootstrapped itself before the skills existed, so this is honest pointers, not retrofitted design docs. The conformance gate (`validate-blueprint.js`) scans `examples/` only, so this root `blueprint/` carries no schema-backed JSON to validate; if it ever gains real JSON, extend the validator's scan. Did **not** mirror the backlog to JSON — that would contradict the logged two-serializations decision and fork the source of truth."
+}

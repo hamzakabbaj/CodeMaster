@@ -51,7 +51,7 @@ cat "${CLAUDE_SKILL_DIR}/schema/ticket.schema.json"
 - **`type`**: `task` (with a one-sentence `goal`) · `story` (with a `story`: "As a … I want … so that …") · `spike` · `fix`. A ticket carries **either `goal` or `story`** — task uses `goal`, story uses `story`.
 - **`subtype: "enabler"`** marks a task that exists to unblock stories (data model, the riskiest-assumption ticket).
 - **`verification`** names how the ticket is proven — almost always pointing at a ladder rung (e.g. "property tests → test rung").
-- **Flat JSON, not folders.** Step-4 tickets are the *sliced plan*, so they are flat `tickets/<ID>.json`. The folder-per-ticket layout (README/plan/evidence) is the **build-time** representation a ticket takes once it is pulled into work — a different stage, not produced here.
+- **Two ticket shapes; the validator accepts both.** A freshly *sliced* Step-4 ticket can be a flat `tickets/<ID>.json` (the planning slice). Once a ticket is pulled into work it becomes a **folder** `tickets/<ID>-<slug>/ticket.json` carrying its build artifacts as files (`plan.md`, `evidence.md`). CodeMaster's own meta-repo backlog is fully foldered — see `blueprint/v1/backlog/`.
 
 ## Output rules
 

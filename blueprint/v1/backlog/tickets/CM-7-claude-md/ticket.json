@@ -1,0 +1,16 @@
+{
+  "id": "CM-7",
+  "title": "CLAUDE.md with invariants only",
+  "epic": "phase-1-capabilities-proving-ground",
+  "type": "task",
+  "status": "done",
+  "slug": "claude-md",
+  "acceptance_criteria": [
+    "Documents repo purpose, branch/commit rules, where things live",
+    "Points to docs/ and ROADMAP instead of duplicating them",
+    "No procedures (those become skills) and no transient state"
+  ],
+  "goal": "Create a project `CLAUDE.md` holding only always-true invariants (kept short — it's paid every turn).",
+  "verification": "Start a session; confirm Claude follows the invariants without being re-told.",
+  "notes": "Validates the \"CLAUDE.md = invariants\" row of docs/01."
+}

@@ -106,35 +106,49 @@ function isEmptyStub(data) {
   return data !== null && typeof data === 'object' && !Array.isArray(data) && Object.keys(data).length === 0;
 }
 
-// Find every blueprint data.json under examples/*/blueprint/*/{design-thinking,system-design}/*/
-function findDataFiles() {
-  const out = [];
-  const examplesDir = path.join(ROOT, 'examples');
-  if (!fs.existsSync(examplesDir)) return out;
-  for (const proj of fs.readdirSync(examplesDir)) {
-    const bp = path.join(examplesDir, proj, 'blueprint');
-    if (!fs.existsSync(bp)) continue;
-    for (const ver of fs.readdirSync(bp)) {
-      for (const category of ['design-thinking', 'system-design']) {
-        const catDir = path.join(bp, ver, category);
-        if (!fs.existsSync(catDir)) continue;
-        for (const step of fs.readdirSync(catDir)) {
-          const df = path.join(catDir, step, 'data.json');
-          if (fs.existsSync(df)) out.push({ file: df, category, step });
-        }
+// Scan one blueprint/ root (examples/<proj>/blueprint OR the repo-root blueprint/)
+// across its version dirs, collecting design-thinking/system-design data.json and
+// the Step-4 backlog (roadmap.json + tickets/<ID>.json).
+function scanBlueprint(bp, out) {
+  if (!fs.existsSync(bp)) return;
+  for (const ver of fs.readdirSync(bp)) {
+    const verDir = path.join(bp, ver);
+    if (!fs.statSync(verDir).isDirectory()) continue; // skip a README.md at the blueprint root
+    for (const category of ['design-thinking', 'system-design']) {
+      const catDir = path.join(verDir, category);
+      if (!fs.existsSync(catDir)) continue;
+      for (const step of fs.readdirSync(catDir)) {
+        const df = path.join(catDir, step, 'data.json');
+        if (fs.existsSync(df)) out.push({ file: df, category, step });
       }
-      // backlog (Step 4): roadmap.json + tickets/<ID>.json — flat JSON, not per-step folders
-      const backlogDir = path.join(bp, ver, 'backlog');
-      if (fs.existsSync(backlogDir)) {
-        const roadmap = path.join(backlogDir, 'roadmap.json');
-        if (fs.existsSync(roadmap)) out.push({ file: roadmap, category: 'backlog', step: 'roadmap' });
-        const ticketsDir = path.join(backlogDir, 'tickets');
-        if (fs.existsSync(ticketsDir)) {
-          for (const t of fs.readdirSync(ticketsDir)) {
-            if (t.endsWith('.json')) out.push({ file: path.join(ticketsDir, t), category: 'backlog', step: 'ticket' });
+    }
+    const backlogDir = path.join(verDir, 'backlog');
+    if (fs.existsSync(backlogDir)) {
+      const roadmap = path.join(backlogDir, 'roadmap.json');
+      if (fs.existsSync(roadmap)) out.push({ file: roadmap, category: 'backlog', step: 'roadmap' });
+      const ticketsDir = path.join(backlogDir, 'tickets');
+      if (fs.existsSync(ticketsDir)) {
+        for (const entry of fs.readdirSync(ticketsDir)) {
+          const p = path.join(ticketsDir, entry);
+          if (entry.endsWith('.json')) {
+            out.push({ file: p, category: 'backlog', step: 'ticket' }); // flat: tickets/<ID>.json
+          } else if (fs.statSync(p).isDirectory()) {
+            const tj = path.join(p, 'ticket.json'); // foldered: tickets/<ID>-<slug>/ticket.json
+            if (fs.existsSync(tj)) out.push({ file: tj, category: 'backlog', step: 'ticket' });
           }
         }
       }
+    }
+  }
+}
+
+function findDataFiles() {
+  const out = [];
+  scanBlueprint(path.join(ROOT, 'blueprint'), out); // CodeMaster's own meta-repo backlog
+  const examplesDir = path.join(ROOT, 'examples');
+  if (fs.existsSync(examplesDir)) {
+    for (const proj of fs.readdirSync(examplesDir)) {
+      scanBlueprint(path.join(examplesDir, proj, 'blueprint'), out);
     }
   }
   return out;

@@ -1,0 +1,12 @@
+#!/bin/sh
+# Keep ROADMAP.md in sync with the canonical JSON backlog: when any backlog JSON
+# is staged, regenerate ROADMAP.md from it and re-stage it. ROADMAP.md is a
+# GENERATED view — never hand-edit it (source of truth: blueprint/v1/backlog/,
+# generator: scripts/gen_roadmap.py). Activated via core.hooksPath (scripts/setup.sh).
+if git diff --cached --name-only | grep -q '^blueprint/v1/backlog/.*\.json$'; then
+  if command -v python3 >/dev/null 2>&1; then
+    python3 scripts/gen_roadmap.py >/dev/null || exit 1
+    git add ROADMAP.md
+  fi
+fi
+exit 0

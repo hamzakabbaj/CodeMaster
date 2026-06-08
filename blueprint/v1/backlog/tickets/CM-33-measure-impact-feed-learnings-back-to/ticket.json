@@ -1,0 +1,11 @@
+{
+  "id": "CM-33",
+  "title": "Measure impact; feed learnings back to the plugin",
+  "epic": "phase-6-pilot-in-a-real-repo-track-c-gated-future",
+  "type": "task",
+  "status": "todo",
+  "slug": "measure-impact-feed-learnings-back-to",
+  "acceptance_criteria": [],
+  "goal": "Measure impact; feed learnings back to the plugin",
+  "notes": "Roadmap line-item migrated as a stub; never elaborated as a folder ticket."
+}

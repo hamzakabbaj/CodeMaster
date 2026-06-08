@@ -1,0 +1,11 @@
+{
+  "id": "CM-1",
+  "title": "repo already existed (`main` + GitHub remote); added `.gitignore` + branch convention in `CONTRIBUTING.md`",
+  "epic": "phase-0-delivery-infrastructure",
+  "type": "task",
+  "status": "done",
+  "slug": "repo-already-existed-main-github-remote",
+  "acceptance_criteria": [],
+  "goal": "repo already existed (`main` + GitHub remote); added `.gitignore` + branch convention in `CONTRIBUTING.md`",
+  "notes": "Roadmap line-item migrated as a stub; never elaborated as a folder ticket."
+}

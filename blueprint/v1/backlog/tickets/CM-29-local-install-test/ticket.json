@@ -1,0 +1,11 @@
+{
+  "id": "CM-29",
+  "title": "Local install test",
+  "epic": "phase-5-package-as-plugin-track-b",
+  "type": "task",
+  "status": "todo",
+  "slug": "local-install-test",
+  "acceptance_criteria": [],
+  "goal": "Local install test",
+  "notes": "Roadmap line-item migrated as a stub; never elaborated as a folder ticket."
+}

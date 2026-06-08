@@ -1,0 +1,11 @@
+{
+  "id": "CM-5",
+  "title": "`.github/workflows/ci.yml` + `scripts/ci.sh` (JSON, md-links, commit-msg) + `scripts/setup.sh`",
+  "epic": "phase-0-delivery-infrastructure",
+  "type": "task",
+  "status": "done",
+  "slug": "github-workflows-ci-yml-scripts-ci",
+  "acceptance_criteria": [],
+  "goal": "`.github/workflows/ci.yml` + `scripts/ci.sh` (JSON, md-links, commit-msg) + `scripts/setup.sh`",
+  "notes": "Roadmap line-item migrated as a stub; never elaborated as a folder ticket."
+}

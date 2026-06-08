@@ -37,6 +37,7 @@
 - [ ] `CM-35` — Enable branch protection on main ⏸️ blocked (needs Pro/public; script ready, deferred to public/plugin stage)
 - [x] `CM-49` — Folder-per-ticket model (ticket + plan + evidence); migrate tooling + existing tickets
 - [x] `CM-50` — Propagate folder-per-ticket to examples/etikets + the site greenfield doc
+- [x] `CM-62` — Migrate the backlog to JSON as the source of truth (folder-per-ticket); generate ROADMAP.md from it
 
 **Exit:** ✅ repo conventions + hooks + CI + backlog in place; CI is *real* (live remote).
 
@@ -82,7 +83,6 @@
 - [x] `CM-23` — `review-board.mjs`: multi-dimension review pipeline (self-contained, cost-routed, bounded)
 - [x] `CM-24` — Adversarial-verify: N haiku skeptics refute each finding; survivors only
 - [x] `CM-25` — Bounded live run (11 agents): 4 considered → 3 confirmed; **found a real bug** unit tests missed (→ CM-38)
-
 - [x] `CM-38` (fix, from CM-25) — `roadmap_stats.py`: `is_file()` + `try/except OSError`; +3 CLI tests (8 total). Closes the loop the review board opened.
 
 **Exit:** ✅ orchestration demonstrated live; review board ran as a pipeline with adversarial verification and surfaced a genuine correctness bug.
@@ -135,6 +135,7 @@
 ---
 
 ## Decisions log
+- **2026-06-08** — Backlog migrated to JSON as the source of truth (CM-62): `blueprint/v1/backlog/roadmap.json` + folder-per-ticket `tickets/CM-<n>-<slug>/ticket.json` (README.md → ticket.json; plan/evidence kept as files). `ROADMAP.md` is now **generated** by `scripts/gen_roadmap.py` (pre-commit hook + CI sync rung), and the blueprint conformance gate validates every ticket. Supersedes the 2026-06-05 decision to keep CodeMaster's own backlog in markdown — CodeMaster now fully eats its own dogfood. `new-ticket` / `/start-ticket` / `/spec` rewired to the JSON; `next-number.sh` unchanged (greps `CM-<n>`).
 - **2026-06-05** — Greenfield model evolved (CM-53): the arc is now **6 steps** with **System Design** as its own step between Design Thinking and `/spec` (architecture decides ticket boundaries, so it precedes slicing — the big-tech PRD+TDD split). Upstream planning artifacts live in one versioned per-project folder, **`blueprint/`** (`design-thinking/`, `system-design/`, `specs/`, `backlog/`), kept **structured/JSON** to unlock future tooling. Two imported skills (`design-thinking`, `technical-design`) are the engines for Steps 1–2. Reconciliation: a project built *via* CodeMaster uses the JSON `blueprint/` model (to be demonstrated in `examples/etikets/`); CodeMaster's own meta-repo keeps the markdown `new-ticket` backlog for now (avoids ripping up `next-number.sh`/`roadmap_stats.py`/`new-ticket`/`/start-ticket`). Follow-ups: **Ticket B** rewire skills to write into `blueprint/`; **Ticket C** convert `examples/etikets/` to the JSON blueprint.
 - **2026-06-01** — Docs site: chose data-driven client-rendered site (JS data + component renderer) over a markdown generator — user wants flexible layouts (cards) + Claude-editable content. `file://` forces classic `<script>` globals (no fetch/ESM). Site content is a separate curated source from the markdowns (accepted tradeoff). Aesthetic: modern dark product.
 - **2026-05-29** — Endgame = Both-in-sequence (standalone → plugin → install). Pilot = CodeMaster only. Ceremony = full Big-Tech.

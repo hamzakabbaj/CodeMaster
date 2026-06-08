@@ -1,0 +1,18 @@
+{
+  "id": "CM-12",
+  "title": "Verification ladder (lint → structure → commit), local = CI",
+  "epic": "phase-2-robust-code-loop",
+  "type": "task",
+  "status": "done",
+  "slug": "verification-ladder",
+  "acceptance_criteria": [
+    "shellcheck rung added; passes clean on all 6 scripts (and on `ci.sh` itself)",
+    "`ci.sh` reads as an explicit 4-rung fail-fast ladder; verified it stops at rung 1 on a deliberate shellcheck violation",
+    "CI runs shellcheck (rung 1 step in ci.yml) so local mirrors CI",
+    "Missing shellcheck locally degrades to `sh -n` + install hint (no silent skip)",
+    "Ladder + extension point documented (ci.sh header, CONTRIBUTING)"
+  ],
+  "goal": "Make doc 02's verification ladder real: ordered, fail-fast, runnable gates that local (`ci.sh`) and CI run identically. Populate with the rungs that apply to a docs/config repo; structure so language rungs (typecheck/unit/e2e) slot in for real repos later.",
+  "verification": "`shellcheck` clean on all scripts; `ci.sh` green; introduce a deliberate shell bug → ladder fails at rung 1.",
+  "notes": "shellcheck is the first real \"lint\" rung. Mirrors doc 02's ladder; the structure is what Track B/C repos inherit."
+}

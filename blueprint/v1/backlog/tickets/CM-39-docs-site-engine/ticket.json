@@ -1,0 +1,19 @@
+{
+  "id": "CM-39",
+  "title": "Docs site engine + Overview page",
+  "epic": "epic-d-docs-site-reference-showcase",
+  "type": "task",
+  "status": "done",
+  "slug": "docs-site-engine",
+  "acceptance_criteria": [
+    "`docs/site/assets/style.css` — modern-dark-product design system + components",
+    "`docs/site/assets/render.js` — classic script mapping typed blocks → DOM (hero, cards, table, steps, flow, ladder, phases, callout, code, divider)",
+    "`docs/site/data/site.js` — `window.CM.site` (name, tagline, nav, footer)",
+    "`docs/site/data/index.js` — Overview page blocks",
+    "`docs/site/index.html` — thin shell loading css + data + render via classic `<script>`/`<link>` (no fetch/ESM)",
+    "Opens via `file://` with no console errors; renders hero, ladder, lifecycle, nav (chrome-devtools MCP verified)"
+  ],
+  "goal": "Stand up the data-driven static site engine and the Overview page, openable via `file://`.",
+  "verification": "`node --check` on the JS; chrome-devtools MCP loads `file://.../docs/site/index.html`, asserts no console errors + key elements, screenshots. Manual double-click opens offline.",
+  "notes": "Built with the `frontend-design` skill. Proves the whole pattern end-to-end before CM-40 adds pages."
+}

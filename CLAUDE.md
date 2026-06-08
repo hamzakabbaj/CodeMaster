@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 > Always-loaded invariants for CodeMaster. Keep this short — it is paid every turn.
-> Procedures live in skills; status lives in `ROADMAP.md`; rationale lives in `docs/`.
+> Procedures live in skills; status lives in the JSON backlog (`blueprint/v1/backlog/`); rationale lives in `docs/`.
 
 ## What this repo is
 CodeMaster builds a Big-Tech-grade engineering operating system **on top of Claude Code**.
@@ -9,8 +9,8 @@ It is a meta-project: we prove the process by dogfooding it on this repo itself.
 
 ## Where things live
 - `docs/` — the doctrine (capabilities, robust-code loop, delivery, profiles, orchestration). Start at `docs/00-index.md`.
-- `ROADMAP.md` — single source of truth for **what** and **status** (phases, tickets `CM-<n>`).
-- `backlog/` — ticket detail + templates + DoR/DoD. Tickets refined just-in-time.
+- `blueprint/v1/backlog/` — **single source of truth** for **what** + **status**: `roadmap.json` (epics, order, prose) + `tickets/CM-<n>-<slug>/ticket.json` (per-ticket body). `ROADMAP.md` is **generated** from it (`scripts/gen_roadmap.py`) — never hand-edit it.
+- `backlog/` — process doctrine + templates + DoR/DoD (ticket detail now lives in `blueprint/v1/backlog/`).
 - `.githooks/`, `scripts/` — the deterministic gates (git hook, CI mirror, setup).
 - `CONTRIBUTING.md` — the full git/commit/PR contract.
 
@@ -18,7 +18,7 @@ It is a meta-project: we prove the process by dogfooding it on this repo itself.
 - **Trunk = `main`.** Never commit directly to `main`; branch `feat/CM-<n>-short-desc`.
 - **Conventional Commits**, enforced by `.githooks/commit-msg`. Never use `--no-verify`.
 - **Run `scripts/ci.sh` and make it green before pushing.** Local must mirror CI.
-- **One ticket → one branch → PR → green CI → merge.** Update `ROADMAP.md` status on merge.
+- **One ticket → one branch → PR → green CI → merge.** Update ticket `status` in `blueprint/v1/backlog/` on merge (`ROADMAP.md` regenerates via the pre-commit hook).
 - New checkout? Run `scripts/setup.sh` once to activate hooks.
 
 ## Guiding principle

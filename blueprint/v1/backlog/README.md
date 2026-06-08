@@ -1,13 +1,13 @@
-# Step 4 — Backlog *(markdown, by design)*
+# Step 4 — Backlog *(the canonical JSON backlog)*
 
-CodeMaster's backlog is **markdown, not JSON** — the deliberate exception in the
-two-serializations decision (ROADMAP decisions log, 2026-06-05). It is **not** mirrored to a
-`roadmap.json` here, to avoid two sources of truth and to keep `next-number.sh`,
-`roadmap_stats.py`, `new-ticket`, and `/start-ticket` working unchanged.
+This **is** CodeMaster's source-of-truth backlog (migrated from markdown in CM-62):
 
-The authoritative backlog:
-- [ROADMAP.md](../../../ROADMAP.md) — the index + status board (every `CM-<n>` and its state)
-- [backlog/README.md](../../../backlog/README.md) — folder-per-ticket layout + DoR / DoD
+- `roadmap.json` — epics, ticket order, and the board prose (preamble, per-epic exit, decisions log).
+- `tickets/CM-<n>-<slug>/ticket.json` — each ticket's structured body, plus optional `plan.md` / `evidence.md` siblings.
 
-Projects built *via* CodeMaster keep this module as JSON instead — see the worked example in
+`ROADMAP.md` at the repo root is a **generated view** of these files (`scripts/gen_roadmap.py`), kept in sync by the pre-commit hook and a CI rung. **Edit the JSON, never `ROADMAP.md`.**
+
+Validated by the blueprint conformance rung against `.claude/skills/backlog/schema/{roadmap,ticket}.schema.json`.
+
+Projects built *via* CodeMaster use this same model — see the worked example in
 [examples/etikets](../../../examples/etikets/README.md).
