@@ -1,0 +1,32 @@
+---
+description: Ship a finished CodeMaster ticket — PR → both gates → review → (confirm) → squash-merge → verify main. Greenfield Step 6.
+argument-hint: <CM-number>  (e.g. /ship 67) — defaults to the current branch's ticket
+---
+
+You are shipping ticket **CM-$ARGUMENTS** through the CodeMaster Step-6 ceremony (CONTRIBUTING.md, CLAUDE.md). `build` got the branch to green; you get it reviewed and merged behind the enforced gates. **The merge is the only irreversible step — you stop for explicit confirmation before it.**
+
+Do exactly this:
+
+1. **Resolve the ticket.** If `$ARGUMENTS` is empty, infer `CM-<n>` from the current branch name (`feat/CM-<n>-<slug>`); if you still can't, ask and stop.
+2. **Assert preconditions.** Run `git status` and `git rev-parse --abbrev-ref HEAD`. You must be on `feat/CM-$ARGUMENTS-<slug>` (**NOT `main`**) — if not, surface it and stop. The feature work should already be committed by `build`; the only expected pending change is the status→done flip in step 4. Surface anything else before continuing.
+3. **Confirm the work is done.** Read the ticket's `ticket.json`; confirm its acceptance criteria are met (and demonstrated). If they aren't, stop and send it back to `build` — `ship` does not write feature code.
+4. **Final gate, then close the ticket.** Run `sh scripts/ci.sh` **first** — build's output is what you're shipping, so verify it's green before you touch anything. Only then flip `"status": "done"` in the ticket's `ticket.json` and regenerate views: `python3 scripts/gen_roadmap.py && python3 scripts/gen_tickets.py`. Make the green checkpoint: `scripts/checkpoint.sh "chore(backlog): mark CM-$ARGUMENTS done"` — it re-runs the ladder and **refuses on red**, so the done-flip is never committed unverified. Then `git push -u origin feat/CM-$ARGUMENTS-<slug>`. (The flip rides *in* the PR so it lands atomically with the squash on `main` — never a separate direct-to-`main` commit after merge.)
+5. **Build and VALIDATE the PR title (deterministic guard).** Compose a Conventional-Commit title: `type(scope): subject (CM-$ARGUMENTS)`. **The PR title becomes the squash-merge commit subject on `main`**, so it must pass the same gate. Validate it before opening the PR:
+   ```sh
+   printf '%s\n' "<your title>" > /tmp/ship_title && .githooks/commit-msg /tmp/ship_title
+   ```
+   If it's rejected (subject >72 chars after the ` (#n)` strip, or wrong format), **shorten and re-validate** until it passes. Do not skip this — a bad squash subject turns `main` red *after* merge (this has happened twice; the `PR title` Action is the CI backstop, this step is the local one).
+6. **Open the PR.** `gh pr create --base main --head feat/CM-$ARGUMENTS-<slug>` with the validated title and a body following `.github/pull_request_template.md` (**What · Why · Test evidence · Risk/rollback · Definition of Done**, with `Closes CM-$ARGUMENTS`). End the body with the PR trailer: `🤖 Generated with [Claude Code](https://claude.com/claude-code)`.
+7. **Wait for both required gates.** `gh pr checks <pr> --watch` until both `PR title is a Conventional Commit` and `Quality gates` report. If **either fails**, stop, surface the failing logs, and fix — **never merge on a red gate.**
+8. **Automated review (review second is human).** Run the automated review on the branch diff — the `reviewer` agent for a normal diff, or the `review-board` workflow for a larger/riskier change. Surface findings: **act on `high`/`critical` now** (loop back to `build` if code must change), note `low`/`nit`. This complements `build`'s in-loop `build-critique`; it is the conventions + Definition-of-Done pass.
+9. **STOP for confirmation.** Present: the PR link, both gates green, and the review summary. **Ask the user for explicit go before merging** — the squash-merge changes `main` and deletes the branch, and it's the one step you can't cheaply undo.
+10. **Merge.** On confirmation: `gh pr merge <pr> --squash --delete-branch`.
+11. **Sync + verify the trunk.** `git checkout main && git pull`, then **verify the post-merge `main` CI is green** (`gh run list --branch main --limit 1`) — a standing step after every merge, because the squash subject and merge skew are only exercised on `main`. If it's red, surface it immediately.
+12. **Report.** The merged commit SHA, the ticket now ✅ in `ROADMAP.md`, and `main` green.
+
+Guardrails:
+- **Never merge on red CI or a failing gate**, and **never `--no-verify`** (a PreToolUse hook blocks it).
+- **The PR title is the squash subject** — validate it through `.githooks/commit-msg` (step 5) before opening the PR. One definition of "valid," reused.
+- **Confirm before the squash-merge** — it's outward-facing and hard to reverse. Branch protection is staged (CM-35); until it lands, this command + the discipline are the enforcement.
+- One ticket → one PR. `ship` is Step 6 only — it does **not** write feature code (that's `build`) and assumes the branch is already green.
+- Optional: for a ticket that warrants proof-of-done, record pointers (green CI run / PR / tests) in the ticket's `evidence.md` — link the cage, don't duplicate it; no committed binaries.
