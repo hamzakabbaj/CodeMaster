@@ -11,7 +11,7 @@ set -e
 ROOT=$(git rev-parse --show-toplevel)
 cd "$ROOT"
 
-echo "▸ 1/6 Shell lint"
+echo "▸ 1/7 Shell lint"
 sh_files=$(git ls-files --cached --others --exclude-standard -- '*.sh' '.githooks/*')
 if [ -z "$sh_files" ]; then
   echo "  (no shell files)"
@@ -24,7 +24,7 @@ else
   echo "  ✓ syntax ok"
 fi
 
-echo "▸ 2/6 JS syntax (site)"
+echo "▸ 2/7 JS syntax (site)"
 # Scope to docs/site only: workflow scripts (.claude/workflows/*.mjs) run inside
 # the Workflow runtime's function wrapper (top-level await/return, injected
 # globals) and are NOT standalone modules — node --check rightly rejects them.
@@ -38,7 +38,7 @@ else
   echo "  ! node not found — skipping JS syntax (install node to mirror CI)"
 fi
 
-echo "▸ 3/6 Unit tests"
+echo "▸ 3/7 Unit tests"
 if [ -d tests ]; then
   python3 -m unittest discover -s tests -p 'test_*.py'
   echo "  ✓ tests pass"
@@ -46,7 +46,7 @@ else
   echo "  (no tests yet)"
 fi
 
-echo "▸ 4/6 JSON validity"
+echo "▸ 4/7 JSON validity"
 json_files=$(git ls-files --cached --others --exclude-standard -- '*.json')
 if [ -z "$json_files" ]; then
   echo "  (no JSON files yet)"
@@ -57,10 +57,19 @@ else
   done
 fi
 
-echo "▸ 5/6 Markdown links"
+echo "▸ 5/7 Blueprint schema conformance"
+# Every populated blueprint data.json must validate against its skill's schema.json.
+# Dependency-free (no ajv); empty {} stubs and guide-only steps are skipped.
+if command -v node >/dev/null 2>&1; then
+  node scripts/validate-blueprint.js
+else
+  echo "  ! node not found — skipping blueprint conformance (install node to mirror CI)"
+fi
+
+echo "▸ 6/7 Markdown links"
 python3 scripts/check_links.py
 
-echo "▸ 6/6 Commit message (HEAD) conforms to Conventional Commits"
+echo "▸ 7/7 Commit message (HEAD) conforms to Conventional Commits"
 git log -1 --format='%B' > /tmp/cm_head_msg
 .githooks/commit-msg /tmp/cm_head_msg
 echo "  ✓ HEAD commit message OK"
