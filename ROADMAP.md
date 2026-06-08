@@ -42,6 +42,7 @@
 - [x] `CM-64` — Cite the canonical DoR in the backlog skill instead of paraphrasing it
 - [x] `CM-65` — Add a feature-intake skill: triage an out-of-the-blue request to the right altitude
 - [x] `CM-66` — Add the build skill + build-critique workflow (the Step-5 robust-code loop engine)
+- [x] `CM-67` — Add the ship command: encode the Step-6 PR -> review -> merge ceremony
 
 **Exit:** ✅ repo conventions + hooks + CI + backlog in place; CI is *real* (live remote).
 
