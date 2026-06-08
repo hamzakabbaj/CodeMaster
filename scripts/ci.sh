@@ -66,8 +66,9 @@ else
   echo "  ! node not found — skipping blueprint conformance (install node to mirror CI)"
 fi
 
-echo "▸ 6/8 ROADMAP.md is generated from the JSON backlog (no drift)"
+echo "▸ 6/8 Generated views in sync (ROADMAP.md + ticket READMEs)"
 python3 scripts/gen_roadmap.py --check
+python3 scripts/gen_tickets.py --check
 
 echo "▸ 7/8 Markdown links"
 python3 scripts/check_links.py
