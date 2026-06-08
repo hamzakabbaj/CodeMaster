@@ -39,6 +39,7 @@
 - [x] `CM-50` — Propagate folder-per-ticket to examples/etikets + the site greenfield doc
 - [x] `CM-62` — Migrate the backlog to JSON as the source of truth (folder-per-ticket); generate ROADMAP.md from it
 - [x] `CM-63` — Generate a synced README.md next to each ticket.json (GitHub-rendered ticket views)
+- [x] `CM-64` — Cite the canonical DoR in the backlog skill instead of paraphrasing it
 
 **Exit:** ✅ repo conventions + hooks + CI + backlog in place; CI is *real* (live remote).
 
