@@ -23,7 +23,7 @@ Read these directly from the project's `blueprint/` record; do not ask the user 
 2. **Slice vertically, one concern each.** Every ticket delivers something verifiable end-to-end and is finishable in one short-lived branch. If a ticket's acceptance criteria span unrelated changes, split it.
 3. **Promote the riskiest assumption.** The spec's riskiest assumption becomes its **own foundational enabler ticket**, built and proven before the stories that depend on it. (This is the concrete payoff of spec-before-you-slice — e.g. EtiKets promoted its timezone rule, TabSplit its settlement engine.)
 4. **Dependency-order.** Enabler tasks (the `1xx` band) first, then stories. Record `depends_on` and `blocks` on every ticket so the order is explicit and checkable.
-5. **Meet the Definition of Ready** for each ticket: clear single-sentence goal (task) or user story (story), testable acceptance criteria, known/unblocked deps, small enough for one branch, and an identified verification approach (which ladder rung proves it).
+5. **Meet the Definition of Ready** for each ticket — the canonical DoR lives in [`backlog/README.md`](../../../backlog/README.md) (single source of truth); the checklist below is a view of it, not a separate definition: clear single-sentence goal (task) or user story (story), testable acceptance criteria, known/unblocked deps, small enough for one branch, and an identified verification approach (which ladder rung proves it).
 6. **Refine just-in-time.** Only elaborate a ticket when it's pulled into work; `roadmap.json` is the index/order, the ticket file holds the detail. A ticket may carry an optional inline `plan` object for gnarly work (the Step-5 Plan beat, captured early).
 
 ## Outputs — persist the structured record
