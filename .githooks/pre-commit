@@ -6,7 +6,9 @@
 if git diff --cached --name-only | grep -q '^blueprint/v1/backlog/.*\.json$'; then
   if command -v python3 >/dev/null 2>&1; then
     python3 scripts/gen_roadmap.py >/dev/null || exit 1
+    python3 scripts/gen_tickets.py >/dev/null || exit 1
     git add ROADMAP.md
+    git add blueprint/v1/backlog/tickets
   fi
 fi
 exit 0
