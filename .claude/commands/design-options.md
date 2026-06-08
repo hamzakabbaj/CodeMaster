@@ -3,13 +3,13 @@ description: Explore a UI/UX choice for a ticket — generate 2–3 throwaway va
 argument-hint: <CM-number>  (e.g. /design-options 68) — defaults to the current branch's ticket
 ---
 
-You are exploring the **look & interaction** of one element for ticket **CM-$ARGUMENTS**, so the user can choose a direction *before* it's built. This is the design-altitude parallel of `/spec`: where `/spec` attacks a gnarly *plan*, this surfaces a UI/UX *choice*. The engine is the `frontend-design` skill. **The gallery is a decision aid, never the implementation.**
+You are exploring the **look & interaction** of one element for ticket **CM-$ARGUMENTS**, so the user can choose a direction *before* it's built. This is the design-altitude parallel of `/spec`: where `/spec` attacks a gnarly *plan*, this surfaces a UI/UX *choice*. The engine is the `frontend-design` skill (the official plugin) when it's installed; where it isn't (a Track B/C repo without it), fall back to generating the gallery directly with HTML/CSS — the skill makes the variants more distinctive, it isn't a hard dependency. **The gallery is a decision aid, never the implementation.**
 
 Do exactly this:
 
 1. **Resolve the ticket.** If `$ARGUMENTS` is empty, infer `CM-<n>` from the current branch (`feat/CM-<n>-<slug>`). Read its `ticket.json` — the goal, acceptance criteria, and the **specific element** in question (a button, a card, a form, a view).
-2. **Confirm a choice is actually open.** This runs inside `build`'s Plan beat, on the ticket's branch. If the element's look is **already determined** by the Step-2 design system (`blueprint/v1/system-design/.../design_system/`), say so and **stop — reuse the system, don't re-explore.** Only proceed when there's a genuine visual/interaction decision to make.
-3. **Generate 2–3 DISTINCT variants** of the element with the `frontend-design` skill, written as a **single self-contained, `file://`-openable gallery** at `prototypes/CM-$ARGUMENTS-<slug>/index.html`. Requirements:
+2. **Confirm a choice is actually open.** This runs inside `build`'s Plan beat, on the ticket's branch. If the element's look is **already determined** by the Step-2 design system (`blueprint/v1/system-design/design_system/`), say so and **stop — reuse the system, don't re-explore.** Only proceed when there's a genuine visual/interaction decision to make.
+3. **Generate 2–3 DISTINCT variants** of the element with the `frontend-design` skill (or directly, if that plugin isn't installed), written as a **single self-contained, `file://`-openable gallery** at `prototypes/CM-$ARGUMENTS-<slug>/index.html`. Requirements:
    - All variants on one page, clearly labelled, shown side by side, each with a one-line note on its tradeoff.
    - Genuinely different directions (layout / interaction / emphasis) — **not recolours of one idea.**
    - Reuse the project's **design tokens** where they exist; this is exploration of *direction*, not a license to ignore the system.
