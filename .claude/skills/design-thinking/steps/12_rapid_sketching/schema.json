@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 11 \u2014 Rapid Sketching",
+  "title": "Step 12 \u2014 Rapid Sketching",
   "description": "Quick, low-effort visual explorations of potential solutions. Techniques include Crazy 8s, sketch storms, and brainstorming sessions. Converge on the best ideas.",
   "type": "object",
   "required": [

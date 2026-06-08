@@ -4,14 +4,14 @@
   "summary": "A mobile app that draws exactly one random micro-task per day to beat procrastination through a streak loop.",
   "modules": {
     "design-thinking": {
-      "status": "completed",
-      "steps": "20/20",
-      "note": "Imported from a real design-thinking run. Throwaway wireframe HTML (step 17 'mobile/') is intentionally not versioned — per CodeMaster doctrine, prototypes are disposable; the structured record is what's kept."
+      "status": "partial",
+      "steps": "16/20 schema-backed steps populated (+ wireframing)",
+      "note": "Imported from a real design-thinking run that covered Brief through Prototype. The Test phase — 18_test_phase_research, 19_usability_study, 20_gather_insights — was never filled in and remains as empty {} stubs (the CM-56 schema-conformance gate skips empty stubs rather than failing on them). Throwaway wireframe HTML (step 17 'mobile/') is intentionally not versioned — per CodeMaster doctrine, prototypes are disposable; the structured record is what's kept."
     },
     "system-design": {
       "status": "partial",
-      "steps": "architecture, api_design, design_system",
-      "note": "database_schema was not produced in v1 — blueprint steps are completed as the work warrants, not ritually. The design_system carries real tokens (styles.css) + a component gallery (components.html, foundations.html)."
+      "steps": "architecture + design_system populated; api_design is an empty {} stub; database_schema not produced",
+      "note": "database_schema was not produced in v1 — blueprint steps are completed as the work warrants, not ritually. api_design was left as an empty {} stub by the import (skipped by the conformance gate, not counted as delivered). The design_system carries real tokens (styles.css) + a component gallery (components.html, foundations.html)."
     },
     "specs": {
       "status": "authored",

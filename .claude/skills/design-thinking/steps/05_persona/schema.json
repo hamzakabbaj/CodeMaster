@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 4 \u2014 Persona",
+  "title": "Step 5 \u2014 Persona",
   "description": "Create fictional but data-driven representations of target user archetypes. Each persona captures demographics, goals, frustrations, behaviors, and a brief narrative.",
   "type": "object",
   "required": [

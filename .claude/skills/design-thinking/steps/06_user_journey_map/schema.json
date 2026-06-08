@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 5 \u2014 User Journey Map",
+  "title": "Step 6 \u2014 User Journey Map",
   "description": "Map the end-to-end experience of a persona interacting with the problem space. Document each stage, touchpoint, action, thought, and emotion across the journey.",
   "type": "object",
   "required": [

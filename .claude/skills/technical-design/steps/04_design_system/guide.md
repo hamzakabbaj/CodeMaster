@@ -27,7 +27,7 @@ Navigation between files is handled by the app's tab UI — the HTML files do no
 All design system files live in:
 
 ```
-{project}/01_technical_design/design_system/
+{project}/blueprint/{version}/system-design/design_system/
 ├── styles.css
 ├── foundations.html
 └── components.html

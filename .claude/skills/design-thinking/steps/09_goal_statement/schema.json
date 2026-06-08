@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 8 \u2014 Goal Statement",
+  "title": "Step 9 \u2014 Goal Statement",
   "description": "Define what the product or solution aims to achieve, for whom, and how success will be measured. This anchors ideation in a clear direction.",
   "type": "object",
   "required": [

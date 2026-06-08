@@ -144,7 +144,7 @@ Each wireframe set has its own `styles.css` in its subfolder.
 Organize `styles.css` in this order:
 
 1. **Reset** — box-sizing, margin/padding reset, link reset (`a { color: inherit; text-decoration: none; }`)
-2. **Design tokens** — CSS custom properties sourced from the project's design system (`01_technical_design/design_system/styles.css`)
+2. **Design tokens** — CSS custom properties sourced from the project's design system (`blueprint/{version}/system-design/design_system/styles.css`)
 3. **Base styles** — body, typography defaults
 4. **Layout styles** — page grids, panel structures
 5. **Component styles** — reusable UI patterns (cards, badges, buttons, etc.)
@@ -152,7 +152,7 @@ Organize `styles.css` in this order:
 
 ### Token sourcing
 
-Wireframe tokens must come from the project's design system. Copy the `:root` block from `01_technical_design/design_system/styles.css` so tokens stay in sync. Sets targeting different viewports or products may customize tokens (e.g., different breakpoints, spacing scales, or touch target sizes) while keeping the same token names.
+Wireframe tokens must come from the project's design system. Copy the `:root` block from `blueprint/{version}/system-design/design_system/styles.css` so tokens stay in sync. Sets targeting different viewports or products may customize tokens (e.g., different breakpoints, spacing scales, or touch target sizes) while keeping the same token names.
 
 ### Cross-set consistency
 
@@ -207,7 +207,7 @@ This is especially useful for catching problems that are hard to spot from HTML 
 When creating or updating a wireframe:
 
 1. **Read prior step data** for realistic content
-2. **Read the project's design system** (`01_technical_design/design_system/`) for tokens and component patterns
+2. **Read the project's design system** (`blueprint/{version}/system-design/design_system/`) for tokens and component patterns
 3. **Read the set's `styles.css`** to check for reusable classes
 4. **Create the HTML file** using the boilerplate
 5. **Add new CSS classes** to `styles.css` if needed (using design system tokens)

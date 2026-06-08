@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 7 \u2014 Value Proposition",
+  "title": "Step 8 \u2014 Value Proposition",
   "description": "Define the unique value the solution will provide. Articulate why users would choose this solution over alternatives and what differentiates it.",
   "type": "object",
   "required": [

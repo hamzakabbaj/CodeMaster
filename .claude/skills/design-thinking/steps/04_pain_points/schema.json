@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 3 \u2014 Pain Points",
+  "title": "Step 4 \u2014 Pain Points",
   "description": "Identify and categorize the specific problems, frustrations, and obstacles users face. Classify them by type and severity.",
   "type": "object",
   "required": [

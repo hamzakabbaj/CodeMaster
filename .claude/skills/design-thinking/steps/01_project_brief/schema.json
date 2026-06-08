@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 0 — Project Brief",
+  "title": "Step 1 — Project Brief",
   "description": "Define the high-level vision, motivation, target audience, initial problem hypothesis, known constraints, and success criteria. This document serves as the anchor that every subsequent step refers back to.",
   "type": "object",
   "required": ["content"],

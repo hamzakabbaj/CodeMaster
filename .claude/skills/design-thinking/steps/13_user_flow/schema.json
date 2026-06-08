@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 12 \u2014 User Flow",
+  "title": "Step 13 \u2014 User Flow",
   "description": "Map the step-by-step paths users will take through the solution to accomplish their goals. Define entry points, decision points, and success states.",
   "type": "object",
   "required": [

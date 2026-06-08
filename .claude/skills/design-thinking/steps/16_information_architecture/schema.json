@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 15 \u2014 Information Architecture",
+  "title": "Step 16 \u2014 Information Architecture",
   "description": "Map the application's screens, regions, navigation patterns, content hierarchy, and platform constraints. Separates UI structure (screens/regions) from content structure (what fills them) and movement patterns (how users navigate).",
   "type": "object",
   "required": [
@@ -98,7 +98,7 @@
         },
         "navigation": {
           "type": "array",
-          "description": "How users move between screens and within screens. Structural patterns, not behavioral flows (those are in Step 12).",
+          "description": "How users move between screens and within screens. Structural patterns, not behavioral flows (those are in Step 13).",
           "items": {
             "type": "object",
             "required": [

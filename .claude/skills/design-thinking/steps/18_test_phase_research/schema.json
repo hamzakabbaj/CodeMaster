@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 17 \u2014 Test Planning",
+  "title": "Step 18 \u2014 Test Planning",
   "description": "Define what to test, how, and who tests. Focused on validating wireframe prototypes \u2014 not built software. Establishes scenarios, scope boundaries, and success signals for cognitive walkthroughs of the HTML wireframes.",
   "type": "object",
   "required": [

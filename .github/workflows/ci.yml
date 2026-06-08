@@ -33,6 +33,9 @@ jobs:
           files=$(git ls-files '*.json')
           for f in $files; do python3 -m json.tool "$f" >/dev/null && echo "ok $f"; done
 
+      - name: Blueprint schema conformance
+        run: node scripts/validate-blueprint.js
+
       - name: Markdown links
         run: python3 scripts/check_links.py
 

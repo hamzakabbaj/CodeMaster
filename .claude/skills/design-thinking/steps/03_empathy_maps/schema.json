@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 2 \u2014 Empathy Maps",
+  "title": "Step 3 \u2014 Empathy Maps",
   "description": "Visualize what users Say, Think, Do, and Feel based on interview data. Helps develop a shared understanding of the user's inner world.",
   "type": "object",
   "required": [

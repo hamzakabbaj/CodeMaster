@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Step 1 \u2014 Interviews",
+  "title": "Step 2 \u2014 Interviews",
   "description": "Conduct qualitative interviews with potential users to gather firsthand insights about their experiences, frustrations, and goals. Each interview has two layers: a Guide (context for the AI to conduct the interview) and an Analysis (synthesized findings).",
   "type": "object",
   "required": [
