@@ -124,6 +124,7 @@
 - [x] `CM-54` — Adapt `design-thinking` + `technical-design` skills: prune React layer, add `Write`, repoint output to `blueprint/`
 - [x] `CM-55` — Convert `examples/etikets/` to a worked JSON `blueprint/` (real import of design-thinking + system-design)
 - [x] `CM-56` — Harden blueprint skills: fix guide paths (C), align design-thinking step numbering (G), add schema-conformance CI rung (D)
+- [ ] `CM-57` — Require Conventional-Commit PR titles (squash subject) — git contract doc
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 
