@@ -1,11 +1,13 @@
 ---
 name: new-ticket
-description: Scaffold a new CodeMaster backlog ticket (CM-<n>) as JSON and register it in the canonical roadmap.json. Use when the user asks to create, add, or file a ticket, story, task, spike, or bug for CodeMaster.
+description: Scaffold ONE already-shaped CodeMaster ticket (CM-<n>) as JSON and register it in the canonical roadmap.json. Use when it's already clear the work is a single, well-formed ticket. If the request is out of the blue and its size/shape is undecided (a feature, idea, or bug that might be several stories or a whole epic), use feature-intake first to triage the altitude.
 ---
 
 # new-ticket
 
 Create a well-formed CodeMaster ticket so every item meets our Definition of Ready. Encodes the process in `backlog/README.md`.
+
+> **Scope:** this skill scaffolds **one ticket whose shape is already decided.** It does **not** triage altitude — if you don't yet know whether the request is one ticket, several stories, or an epic, start at [`feature-intake`](../feature-intake/SKILL.md) (the front door), which routes back here for the small cases.
 
 ## Steps
 1. **Get the next number.** Run `.claude/skills/new-ticket/next-number.sh` — it prints the next free `CM-<n>`.

@@ -10,6 +10,17 @@ How we run work, the Big-Tech way, dogfooded on CodeMaster itself.
 ## Hierarchy
 `Epic` (= a phase) → `Story`/`Task` (= a `CM-<n>` ticket) → optional `Spike` (research, timeboxed).
 
+## Intake — routing a request to the right altitude
+A request that arrives **out of the blue** (a feature, idea, change, or bug) goes through the **`feature-intake`** skill first — the front door that triages **altitude** before anything is written:
+
+| Altitude | Route |
+|---|---|
+| Fix / chore, or one vertical slice | **one ticket** (via `new-ticket`) |
+| A feature = a few independent slices, **no** unknowns | **2–4 stories** under an existing/new epic |
+| New surface area, an architecture decision, or a **riskiest assumption** | **epic-sized** → scaffold an epic shell, then **`/spec`** (don't hand-slice) |
+
+The decisive test for escalation is *"is there a riskiest assumption or architecture decision a spec should settle before slicing?"* — if yes, it's epic-sized. `new-ticket` is the mechanical "scaffold ONE already-shaped ticket" step that intake delegates to; the `backlog` skill is the bulk Step-4 slice that runs *after* a spec exists.
+
 ## Ticket layout
 Each ticket is a **folder** so the structured body, the plan, and the proof live together:
 

@@ -40,6 +40,7 @@
 - [x] `CM-62` — Migrate the backlog to JSON as the source of truth (folder-per-ticket); generate ROADMAP.md from it
 - [x] `CM-63` — Generate a synced README.md next to each ticket.json (GitHub-rendered ticket views)
 - [x] `CM-64` — Cite the canonical DoR in the backlog skill instead of paraphrasing it
+- [x] `CM-65` — Add a feature-intake skill: triage an out-of-the-blue request to the right altitude
 
 **Exit:** ✅ repo conventions + hooks + CI + backlog in place; CI is *real* (live remote).
 
