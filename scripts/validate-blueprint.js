@@ -44,6 +44,12 @@ const SCHEMA_MAPS = {
   'system-design': buildSchemaMap(SKILL_STEP_DIRS['system-design']),
 };
 
+// Step-4 backlog: a single skill with two artifact schemas (not per-step folders).
+const BACKLOG_SCHEMAS = {
+  roadmap: path.join(ROOT, '.claude/skills/backlog/schema/roadmap.schema.json'),
+  ticket: path.join(ROOT, '.claude/skills/backlog/schema/ticket.schema.json'),
+};
+
 function typeOk(val, t) {
   switch (t) {
     case 'object': return val !== null && typeof val === 'object' && !Array.isArray(val);
@@ -65,6 +71,14 @@ function validate(data, schema, p, errs) {
   }
   if (schema.enum && !schema.enum.includes(data)) {
     errs.push(`${p}: ${JSON.stringify(data)} not in enum [${schema.enum.join(', ')}]`);
+  }
+  if (schema.anyOf) {
+    const matches = schema.anyOf.some((sub) => {
+      const sandbox = [];
+      validate(data, sub, p, sandbox);
+      return sandbox.length === 0;
+    });
+    if (!matches) errs.push(`${p}: does not satisfy any of the required shapes (anyOf)`);
   }
   const isObj = data !== null && typeof data === 'object' && !Array.isArray(data);
   if (isObj && (schema.properties || schema.required || schema.additionalProperties)) {
@@ -109,6 +123,18 @@ function findDataFiles() {
           if (fs.existsSync(df)) out.push({ file: df, category, step });
         }
       }
+      // backlog (Step 4): roadmap.json + tickets/<ID>.json — flat JSON, not per-step folders
+      const backlogDir = path.join(bp, ver, 'backlog');
+      if (fs.existsSync(backlogDir)) {
+        const roadmap = path.join(backlogDir, 'roadmap.json');
+        if (fs.existsSync(roadmap)) out.push({ file: roadmap, category: 'backlog', step: 'roadmap' });
+        const ticketsDir = path.join(backlogDir, 'tickets');
+        if (fs.existsSync(ticketsDir)) {
+          for (const t of fs.readdirSync(ticketsDir)) {
+            if (t.endsWith('.json')) out.push({ file: path.join(ticketsDir, t), category: 'backlog', step: 'ticket' });
+          }
+        }
+      }
     }
   }
   return out;
@@ -121,7 +147,9 @@ function main() {
 
   for (const { file, category, step } of files) {
     const rel = path.relative(ROOT, file);
-    const schemaPath = SCHEMA_MAPS[category][step];
+    const schemaPath = category === 'backlog'
+      ? BACKLOG_SCHEMAS[step]
+      : SCHEMA_MAPS[category][step];
     if (!schemaPath) { skippedNoSchema++; continue; }
 
     let data;

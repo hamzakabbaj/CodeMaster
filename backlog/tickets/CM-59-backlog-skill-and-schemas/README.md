@@ -2,7 +2,7 @@
 
 - **Epic:** Epic D — Docs Site (reference showcase) / blueprint skills
 - **Type:** task
-- **Status:** ⬜ todo
+- **Status:** ✅ done
 - **Branch:** `feat/CM-59-backlog-skill-and-schemas`
 
 ## Goal
@@ -12,14 +12,15 @@ Give greenfield **Step 4 (slice the backlog)** an engine and a contract: a `back
 Surfaced while answering "is there a backlog skill?": there isn't. Steps 1–2 have skills (`design-thinking`, `technical-design`), each step schema-backed; **Step 4 has neither a skill nor a schema.** The blueprint backlog is currently produced freehand (EtiKets, TabSplit), and is the *only* blueprint module the CM-56 schema-conformance rung does not validate.
 
 ## Acceptance criteria (draft — refine at pull-in)
-- [ ] A `backlog` skill (`.claude/skills/backlog/SKILL.md`) documenting the Step-4 method: read `specs/` + `system-design/`, slice vertically (one concern / DoR per ticket), dependency-order, promote the riskiest assumption to its own enabler ticket.
-- [ ] A `roadmap.schema.json` and a `ticket.schema.json` defining the structured backlog (epics + order; ticket goal/AC/verification/deps/plan).
-- [ ] `scripts/validate-blueprint.js` extended to validate `blueprint/*/backlog/roadmap.json` and `tickets/*.json` against those schemas.
-- [ ] EtiKets + TabSplit backlogs validated against the new schemas (fix or document any drift).
+- [x] A `backlog` skill (`.claude/skills/backlog/SKILL.md`) documenting the Step-4 method: read `specs/` + `system-design/`, slice vertically (one concern / DoR per ticket), dependency-order, promote the riskiest assumption to its own enabler ticket.
+- [x] A `roadmap.schema.json` and a `ticket.schema.json` defining the structured backlog (epics + order; ticket goal/AC/verification/deps/plan).
+- [x] `scripts/validate-blueprint.js` extended to validate `blueprint/*/backlog/roadmap.json` and `tickets/*.json` against those schemas.
+- [x] EtiKets + TabSplit backlogs validated against the new schemas (fix or document any drift).
 
-## Open design decisions (resolve at refinement)
-- **Flat JSON vs folder for blueprint tickets.** Current doctrine (greenfield.js) shows flat `tickets/<ID>.json`; the folder-per-ticket layout (README/plan/evidence) is the *build-time* representation. Decide whether the skill keeps Step-4 tickets as flat JSON (recommended — they're the sliced plan, not yet in-build) or unifies the two.
-- **Ticket id prefix.** Doctrine illustration uses `CM-n.json`; examples localize per project (`ETK-`, `TS-`). Pick one and document it.
+## Design decisions (resolved)
+- **Flat JSON, kept.** Step-4 tickets stay flat `tickets/<ID>.json` — they are the *sliced plan*; the folder-per-ticket layout (README/plan/evidence) is the *build-time* representation a ticket takes once pulled into work. Documented in `SKILL.md`.
+- **Project-localized id prefix.** Ids are `<PREFIX>-<n>` with a short uppercase project tag (`ETK`, `TS`), **not** `CM-` (reserved for CodeMaster's own meta-repo). `greenfield.js`'s `CM-n.json` is illustrative only.
+- **`goal`-or-`story` enforced via `anyOf`.** The validator gained minimal `anyOf` support so the ticket schema can require a task's `goal` or a story's `story` without forcing one shape. `decision_to_record` left free-form (EtiKets stores it as an object).
 
 ## Verification
 `node scripts/validate-blueprint.js` covers the backlog; both example backlogs pass; `bash scripts/ci.sh` green.

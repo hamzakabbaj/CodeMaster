@@ -126,7 +126,7 @@
 - [x] `CM-56` — Harden blueprint skills: fix guide paths (C), align design-thinking step numbering (G), add schema-conformance CI rung (D)
 - [x] `CM-57` — Require Conventional-Commit PR titles (squash subject) — git contract doc
 - [x] `CM-58` — Reconcile ticket conventions: convert CM-56/57 to folder-per-ticket; clear CM-57 status
-- [ ] `CM-59` — Author a `backlog` skill (greenfield Step 4) + roadmap/ticket schemas (extends the CM-56 conformance gate to Step 4)
+- [x] `CM-59` — Author a `backlog` skill (greenfield Step 4) + roadmap/ticket schemas (extends the CM-56 conformance gate to Step 4)
 
 **Exit:** ✅ open `docs/site/index.html` offline → polished multi-page site; renderer verified via chrome-devtools MCP; JS rung green.
 
