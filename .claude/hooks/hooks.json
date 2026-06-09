@@ -1,0 +1,31 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/block-no-verify.sh\"",
+            "if": "Bash(git *)",
+            "timeout": 10,
+            "statusMessage": "Checking commit-bypass guard"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "code-explorer|reviewer|architect|security|tester",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/trace-subagent.sh\"",
+            "timeout": 10,
+            "statusMessage": "Persisting agent trace to the ticket"
+          }
+        ]
+      }
+    ]
+  }
+}

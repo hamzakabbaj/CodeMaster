@@ -216,7 +216,7 @@
     "CM-25": "— Bounded live run (11 agents): 4 considered → 3 confirmed; **found a real bug** unit tests missed (→ CM-38)",
     "CM-38": "(fix, from CM-25) — `roadmap_stats.py`: `is_file()` + `try/except OSError`; +3 CLI tests (8 total). Closes the loop the review board opened.",
     "CM-26": "— `plugin.json` manifest (package `.claude/` as a plugin unit; no marketplace)",
-    "CM-27": "— Bundle agents + hooks + skills + commands + workflows",
+    "CM-27": "— Bundle hooks as a plugin component (`hooks.json`) + drift guard vs `settings.json`",
     "CM-28": "— Version + changelog",
     "CM-29": "— Local install test",
     "CM-30": "— Install into Tigris or Argon",
