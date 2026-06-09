@@ -101,7 +101,7 @@
 ## Phase 5 — Package as Plugin *(Track B)*
 
 - [x] `CM-26` — `plugin.json` manifest (package `.claude/` as a plugin unit; no marketplace)
-- [ ] `CM-27` — Bundle hooks as a plugin component (`hooks.json`) + drift guard vs `settings.json`
+- [x] `CM-27` — Bundle hooks as a plugin component (`hooks.json`) + drift guard vs `settings.json`
 - [ ] `CM-28` — Version + changelog
 - [ ] `CM-29` — Local install test
 - [x] `CM-74` — Spike: can CodeMaster ship as an in-repo project @skills-dir plugin?

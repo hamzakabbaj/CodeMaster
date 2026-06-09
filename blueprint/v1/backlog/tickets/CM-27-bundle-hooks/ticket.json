@@ -3,7 +3,7 @@
   "title": "Bundle hooks as a plugin component + verify the full component inventory",
   "epic": "phase-5-package-as-plugin-track-b",
   "type": "task",
-  "status": "in_progress",
+  "status": "done",
   "slug": "bundle-hooks",
   "goal": "Complete the plugin unit's components: add `.claude/hooks/hooks.json` so the hooks ship as a plugin component (they previously only registered via `.claude/settings.json`, which is project-native and does NOT ship), keep it from drifting from settings.json, and verify the full component inventory (skills/agents/commands/hooks) resolves.",
   "acceptance_criteria": [
