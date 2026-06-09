@@ -218,7 +218,7 @@
     "CM-26": "— `plugin.json` manifest (package `.claude/` as a plugin unit; no marketplace)",
     "CM-27": "— Bundle hooks as a plugin component (`hooks.json`) + drift guard vs `settings.json`",
     "CM-28": "— Version + `CHANGELOG.md` + `claude plugin tag` release discipline",
-    "CM-29": "— Local install test",
+    "CM-29": "— Validate the plugin in CI (`claude plugin validate` rung) + isolated install smoke; cut `codemaster--v0.1.0`",
     "CM-30": "— Install into Tigris or Argon",
     "CM-31": "— Adapt conventions to the target repo",
     "CM-32": "— Ship one real feature through the CodeMaster process",
