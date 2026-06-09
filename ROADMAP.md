@@ -104,6 +104,7 @@
 - [ ] `CM-27` — Bundle agents + hooks + skills + commands + workflows
 - [ ] `CM-28` — Version + changelog
 - [ ] `CM-29` — Local install test
+- [x] `CM-74` — Spike: can CodeMaster ship as an in-repo project @skills-dir plugin?
 
 **Exit:** CodeMaster installable as one unit.
 
