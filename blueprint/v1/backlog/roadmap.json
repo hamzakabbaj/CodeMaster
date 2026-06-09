@@ -85,7 +85,8 @@
         "CM-19",
         "CM-20",
         "CM-21",
-        "CM-22"
+        "CM-22",
+        "CM-69"
       ],
       "description": "Materialize [doc 04](docs/04-team-profiles.md).",
       "exit": "✅ fleet defined with least-privilege tools + model routing; registers on reload (mechanic proven in CM-9). Live fleet validation folds into Phase 4 orchestration."
@@ -244,7 +245,8 @@
     "CM-65": "— Add a feature-intake skill: triage an out-of-the-blue request to the right altitude",
     "CM-66": "— Add the build skill + build-critique workflow (the Step-5 robust-code loop engine)",
     "CM-67": "— Add the ship command: encode the Step-6 PR -> review -> merge ceremony",
-    "CM-68": "— Add the design-options command: pick a UI/UX variant before building it"
+    "CM-68": "— Add the design-options command: pick a UI/UX variant before building it",
+    "CM-69": "— Add the code-explorer agent: read-only code reconnaissance for the fleet"
   },
   "decisions_log": [
     "- **2026-06-08** — Backlog migrated to JSON as the source of truth (CM-62): `blueprint/v1/backlog/roadmap.json` + folder-per-ticket `tickets/CM-<n>-<slug>/ticket.json` (README.md → ticket.json; plan/evidence kept as files). `ROADMAP.md` is now **generated** by `scripts/gen_roadmap.py` (pre-commit hook + CI sync rung), and the blueprint conformance gate validates every ticket. Supersedes the 2026-06-05 decision to keep CodeMaster's own backlog in markdown — CodeMaster now fully eats its own dogfood. `new-ticket` / `/start-ticket` / `/spec` rewired to the JSON; `next-number.sh` unchanged (greps `CM-<n>`).",

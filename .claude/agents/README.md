@@ -7,6 +7,7 @@ Role-based subagents that encode CodeMaster's doctrine (not generic helpers). Ea
 | Agent | Role | Tools (least privilege) | Model | Why this model |
 |---|---|---|---|---|
 | `librarian` | navigate/consistency-check our docs | Read, Grep, Glob | sonnet | read+summarize = grunt work |
+| `code-explorer` | map existing code before changing it | Read, Grep, Glob | sonnet | trace + enumerate, not judge |
 | `architect` | design review vs doctrine | Read, Grep, Glob | opus | deep tradeoff reasoning |
 | `tester` | adversarial test design | Read, Grep, Glob | sonnet | enumerate + draft tests |
 | `devops` | gates/CI/reproducibility | Read, Grep, Glob | sonnet | targeted analysis |

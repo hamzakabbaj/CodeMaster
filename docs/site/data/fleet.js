@@ -17,6 +17,7 @@ window.CM.pages.fleet = {
       title: "Role-based subagents (least privilege)",
       items: [
         { tag: "sonnet · read-only", title: "librarian", body: "Navigates & consistency-checks our own docs/ROADMAP/backlog.", meta: "Read · Grep · Glob" },
+        { tag: "sonnet · read-only", title: "code-explorer", body: "Maps existing code before you change it — execution paths, dependencies, blast radius. Brownfield, and greenfield once it outgrows your context.", meta: "Read · Grep · Glob" },
         { tag: "opus · read-only", title: "architect", body: "Design review vs doctrine: where complexity lives, what will rot.", meta: "Read · Grep · Glob" },
         { tag: "sonnet · read-only", title: "tester", body: "Adversarial test design — finds the edge cases you didn't.", meta: "Read · Grep · Glob" },
         { tag: "sonnet · read-only", title: "devops", body: "Gates, CI, reproducibility; hunts silent skips & local↔CI drift.", meta: "Read · Grep · Glob" },
