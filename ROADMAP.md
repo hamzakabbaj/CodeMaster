@@ -105,7 +105,7 @@
 - [x] `CM-28` — Version + `CHANGELOG.md` + `claude plugin tag` release discipline
 - [x] `CM-29` — Validate the plugin in CI (`claude plugin validate` rung) + isolated install smoke; cut `codemaster--v0.1.0`
 - [x] `CM-74` — Spike: can CodeMaster ship as an in-repo project @skills-dir plugin?
-- [ ] `CM-75` — Dedicated `plugin/` folder (symlinked into `.claude/`) so the plugin is one obvious unit
+- [x] `CM-75` — Dedicated `plugin/` folder (symlinked into `.claude/`) so the plugin is one obvious unit
 
 **Exit:** CodeMaster installable as one unit.
 
