@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "codemaster",
+  "version": "0.1.0",
+  "description": "CodeMaster — a Big-Tech-grade engineering operating system on Claude Code: the skills, agents, commands, and hooks that run the spec -> plan -> generate -> verify -> critique loop behind a deterministic cage.",
+  "author": {
+    "name": "hamzakabbaj",
+    "email": "hamza.kabbaj@live.fr"
+  },
+  "homepage": "https://github.com/hamzakabbaj/CodeMaster",
+  "repository": "https://github.com/hamzakabbaj/CodeMaster",
+  "license": "MIT",
+  "keywords": [
+    "engineering-operating-system",
+    "claude-code",
+    "deterministic-cage",
+    "robust-code-loop"
+  ]
+}

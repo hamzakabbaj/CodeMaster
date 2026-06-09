@@ -18,7 +18,7 @@
 | 2 | Robust-Code Loop | A | ✅ |
 | 3 | Subagent Fleet | A | ✅ |
 | 4 | Orchestration | A | ✅ |
-| 5 | Package as Plugin | B | ⬜ |
+| 5 | Package as Plugin | B | 🟦 |
 | 6 | Pilot in Real Repo | C | ⬜ |
 | D | Docs Site (reference showcase) | A | ✅ |
 
@@ -100,7 +100,7 @@
 
 ## Phase 5 — Package as Plugin *(Track B)*
 
-- [ ] `CM-26` — `plugin.json` / marketplace manifest
+- [ ] `CM-26` — `plugin.json` manifest (package `.claude/` as a plugin unit; no marketplace)
 - [ ] `CM-27` — Bundle agents + hooks + skills + commands + workflows
 - [ ] `CM-28` — Version + changelog
 - [ ] `CM-29` — Local install test

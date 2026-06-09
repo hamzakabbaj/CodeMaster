@@ -1,6 +1,6 @@
 ---
 name: code-explorer
-description: Read-only code reconnaissance for the fleet — traces execution paths, maps the architecture layers, and surfaces dependencies / callers / blast radius before you change code. Use whenever the code you're about to touch isn't in your working context: brownfield always, and grown greenfield once the project has outgrown what you still hold in memory (your own early code becomes brownfield to your future self). Returns a map, not edits.
+description: Read-only code reconnaissance for the fleet — traces execution paths, maps the architecture layers, and surfaces dependencies / callers / blast radius before you change code. Use whenever the code you're about to touch isn't in your working context — brownfield always, and grown greenfield once the project has outgrown what you still hold in memory (your own early code becomes brownfield to your future self). Returns a map, not edits.
 tools: Read, Grep, Glob
 model: sonnet
 ---
