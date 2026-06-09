@@ -46,6 +46,7 @@
 - [x] `CM-68` — Add the design-options command: pick a UI/UX variant before building it
 - [x] `CM-70` — Stop tracking Python bytecode: untrack __pycache__ and gitignore *.pyc
 - [x] `CM-71` — Wire code-explorer into build Plan beat as the terrain-uncertainty hatch
+- [x] `CM-72` — Drop jq from block-no-verify.sh: parse hook input with python3 (close the fail-open)
 
 **Exit:** ✅ repo conventions + hooks + CI + backlog in place; CI is *real* (live remote).
 
