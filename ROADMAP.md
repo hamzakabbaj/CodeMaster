@@ -45,6 +45,7 @@
 - [x] `CM-67` — Add the ship command: encode the Step-6 PR -> review -> merge ceremony
 - [x] `CM-68` — Add the design-options command: pick a UI/UX variant before building it
 - [x] `CM-70` — Stop tracking Python bytecode: untrack __pycache__ and gitignore *.pyc
+- [x] `CM-71` — Wire code-explorer into build Plan beat as the terrain-uncertainty hatch
 
 **Exit:** ✅ repo conventions + hooks + CI + backlog in place; CI is *real* (live remote).
 
