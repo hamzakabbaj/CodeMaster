@@ -1,0 +1,27 @@
+# CM-73: Persist fleet-agent output per ticket via a SubagentStop trace hook
+
+> Generated from `ticket.json` — do not edit by hand (`scripts/gen_tickets.py`).
+
+- **Epic:** phase-3-subagent-fleet
+- **Type:** task
+- **Status:** ✅ done
+
+## Goal
+Give a ticket full traceability of what its agents concluded: a SubagentStop hook that, on a ticket branch, appends each fleet subagent's returned output to a per-agent file in the ticket folder (code-explorer -> explore.md, reviewer -> review.md, ...), deterministically — not relying on the model to remember.
+
+## Acceptance criteria
+- [x] .claude/hooks/trace-subagent.sh exists: reads the SubagentStop payload (python3, no jq), and only on a feat/CM-<n> branch with an existing ticket folder, appends agent_type + last_assistant_message to a per-agent trace file in blueprint/v1/backlog/tickets/CM-<n>-<slug>/
+- [x] Registered in .claude/settings.json as a SubagentStop hook with matcher = the fleet agent types (code-explorer|reviewer|architect|security|tester), so it never fires for a workflow's internal skeptics or unrelated subagents
+- [x] Agent -> file mapping: code-explorer->explore.md, reviewer->review.md, architect->architect.md, security->security.md, tester->tester.md; entries are timestamped and appended (multiple runs accumulate)
+- [x] No-ops safely off a ticket branch, when the ticket folder is absent, on unmapped agent types, and on malformed input (fail-open)
+- [x] Verified by feeding real-shaped SubagentStop payloads to the script (the payload shape confirmed by the CM hook probe spike): writes the right file on a ticket branch, no-ops otherwise
+- [x] scripts/ci.sh green (8 rungs)
+
+## Verification
+Unit-tested the script with sample SubagentStop payloads (agent_type + last_assistant_message) on a feat/CM-73 branch -> explore.md/review.md written; off-branch + missing-folder + unmapped-agent + malformed all no-op. bash scripts/ci.sh green. The live hook registers at session start (CM-9 caveat), so it activates next session.
+
+## Plan
+1) trace-subagent.sh: shell reads stdin payload + derives ticket dir from branch (feat/CM-n-slug -> tickets/CM-n-slug/, no-op otherwise); python3 parses payload from env, maps agent_type->file, appends timestamped entry. 2) Register SubagentStop in settings.json (matcher = fleet agent types). 3) Unit-test with sample payloads; rm the test-written trace files before committing. Defer critique.md (workflow) to a fast-follow.
+
+## Notes
+Built after a verification SPIKE (probe hook) confirmed SubagentStop exposes agent_type (matchable) + last_assistant_message (the output) + cwd. Scope: the verified AGENT path only. build-critique (a WORKFLOW) -> critique.md is a fast-follow once a real PostToolUse[Workflow] payload is captured (not triggered in the probe). Trace files are committed (durable, like plan.md) — unlike the gitignored throwaway prototypes/. Parses with python3, not jq (consistent with CM-72).

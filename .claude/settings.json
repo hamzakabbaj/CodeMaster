@@ -14,6 +14,19 @@
           }
         ]
       }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "code-explorer|reviewer|architect|security|tester",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/trace-subagent.sh\"",
+            "timeout": 10,
+            "statusMessage": "Persisting agent trace to the ticket"
+          }
+        ]
+      }
     ]
   }
 }

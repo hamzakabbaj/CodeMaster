@@ -84,6 +84,7 @@
 - [x] `CM-21` — `reviewer.md` (sonnet, PR review vs conventions/DoD; read-only Bash)
 - [x] `CM-22` — Scoped tools + model routing + memory **convention**; `.claude/agents/README.md`
 - [x] `CM-69` — Add the code-explorer agent: read-only code reconnaissance for the fleet
+- [x] `CM-73` — Persist fleet-agent output per ticket via a SubagentStop trace hook
 
 **Exit:** ✅ fleet defined with least-privilege tools + model routing; registers on reload (mechanic proven in CM-9). Live fleet validation folds into Phase 4 orchestration.
 
