@@ -9,18 +9,24 @@
 # blocking only when a real `git commit` segment carries the flag as an actual
 # token — not as text inside a quoted argument.
 #
+# CM-72: parse the hook input with python3 (already required for the shlex pass)
+# instead of jq. jq was an UNDECLARED dependency (repo deps are git/python3/node),
+# and if it was absent the guard failed OPEN — silently allowing the bypass. python3
+# is a hard dependency, so the local cage no longer hinges on an unlisted tool.
+#
 # Input : Claude Code hook JSON on stdin (.tool_input.command).
 # Output: a PreToolUse "deny" decision on stdout when blocking; else nothing.
 # Backstop: server CI re-validates every pushed commit message regardless.
 # Known gaps (accepted; CI covers): a real bypass written with an unbalanced
 # quote / heredoc on the git-commit segment won't lex, so it's skipped.
 
-cmd=$(jq -r '.tool_input.command // empty' 2>/dev/null)
-[ -z "$cmd" ] && exit 0
-
-verdict=$(printf '%s' "$cmd" | python3 -c '
-import sys, re, shlex
-cmd = sys.stdin.read()
+verdict=$(python3 -c '
+import sys, json, re, shlex
+try:
+    data = json.loads(sys.stdin.read() or "{}")
+    cmd = (data.get("tool_input") or {}).get("command") or ""
+except Exception:
+    print("allow"); sys.exit(0)  # unparseable input -> allow (CI backstops)
 blocked = False
 for seg in re.split(r"&&|\|\||[;\n|]", cmd):
     try:
