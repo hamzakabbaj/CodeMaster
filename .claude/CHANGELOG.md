@@ -9,14 +9,20 @@ All notable changes to the **CodeMaster** plugin — the `.claude/` unit declare
 
 ## [Unreleased]
 
-> Targets **0.1.0** — the first packaged version of the engineering OS.
+_No unreleased changes._
+
+## [0.1.0] - 2026-06-09
+
+First packaged version of the engineering OS — `.claude/` is now a coherent, versioned, CI-validated plugin unit (Phase 5). Still dogfooded in-repo: loaded natively, no marketplace, nothing installed.
 
 ### Added
 - `plugin.json` manifest — packages `.claude/` as the `codemaster` plugin unit (name, version, validatable components); the repo keeps loading `.claude/` natively, no marketplace, nothing installed. (CM-26)
 - `.claude/hooks/hooks.json` — the `block-no-verify` (PreToolUse) and `trace-subagent` (SubagentStop) hooks now ship as a plugin component; `tests/test_hooks_sync.py` guards it against drifting from `.claude/settings.json`. (CM-27)
 - `.claude/CHANGELOG.md` + release-tag discipline via `claude plugin tag` (`codemaster--v<version>`). (CM-28)
+- Plugin manifest validation wired into the verification ladder — `claude plugin validate .claude` as ci.sh rung 6 (graceful-degrade) + a version-pinned ci.yml step; `scripts/plugin_install_smoke.sh` proves the unit installs cleanly under an isolated config. (CM-29)
 
 ### Fixed
 - Broken YAML frontmatter — a `: ` (colon-space) inside the unquoted `description` — in `feature-intake/SKILL.md` and `code-explorer.md`, which made the whole frontmatter fail to parse and load with empty metadata at runtime. (CM-26)
 
-[Unreleased]: https://github.com/hamzakabbaj/CodeMaster/commits/main
+[Unreleased]: https://github.com/hamzakabbaj/CodeMaster/compare/codemaster--v0.1.0...HEAD
+[0.1.0]: https://github.com/hamzakabbaj/CodeMaster/releases/tag/codemaster--v0.1.0
