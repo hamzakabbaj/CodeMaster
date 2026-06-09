@@ -55,6 +55,7 @@
     "notes": { "type": "string", "description": "Optional supplementary notes, slicing rationale, or non-goals." },
     "slug": { "type": "string", "description": "Optional kebab-case slug used for the build-time branch/folder name." },
     "evidence": { "type": "string", "description": "Optional proof-of-done — pointers to the merged PR / green CI run / tests (small text)." },
-    "plan_md": { "type": "string", "description": "Optional inline Plan beat as raw markdown (migrated from a ticket's plan.md)." }
+    "plan_md": { "type": "string", "description": "Optional inline Plan beat as raw markdown (migrated from a ticket's plan.md)." },
+    "needs_design": { "type": "boolean", "description": "Optional. true when the ticket implies an open UI/UX choice — build's Plan beat then runs /design-options to generate a variant gallery and stop for a pick before building. Absent/false = no design exploration (or left to build's judgment)." }
   }
 }

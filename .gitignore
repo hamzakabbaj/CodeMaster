@@ -21,3 +21,7 @@ npm-debug.log*
 *.log
 tmp/
 .cache/
+
+# Throwaway design galleries (the /design-options element-altitude wireframes).
+# Decision aids only — the durable artifact is the choice recorded in plan.md.
+prototypes/
