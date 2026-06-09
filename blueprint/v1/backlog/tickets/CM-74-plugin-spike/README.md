@@ -1,4 +1,4 @@
-# CM-74: Spike: can CodeMaster's primitives ship as an in-repo project @skills-dir plugin?
+# CM-74: Spike: can CodeMaster's primitives ship as an in-repo @skills-dir plugin?
 
 > Generated from `ticket.json` — do not edit by hand (`scripts/gen_tickets.py`).
 
@@ -7,18 +7,18 @@
 - **Status:** ✅ done
 
 ## Goal
-Before the Phase-5 migration, verify by running whether a project-scope .claude/skills/<name>/.claude-plugin/ plugin loads in THIS repo and how its components behave — so we don't bulk-migrate on doc-reading alone.
+Before the Phase-5 migration, verify by running whether CodeMaster's primitives can be packaged as an @skills-dir plugin, and how plugin components behave — so we don't bulk-migrate on doc-reading alone.
 
 ## Acceptance criteria
-- [x] Questions answered from a real restart, not the docs: (1) does a project @skills-dir plugin load in-repo? (2) namespacing of skills/commands? (3) do plugin agents register? (4) does a plugin SessionStart hook fire + ${CLAUDE_PLUGIN_ROOT} resolve? (5) is a workflow inside a plugin discoverable/runnable?
-- [x] Decision recorded: go/no-go on the plugin migration, with the confirmed constraints
-- [x] The throwaway probe plugin (.claude/skills/cmplugin-probe/) is DELETED and disabled — the prototype is never shipped (spike discipline)
+- [x] Answered by running on Claude Code 2.1.169: does an @skills-dir plugin load? do components namespace? are workflows plugin-packageable? what scope/runtime constraints apply?
+- [x] Decision recorded with the viable path and the migration's concrete constraints
+- [x] All throwaway probes deleted + disabled (project-scope hand-built AND personal-scope plugin-init) — prototypes never shipped (spike discipline)
 
 ## Verification
-Probed across a restart, a /reload-skills, and a fresh session on Claude Code 2.1.71. RESULT: the CLI discovers + validates + enables the @skills-dir plugin (claude plugin enable cmplugin-probe@skills-dir succeeds; manifest validates), but at runtime NONE of its 5 components load — skill/command absent from the registries, agent not an invocable type, SessionStart hook never fires (no /tmp/cm-plugin-probe.txt), and the Workflow tool reports `pkgprobe-wf not found` (only built-ins deep-research, code-review registered).
+First a hand-built PROJECT-scope probe (.claude/skills/cmplugin-probe/) did NOT load (across 2.1.71 and 2.1.169). Re-checking the creation docs revealed the official scaffolder: `claude plugin init cmprobe --with skills agents hooks` -> ~/.claude/skills/cmprobe/. That plugin LOADED: `claude plugin list` shows `cmprobe@skills-dir  Status: ✔ loaded`, and its root skill appeared in the live skills registry. So the mechanism works; the first failure was construction + scope, not a fundamental block.
 
 ## Plan
-Spike concluded. Cleanup: claude plugin disable cmplugin-probe@skills-dir; delete .claude/skills/cmplugin-probe/ (throwaway, never committed). Ship only this decision record. Phase-5 migration epic now has a hard precondition (CC >= 2.1.154) and two open design questions (marketplace-vs-@skills-dir; how workflows ship).
+Spike concluded (GO). Phase-5 migration epic: `claude plugin init codemaster` at project scope; migrate skills/agents/commands/hooks; root SKILL.md as entry; python3/node hooks (not bun); REWRITE namespaced cross-references; keep workflows project-level; document trust-gate + launch-from-root (or go marketplace); require CC >= 2.1.154; test install in a clean clone. Cleanup done: both throwaway probes disabled + deleted.
 
 ## Notes
-DECISION: NO-GO for the in-repo @skills-dir plugin migration on Claude Code 2.1.71. Evidence points to a version gap (defaultEnabled explicitly requires >= 2.1.154; in-place @skills-dir component loading appears unsupported/incomplete on 2.1.71 even when the plugin is enabled). Two paths when revisited in Phase 5: (a) upgrade Claude Code to >= 2.1.154 and re-test the in-place @skills-dir approach (re-run the probe via the handoff prompt); (b) package as a proper marketplace-distributed plugin (the standard install path) rather than dropping a manifest into .claude/skills/. SEPARATE confirmed risk: workflows packaged in a plugin were NOT discovered by the Workflow tool — review-board / build-critique likely cannot ship as plugin components and must stay project-level or be invoked differently. Command namespacing (the /spec, /build, /ship cross-reference question) stays UNVERIFIED — blocked until the plugin actually loads. Until then, KEEP the working project-level .claude/{skills,agents,commands,hooks,workflows}; plugin packaging is deferred. The probe (manifest valid, structure complete) is reusable for the re-test after a CC upgrade.
+DECISION: GO — @skills-dir plugin packaging IS viable on Claude Code >= 2.1.154 (verified on 2.1.169). Corrects the earlier premature NO-GO. WHY the first probe failed: (a) PROJECT scope (<repo>/.claude/skills/) is trust-gated and only loads when launched from the repo root; (b) our hand-built folder lacked the root SKILL.md that `claude plugin init` creates (manifest has "skills":["./"], so the plugin's entry skill IS the root SKILL.md). CONSTRAINTS for the Phase-5 migration: (1) scaffold with `claude plugin init`; (2) CodeMaster wants PROJECT scope (checked into the repo so collaborators get it on clone) -> document the trust-gate + launch-from-repo-root requirement, OR distribute via a marketplace; (3) WORKFLOWS are NOT a plugin component (`init --with` offers skills/agents/hooks/mcp/lsp/output-style/channel, no workflows) -> review-board/build-critique stay project-level (or are invoked by a bundled skill); (4) NAMESPACING — a plugin's root skill keeps the plain plugin name, but bundled agents/commands namespace as <plugin>:<component> (evidence: feature-dev:code-explorer) -> our bare /spec, /build, /ship, code-explorer cross-references will need updating; (5) HOOKS — init defaults to a `bun` handler (not installed here); use python3/node instead (doc-supported), matching our deps; (6) requires CC >= 2.1.154 (defaultEnabled). Until the migration runs, KEEP the working project-level .claude/{skills,agents,commands,hooks,workflows}.
