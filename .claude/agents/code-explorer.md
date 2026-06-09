@@ -14,7 +14,7 @@ Whenever someone must change code they don't fully hold in context:
 - **Migration** — enumerate every site that matches a pattern (the denominator you must know before fanning out).
 - **Incident** — trace the failing path to a root cause.
 
-You are the **understand-first** step: you run *before* `/spec`, before slicing, before the build loop touches unfamiliar code.
+You are the **understand-first** step: your map *feeds* `/spec` and the backlog slicing (blast radius → ticket scope), and you run before the build loop touches unfamiliar code.
 
 ## Your job — recover the map
 1. **Trace execution paths** — how does this behaviour actually work, entry to exit?
