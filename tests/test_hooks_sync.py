@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SETTINGS = ROOT / ".claude" / "settings.json"
-PLUGIN_HOOKS = ROOT / ".claude" / "hooks" / "hooks.json"
+PLUGIN_HOOKS = ROOT / "plugin" / "hooks" / "hooks.json"
 
 _SCRIPT = re.compile(r"([\w.-]+\.(?:sh|py|js|ts|mjs))")
 

@@ -23,7 +23,7 @@ trap cleanup EXIT
 
 export CLAUDE_CONFIG_DIR="$CFG"          # isolate ALL install state to a throwaway dir
 mkdir -p "$MKT/.claude-plugin"
-cp -R .claude "$MKT/codemaster-src"
+cp -R plugin "$MKT/codemaster-src"       # plugin/ is the real plugin root (CM-75)
 cat > "$MKT/.claude-plugin/marketplace.json" <<JSON
 { "name": "cm-smoke", "version": "0.0.0", "owner": { "name": "smoke" },
   "plugins": [ { "name": "codemaster", "source": "./codemaster-src", "description": "install smoke" } ] }
