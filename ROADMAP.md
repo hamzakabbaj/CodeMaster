@@ -103,7 +103,7 @@
 - [x] `CM-26` — `plugin.json` manifest (package `.claude/` as a plugin unit; no marketplace)
 - [x] `CM-27` — Bundle hooks as a plugin component (`hooks.json`) + drift guard vs `settings.json`
 - [x] `CM-28` — Version + `CHANGELOG.md` + `claude plugin tag` release discipline
-- [ ] `CM-29` — Validate the plugin in CI (`claude plugin validate` rung) + isolated install smoke; cut `codemaster--v0.1.0`
+- [x] `CM-29` — Validate the plugin in CI (`claude plugin validate` rung) + isolated install smoke; cut `codemaster--v0.1.0`
 - [x] `CM-74` — Spike: can CodeMaster ship as an in-repo project @skills-dir plugin?
 
 **Exit:** CodeMaster installable as one unit.

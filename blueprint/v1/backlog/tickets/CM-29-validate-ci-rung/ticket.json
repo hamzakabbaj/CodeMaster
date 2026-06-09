@@ -3,7 +3,7 @@
   "title": "Validate the plugin in CI + prove it installs cleanly (Phase 5 close)",
   "epic": "phase-5-package-as-plugin-track-b",
   "type": "task",
-  "status": "in_progress",
+  "status": "done",
   "slug": "validate-ci-rung",
   "goal": "Make the plugin packaging a real, enforced gate (not advisory) and prove the unit installs cleanly — closing Phase 5: wire `claude plugin validate .claude` into the verification ladder (ci.sh + ci.yml), add an isolated install-smoke, promote the changelog, and cut the first release tag.",
   "acceptance_criteria": [
