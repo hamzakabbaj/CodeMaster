@@ -1,0 +1,17 @@
+{
+  "id": "CM-74",
+  "type": "spike",
+  "title": "Spike: can CodeMaster's primitives ship as an in-repo project @skills-dir plugin?",
+  "epic": "phase-5-package-as-plugin-track-b",
+  "status": "done",
+  "slug": "plugin-spike",
+  "goal": "Before the Phase-5 migration, verify by running whether a project-scope .claude/skills/<name>/.claude-plugin/ plugin loads in THIS repo and how its components behave — so we don't bulk-migrate on doc-reading alone.",
+  "acceptance_criteria": [
+    "Questions answered from a real restart, not the docs: (1) does a project @skills-dir plugin load in-repo? (2) namespacing of skills/commands? (3) do plugin agents register? (4) does a plugin SessionStart hook fire + ${CLAUDE_PLUGIN_ROOT} resolve? (5) is a workflow inside a plugin discoverable/runnable?",
+    "Decision recorded: go/no-go on the plugin migration, with the confirmed constraints",
+    "The throwaway probe plugin (.claude/skills/cmplugin-probe/) is DELETED and disabled — the prototype is never shipped (spike discipline)"
+  ],
+  "verification": "Probed across a restart, a /reload-skills, and a fresh session on Claude Code 2.1.71. RESULT: the CLI discovers + validates + enables the @skills-dir plugin (claude plugin enable cmplugin-probe@skills-dir succeeds; manifest validates), but at runtime NONE of its 5 components load — skill/command absent from the registries, agent not an invocable type, SessionStart hook never fires (no /tmp/cm-plugin-probe.txt), and the Workflow tool reports `pkgprobe-wf not found` (only built-ins deep-research, code-review registered).",
+  "notes": "DECISION: NO-GO for the in-repo @skills-dir plugin migration on Claude Code 2.1.71. Evidence points to a version gap (defaultEnabled explicitly requires >= 2.1.154; in-place @skills-dir component loading appears unsupported/incomplete on 2.1.71 even when the plugin is enabled). Two paths when revisited in Phase 5: (a) upgrade Claude Code to >= 2.1.154 and re-test the in-place @skills-dir approach (re-run the probe via the handoff prompt); (b) package as a proper marketplace-distributed plugin (the standard install path) rather than dropping a manifest into .claude/skills/. SEPARATE confirmed risk: workflows packaged in a plugin were NOT discovered by the Workflow tool — review-board / build-critique likely cannot ship as plugin components and must stay project-level or be invoked differently. Command namespacing (the /spec, /build, /ship cross-reference question) stays UNVERIFIED — blocked until the plugin actually loads. Until then, KEEP the working project-level .claude/{skills,agents,commands,hooks,workflows}; plugin packaging is deferred. The probe (manifest valid, structure complete) is reusable for the re-test after a CC upgrade.",
+  "plan_md": "Spike concluded. Cleanup: claude plugin disable cmplugin-probe@skills-dir; delete .claude/skills/cmplugin-probe/ (throwaway, never committed). Ship only this decision record. Phase-5 migration epic now has a hard precondition (CC >= 2.1.154) and two open design questions (marketplace-vs-@skills-dir; how workflows ship)."
+}
