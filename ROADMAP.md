@@ -100,7 +100,7 @@
 
 ## Phase 5 — Package as Plugin *(Track B)*
 
-- [ ] `CM-26` — `plugin.json` manifest (package `.claude/` as a plugin unit; no marketplace)
+- [x] `CM-26` — `plugin.json` manifest (package `.claude/` as a plugin unit; no marketplace)
 - [ ] `CM-27` — Bundle agents + hooks + skills + commands + workflows
 - [ ] `CM-28` — Version + changelog
 - [ ] `CM-29` — Local install test

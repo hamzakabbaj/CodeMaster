@@ -4,17 +4,17 @@
 
 - **Epic:** phase-5-package-as-plugin-track-b
 - **Type:** task
-- **Status:** 🟦 in progress
+- **Status:** ✅ done
 
 ## Goal
 Make CodeMaster's primitives a coherent, versioned plugin *unit* by adding a `.claude/.claude-plugin/plugin.json` manifest over the existing `.claude/` layout — WITHOUT distribution: no marketplace, nothing installed, the repo keeps loading `.claude/` natively (instant edits). Metadata packaging only (per the CM-74 GO decision + the no-marketplace call).
 
 ## Acceptance criteria
-- [ ] `.claude/.claude-plugin/plugin.json` exists with name `codemaster`, a semver `version`, description, author, and repo/homepage/license/keywords — NO `skills:["./"]` (components auto-discover from `.claude/{skills,agents,commands,hooks}`; there is no root entry skill)
-- [ ] `claude plugin validate .claude` passes (exit 0) — i.e. no manifest/component ERRORS; the only remaining items are WARNINGS on the intentional `.claude/agents/README.md` + `.claude/agents/memory/README.md` docs (the validator treats every .md under agents/ as an agent). `--strict` is deliberately NOT the gate, because it would force removing those load-bearing, referenced docs.
-- [ ] NO `marketplace.json` and no install step are introduced — `.claude/` continues to load natively; bare `/spec`, `/build`, `/ship`, `code-explorer` cross-references stay valid (native load needs no `codemaster:` namespacing)
-- [ ] Two pre-existing frontmatter parse bugs surfaced BY the validation are fixed: `.claude/skills/feature-intake/SKILL.md` and `.claude/agents/code-explorer.md` each had a `: ` (colon-space) inside the unquoted YAML `description`, which made the whole frontmatter fail to parse and load with EMPTY metadata at runtime (trigger description / tools+model silently dropped)
-- [ ] scripts/ci.sh stays green
+- [x] `.claude/.claude-plugin/plugin.json` exists with name `codemaster`, a semver `version`, description, author, and repo/homepage/license/keywords — NO `skills:["./"]` (components auto-discover from `.claude/{skills,agents,commands,hooks}`; there is no root entry skill)
+- [x] `claude plugin validate .claude` passes (exit 0) — i.e. no manifest/component ERRORS; the only remaining items are WARNINGS on the intentional `.claude/agents/README.md` + `.claude/agents/memory/README.md` docs (the validator treats every .md under agents/ as an agent). `--strict` is deliberately NOT the gate, because it would force removing those load-bearing, referenced docs.
+- [x] NO `marketplace.json` and no install step are introduced — `.claude/` continues to load natively; bare `/spec`, `/build`, `/ship`, `code-explorer` cross-references stay valid (native load needs no `codemaster:` namespacing)
+- [x] Two pre-existing frontmatter parse bugs surfaced BY the validation are fixed: `.claude/skills/feature-intake/SKILL.md` and `.claude/agents/code-explorer.md` each had a `: ` (colon-space) inside the unquoted YAML `description`, which made the whole frontmatter fail to parse and load with EMPTY metadata at runtime (trigger description / tools+model silently dropped)
+- [x] scripts/ci.sh stays green
 
 ## Verification
 Built the manifest, then `claude plugin validate .claude` -> initially FAILED on two real errors (feature-intake + code-explorer frontmatter YAML parse failures from a `: ` in the description) plus two README warnings. Fixed the two parse bugs (`: ` -> ` - `); re-validated -> `Validation passed with warnings` (exit 0), warnings only on the two intentional agents/ README docs. bash scripts/ci.sh green. Chose lenient validate over --strict so the load-bearing agents/README.md (fleet roster, referenced by ROADMAP + CM-22/CM-69) and agents/memory/README.md (the memory convention) need not be relocated.

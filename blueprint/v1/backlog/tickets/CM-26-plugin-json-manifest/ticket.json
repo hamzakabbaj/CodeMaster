@@ -3,7 +3,7 @@
   "title": "`plugin.json` manifest — package `.claude/` as a CodeMaster plugin unit",
   "epic": "phase-5-package-as-plugin-track-b",
   "type": "task",
-  "status": "in_progress",
+  "status": "done",
   "slug": "plugin-json-manifest",
   "goal": "Make CodeMaster's primitives a coherent, versioned plugin *unit* by adding a `.claude/.claude-plugin/plugin.json` manifest over the existing `.claude/` layout — WITHOUT distribution: no marketplace, nothing installed, the repo keeps loading `.claude/` natively (instant edits). Metadata packaging only (per the CM-74 GO decision + the no-marketplace call).",
   "acceptance_criteria": [
