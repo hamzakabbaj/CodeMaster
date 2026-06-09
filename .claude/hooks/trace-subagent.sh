@@ -21,6 +21,7 @@ case "$branch" in
   feat/CM-*) ticket="${branch#feat/}" ;;                # feat/CM-73-slug -> CM-73-slug
   *) exit 0 ;;                                          # only on a ticket branch
 esac
+case "$ticket" in */*|*..*) exit 0 ;; esac              # defense-in-depth: never escape tickets/
 root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
 dir="$root/blueprint/v1/backlog/tickets/$ticket"
 [ -d "$dir" ] || exit 0                                 # ticket folder must already exist
