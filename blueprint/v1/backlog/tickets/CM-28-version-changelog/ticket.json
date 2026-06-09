@@ -3,7 +3,7 @@
   "title": "Version + changelog — release discipline for the plugin unit",
   "epic": "phase-5-package-as-plugin-track-b",
   "type": "task",
-  "status": "in_progress",
+  "status": "done",
   "slug": "version-changelog",
   "goal": "Give the plugin unit a release discipline: a Keep-a-Changelog `CHANGELOG.md`, a documented SemVer + `claude plugin tag` flow, so versions are deliberate and traceable — even though CodeMaster is dogfooded in-repo and not published.",
   "acceptance_criteria": [
