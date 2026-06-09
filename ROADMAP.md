@@ -18,7 +18,7 @@
 | 2 | Robust-Code Loop | A | ✅ |
 | 3 | Subagent Fleet | A | ✅ |
 | 4 | Orchestration | A | ✅ |
-| 5 | Package as Plugin | B | 🟦 |
+| 5 | Package as Plugin | B | ✅ |
 | 6 | Pilot in Real Repo | C | ⬜ |
 | D | Docs Site (reference showcase) | A | ✅ |
 
