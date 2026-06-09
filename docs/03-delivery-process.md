@@ -45,6 +45,14 @@ Design (done) → Backlog → Sprint → Branch → Build+Verify → PR/Review �
 - **Semantic versioning** + auto-generated changelog from commits.
 - Tagged releases, release notes link tickets, migration notes for breaking changes.
 
+### Releasing the CodeMaster plugin
+
+CodeMaster is packaged as a plugin *unit* (`.claude/` + `.claude/.claude-plugin/plugin.json`) but is **dogfooded in-repo** — loaded natively from `.claude/`, not installed or published to a marketplace (per the CM-74 spike). The release ceremony is therefore lightweight:
+
+1. **Version of record** is `plugin.json`'s `version` (SemVer). Bump it when the unit's behavior changes.
+2. **Accumulate** changes under `## [Unreleased]` in `.claude/CHANGELOG.md` as tickets merge.
+3. **Cut the release** with `claude plugin tag .claude` — it validates the manifest and creates an annotated git tag `codemaster--v<version>` (preview with `--dry-run`, publish with `--push --remote origin`). Then promote `[Unreleased]` → `[<version>] - <date>` in the changelog.
+
 ## 7. Observability & operations
 
 - **Logs, metrics, traces** (the three pillars) wired in before release.
