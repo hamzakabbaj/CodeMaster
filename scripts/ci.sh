@@ -67,13 +67,14 @@ else
 fi
 
 echo "▸ 6/9 Plugin manifest validation"
-# The .claude/ tree is packaged as the `codemaster` plugin (CM-26..28). Validate the
-# manifest + components — this catches broken skill/agent frontmatter that would load
-# as EMPTY metadata at runtime (it already caught two such bugs). Lenient `validate`:
-# component ERRORS fail the rung; the two intentional agents/ README docs only warn.
-# Needs the Claude CLI; graceful-degrade if absent (mirrors the shellcheck/node rungs).
+# The plugin/ folder IS the `codemaster` plugin (CM-26..28, relocated in CM-75; .claude/
+# symlinks into it for native loading). Validate the manifest + components — this catches
+# broken skill/agent frontmatter that would load as EMPTY metadata at runtime (it already
+# caught two such bugs). Lenient `validate`: component ERRORS fail the rung; the two
+# intentional agents/ README docs only warn. Needs the Claude CLI; graceful-degrade if
+# absent (mirrors the shellcheck/node rungs).
 if command -v claude >/dev/null 2>&1; then
-  claude plugin validate .claude
+  claude plugin validate plugin
 else
   echo "  ! claude CLI not found — skipping plugin validation (install to mirror CI: npm i -g @anthropic-ai/claude-code)"
 fi

@@ -1,11 +1,11 @@
-"""Drift guard: the plugin hook registration (.claude/hooks/hooks.json) must stay
+"""Drift guard: the plugin hook registration (plugin/hooks/hooks.json) must stay
 semantically identical to the live project registration (.claude/settings.json).
 
 Why this test exists (CM-27): CodeMaster is packaged as a plugin *unit* but is NOT
-installed in its own repo — it loads .claude/ natively, so .claude/settings.json is
-what actually runs the hooks. hooks.json is the packaged mirror that ships in the
-plugin. Two registrations of the same hooks can silently diverge; this test fails
-the build the moment they do.
+installed in its own repo — it loads .claude/ natively (which symlinks into plugin/,
+CM-75), so .claude/settings.json is what actually runs the hooks. hooks.json is the
+packaged mirror that ships in the plugin. Two registrations of the same hooks can
+silently diverge; this test fails the build the moment they do.
 
 The two files differ ONLY in the path prefix (settings.json uses
 ${CLAUDE_PROJECT_DIR:-$PWD}/.claude/..., the plugin uses ${CLAUDE_PLUGIN_ROOT}/...),
@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SETTINGS = ROOT / ".claude" / "settings.json"
-PLUGIN_HOOKS = ROOT / ".claude" / "hooks" / "hooks.json"
+PLUGIN_HOOKS = ROOT / "plugin" / "hooks" / "hooks.json"
 
 _SCRIPT = re.compile(r"([\w.-]+\.(?:sh|py|js|ts|mjs))")
 
@@ -67,7 +67,7 @@ class TestHooksSync(unittest.TestCase):
         self.assertEqual(
             live,
             packaged,
-            "\n.claude/settings.json and .claude/hooks/hooks.json have DRIFTED.\n"
+            "\n.claude/settings.json and plugin/hooks/hooks.json have DRIFTED.\n"
             "Every hook (event, matcher, handler script, if, timeout, statusMessage) "
             "must match in both. Update whichever you changed so they agree.",
         )
