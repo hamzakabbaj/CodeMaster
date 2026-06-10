@@ -38,6 +38,7 @@ claude plugin install codemaster@codemaster
 | `/start-ticket` | Create a ticket's feature branch and flip its status to in progress. |
 | `/design-options` | Generate 2–3 throwaway UI variants as a `file://`-openable gallery, then stop for you to pick. |
 | `/ship` | PR → both gates → review → (confirm) → squash-merge → verify main. |
+| `/tracker-init` | Set up where the backlog lives — scaffold `.codemaster/` for the `folder` or `plane` provider (see **Tracker** below). |
 
 ### Skills — multi-step procedures (invoked by name or auto-matched)
 
@@ -131,9 +132,40 @@ What to actually run, in order, for the common starting points. (Commands carry 
 - **Build only after a Ready ticket exists.** `/build` expects acceptance criteria to check against — that's what "Ready" means.
 - **Trust the cage, verify the output.** The hooks + CI guarantee the invariants; your job at each checkpoint is to review design, security, and correctness — not just "does it run".
 
+## Tracker — where the backlog lives (pluggable)
+
+The process skills never touch a backlog directly. They call five **tracker verbs**
+(`mint · read · list · transition · link`); a **provider** implements them; a one-line
+per-project config picks the provider. Swap where work items live without changing the loop,
+the fleet, or the cage.
+
+| Provider | Backlog lives in | Use when |
+|---|---|---|
+| `folder` *(default)* | repo files + a generated board (`<root>/roadmap.json` + `tickets/…`) | solo / repo-native, no external tool |
+| `plane` | a [Plane](https://plane.so) project, via its REST API | the team tracks work in Plane |
+
+**Switch it on:**
+
+```bash
+/tracker-init folder      # or: /tracker-init plane
+```
+
+`tracker-init` scaffolds `.codemaster/` in your repo — `config.json` (committed) + the chosen
+provider's mechanics; for `plane` it also drops in the API wrapper and a gitignored `plane.env`
+for your token. From then on `feature-intake` / `new-ticket` / `backlog` / `/start-ticket` / `/ship`
+route through the active provider automatically. Full contract: [`tracker/README.md`](tracker/README.md).
+
+> Status + work items are pluggable; **design artifacts** (`/spec` output, blueprints) stay as repo
+> files either way — they version with the code and are reviewed in the PR.
+
 ## Heads-up: CodeMaster ships its own primitives
 
-CodeMaster is a **meta-project — it's dogfooded on its own repo.** Several backlog/generation skills (`new-ticket`, `backlog`, `build`) drive *this* repo's machinery — its JSON backlog under `blueprint/`, the `scripts/gen_roadmap.py` generators, the `scripts/ci.sh` verification ladder. Installed into a **foreign project**, the install reliably delivers the **agents, hooks, and thin commands**; the repo-specific backlog skills assume CodeMaster's own structure and won't be turnkey there. See [docs/03 §6](../docs/03-delivery-process.md#6-release-management) for the full picture. Treat a cross-project install as "borrow the fleet and the cage," not "drop in the whole backlog system."
+CodeMaster is a **meta-project — it's dogfooded on its own repo.** The **backlog** is now pluggable
+(see **Tracker** above — `folder` or `plane`), but some skills still lean on *this* repo's
+machinery — the `scripts/gen_roadmap.py` generators and the `scripts/ci.sh` verification ladder.
+Installed into a **foreign project**, the install reliably delivers the **fleet, hooks, thin commands,
+and the tracker**; the CI/generator scripts assume CodeMaster's own structure, so a consuming project
+wires its own CI. See [docs/03 §6](../docs/03-delivery-process.md#6-release-management) for the full picture.
 
 ## Learn more
 
