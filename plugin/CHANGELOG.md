@@ -9,6 +9,9 @@ All notable changes to the **CodeMaster** plugin — the `plugin/` unit declared
 
 ## [Unreleased]
 
+### Added
+- In-repo marketplace (`.claude-plugin/marketplace.json`, source `./plugin`) so the plugin can be installed into **other projects**: `claude plugin marketplace add <repo>` → `claude plugin install codemaster@codemaster` (user scope). The dogfood repo still loads natively via symlinks. CI now validates the marketplace manifest too; `scripts/plugin_install_smoke.sh` exercises the real marketplace. (CM-76)
+
 ### Changed
 - Relocated the plugin into a dedicated **`plugin/`** folder (`.claude-plugin/`, `skills/`, `agents/`, `commands/`, `hooks/`, this `CHANGELOG.md`) so the unit is one obvious folder. `.claude/{skills,agents,commands,hooks}` now symlink into it, preserving native loading + instant edits. Pure relocation — no component behavior changed; not re-tagged. (CM-75)
 

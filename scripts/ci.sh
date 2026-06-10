@@ -74,7 +74,8 @@ echo "▸ 6/9 Plugin manifest validation"
 # intentional agents/ README docs only warn. Needs the Claude CLI; graceful-degrade if
 # absent (mirrors the shellcheck/node rungs).
 if command -v claude >/dev/null 2>&1; then
-  claude plugin validate plugin
+  claude plugin validate plugin                        # the plugin unit + its components
+  claude plugin validate .claude-plugin/marketplace.json  # the in-repo marketplace (CM-76)
 else
   echo "  ! claude CLI not found — skipping plugin validation (install to mirror CI: npm i -g @anthropic-ai/claude-code)"
 fi
