@@ -18,7 +18,7 @@
 | 2 | Robust-Code Loop | A | ✅ |
 | 3 | Subagent Fleet | A | ✅ |
 | 4 | Orchestration | A | ✅ |
-| 5 | Package as Plugin | B | 🟦 |
+| 5 | Package as Plugin | B | ✅ |
 | 6 | Pilot in Real Repo | C | ⬜ |
 | D | Docs Site (reference showcase) | A | ✅ |
 
@@ -109,6 +109,7 @@
 - [x] `CM-76` — In-repo marketplace (`marketplace.json` → `./plugin`) to install codemaster into other projects
 - [x] `CM-77` — Remove symlinks: one way to load the plugin — marketplace install (via `setup.sh`)
 - [ ] `CM-78` — Add `plugin/README.md` — the consumer-facing front page
+- [x] `CM-79` — Inline next-number into `new-ticket`; drop the bundled-script reference
 
 **Exit:** CodeMaster installable as one unit.
 

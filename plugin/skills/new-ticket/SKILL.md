@@ -10,7 +10,11 @@ Create a well-formed CodeMaster ticket so every item meets our Definition of Rea
 > **Scope:** this skill scaffolds **one ticket whose shape is already decided.** It does **not** triage altitude — if you don't yet know whether the request is one ticket, several stories, or an epic, start at [`feature-intake`](../feature-intake/SKILL.md) (the front door), which routes back here for the small cases.
 
 ## Steps
-1. **Get the next number.** Run `plugin/skills/new-ticket/next-number.sh` — it prints the next free `CM-<n>`.
+1. **Get the next number.** The next free `CM-<n>` is one past the highest existing id. From the repo root, run:
+   ```sh
+   echo $(( $(grep -rhoE 'CM-[0-9]+' ROADMAP.md backlog/ | grep -oE '[0-9]+' | sort -n | tail -1) + 1 ))
+   ```
+   (It scans the generated board + process docs, which carry every id — JSON tickets included via `ROADMAP.md`.)
 2. **Gather inputs** (ask only for what's missing): title, epic/phase, type (`task|story|spike|fix`), goal (one sentence), acceptance criteria.
 3. **Create the ticket folder** `blueprint/v1/backlog/tickets/CM-<n>-<short-slug>/` and write its `ticket.json`, conforming to `plugin/skills/backlog/schema/ticket.schema.json` (`id`, `title`, `epic` = the epic id, `type`, `status: "todo"`, `acceptance_criteria`, plus a `goal` for a task or `story` for a story). Slug = kebab-case of the title. (`plan.md` and `evidence.md` are optional siblings, added later when the ticket is built — see `backlog/README.md`.)
 4. **Register in `roadmap.json`**: append `CM-<n>` to the correct epic's `tickets` list in `blueprint/v1/backlog/roadmap.json` and add its board line under `board_summaries` (`"CM-<n>": "— <title>"`), then run `python3 scripts/gen_roadmap.py` to regenerate `ROADMAP.md`. **Never hand-edit `ROADMAP.md`** — it is a generated view.
@@ -19,4 +23,4 @@ Create a well-formed CodeMaster ticket so every item meets our Definition of Rea
 ## Guardrails
 - One concern per ticket. If acceptance criteria span unrelated changes, suggest splitting.
 - Keep detail just-in-time: a placeholder-only ticket is fine until it's pulled into work.
-- Status lives only in `ticket.json`; `ROADMAP.md` is generated from the JSON backlog (`scripts/gen_roadmap.py`), so never edit the board by hand. `next-number.sh` still works (it greps `CM-<n>` across files, JSON included).
+- Status lives only in `ticket.json`; `ROADMAP.md` is generated from the JSON backlog (`scripts/gen_roadmap.py`), so never edit the board by hand. The step-1 grep finds `CM-<n>` across files (JSON tickets included via the regenerated `ROADMAP.md`).

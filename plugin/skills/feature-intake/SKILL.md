@@ -35,7 +35,7 @@ State the verdict and the one-line reason before you create anything.
 ## Step 3 — Route
 
 ### Small (fix / one story / a few stories) → delegate to `new-ticket`
-Follow the **[`new-ticket`](../new-ticket/SKILL.md)** procedure for each ticket: `next-number.sh` → write `tickets/CM-<n>-<slug>/ticket.json` (schema-valid, `status: "todo"`, `goal` for a task / `story` for a story) → register in `roadmap.json` (`tickets[]` + a `board_summaries` line) → `python3 scripts/gen_roadmap.py`. For **a few stories**, put them under the right epic in dependency order (enabler first if one is needed) and record `depends_on`/`blocks`. Each ticket must meet the Definition of Ready (canonical in [`backlog/README.md`](../../../backlog/README.md)).
+Follow the **[`new-ticket`](../new-ticket/SKILL.md)** procedure for each ticket: get the next `CM-<n>` → write `tickets/CM-<n>-<slug>/ticket.json` (schema-valid, `status: "todo"`, `goal` for a task / `story` for a story) → register in `roadmap.json` (`tickets[]` + a `board_summaries` line) → `python3 scripts/gen_roadmap.py`. For **a few stories**, put them under the right epic in dependency order (enabler first if one is needed) and record `depends_on`/`blocks`. Each ticket must meet the Definition of Ready (canonical in [`backlog/README.md`](../../../backlog/README.md)).
 
 ### Epic-sized → scaffold an epic shell, then send to `/spec`
 **Do not hand-slice the feature into stories — there's no spec yet.** Instead:
@@ -67,5 +67,5 @@ Report: the **altitude verdict + one-line reason**, what you created (ticket ids
 - **Triage, don't build.** You mint tickets / an epic shell and a recommendation. Never write feature code or a spec here.
 - **Don't fake-slice an epic.** If there are unknowns, the honest output is "new epic → go spec it," not a pile of speculative stories. Promoting the riskiest assumption is the `backlog` skill's job *after* a spec exists, not yours.
 - **One concern per ticket** (DoR, [`backlog/README.md`](../../../backlog/README.md)). If a single ticket's acceptance criteria span unrelated changes, split it.
-- **Reuse, don't duplicate.** Ticket mechanics come from `new-ticket` (its `next-number.sh`, the `ticket.schema.json`, `roadmap.json` registration, `gen_roadmap.py`); the DoR and altitude doctrine live in `backlog/README.md`. Point at them; don't restate them.
+- **Reuse, don't duplicate.** Ticket mechanics come from `new-ticket` (its next-`CM-<n>` step, the `ticket.schema.json`, `roadmap.json` registration, `gen_roadmap.py`); the DoR and altitude doctrine live in `backlog/README.md`. Point at them; don't restate them.
 - **`CM-` prefix** is CodeMaster's own meta-repo backlog. Product/example projects use their own prefix (`TS-`, `ETK-`) — there the same triage applies, but ids and paths follow that project's blueprint.
