@@ -42,7 +42,7 @@ Claude Code is a **layered, programmable platform**. The model is probabilistic;
 > Mechanics move fast. When we build any of these, we prototype + run it to confirm behavior rather than trust this table.
 
 ## Verified mechanic: new hooks & agents need a session reload
-Confirmed by building CM-8 (hook) and CM-9 (subagent): a **hook or custom subagent added mid-session is not active until the config is reloaded** (open `/hooks`, or restart). Claude Code's settings/agent registry is read at session start; files created afterward register on the next start. Practical rule: after adding a `.claude/` hook or agent, **reload before trusting it**, and don't "test" a deny-hook with the very action it's meant to block while it may still be inactive.
+Confirmed by building CM-8 (hook) and CM-9 (subagent): a **hook or custom subagent added mid-session is not active until the config is reloaded** (open `/hooks`, or restart). Claude Code's settings/agent registry is read at session start; files created afterward register on the next start. Practical rule: after editing a plugin hook/agent/skill, **refresh before trusting it** — for CodeMaster that means `claude plugin uninstall codemaster && claude plugin install codemaster@codemaster`, then restart (installs run from a cached copy, CM-77) — and don't "test" a deny-hook with the very action it's meant to block while it may still be inactive.
 
 ## The one senior insight
 
