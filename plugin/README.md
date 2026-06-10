@@ -71,7 +71,7 @@ claude plugin install codemaster@codemaster
 
 ## How it composes — the greenfield flow
 
-`feature-intake` → `/spec` → `backlog` → `/start-ticket` → `/build` → `/ship`. Each step stops at a human checkpoint; the hooks and CI enforce the invariants regardless of what the model decides. The doctrine behind each is in [docs/02 (robust-code loop)](../docs/02-robust-code-process.md) and [docs/03 (delivery)](../docs/03-delivery-process.md).
+`feature-intake` → `/spec` → `backlog` → `/start-ticket` → `build` → `/ship` (commands carry the `/`; skills are bare, matching the catalog above — though a skill is also invocable as `/build`). Each step stops at a human checkpoint; the hooks and CI enforce the invariants regardless of what the model decides. The doctrine behind each is in [docs/02 (robust-code loop)](../docs/02-robust-code-process.md) and [docs/03 (delivery)](../docs/03-delivery-process.md).
 
 ## Heads-up: CodeMaster ships its own primitives
 
