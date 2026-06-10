@@ -3,7 +3,7 @@
   "title": "In-repo marketplace manifest — install codemaster into other projects",
   "epic": "phase-5-package-as-plugin-track-b",
   "type": "task",
-  "status": "in_progress",
+  "status": "done",
   "slug": "marketplace-manifest",
   "goal": "Let CodeMaster be installed and tested in OTHER projects without losing the in-repo dev loop: add a `.claude-plugin/marketplace.json` (source `./plugin`) so `claude plugin marketplace add <repo>` + `install codemaster@codemaster` works at user scope. Additive — the symlink dogfood loop (CM-75) stays untouched.",
   "acceptance_criteria": [

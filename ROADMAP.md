@@ -18,7 +18,7 @@
 | 2 | Robust-Code Loop | A | ✅ |
 | 3 | Subagent Fleet | A | ✅ |
 | 4 | Orchestration | A | ✅ |
-| 5 | Package as Plugin | B | 🟦 |
+| 5 | Package as Plugin | B | ✅ |
 | 6 | Pilot in Real Repo | C | ⬜ |
 | D | Docs Site (reference showcase) | A | ✅ |
 
@@ -106,7 +106,7 @@
 - [x] `CM-29` — Validate the plugin in CI (`claude plugin validate` rung) + isolated install smoke; cut `codemaster--v0.1.0`
 - [x] `CM-74` — Spike: can CodeMaster ship as an in-repo project @skills-dir plugin?
 - [x] `CM-75` — Dedicated `plugin/` folder (symlinked into `.claude/`) so the plugin is one obvious unit
-- [ ] `CM-76` — In-repo marketplace (`marketplace.json` → `./plugin`) to install codemaster into other projects
+- [x] `CM-76` — In-repo marketplace (`marketplace.json` → `./plugin`) to install codemaster into other projects
 
 **Exit:** CodeMaster installable as one unit.
 

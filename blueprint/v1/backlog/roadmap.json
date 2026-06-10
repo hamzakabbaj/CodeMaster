@@ -118,7 +118,7 @@
       "phase": "5",
       "short_name": "Package as Plugin",
       "track": "B",
-      "status": "in_progress",
+      "status": "done",
       "goal": "Phase 5 — Package as Plugin *(Track B)*",
       "tickets": [
         "CM-26",

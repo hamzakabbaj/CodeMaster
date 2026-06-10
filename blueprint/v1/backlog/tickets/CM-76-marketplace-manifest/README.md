@@ -4,18 +4,18 @@
 
 - **Epic:** phase-5-package-as-plugin-track-b
 - **Type:** task
-- **Status:** 🟦 in progress
+- **Status:** ✅ done
 
 ## Goal
 Let CodeMaster be installed and tested in OTHER projects without losing the in-repo dev loop: add a `.claude-plugin/marketplace.json` (source `./plugin`) so `claude plugin marketplace add <repo>` + `install codemaster@codemaster` works at user scope. Additive — the symlink dogfood loop (CM-75) stays untouched.
 
 ## Acceptance criteria
-- [ ] `.claude-plugin/marketplace.json` at repo root: name `codemaster`, owner, lists the `codemaster` plugin with `source: "./plugin"`. No invalid fields (the `repository` key is not a marketplace field — omitted to avoid the validate warning).
-- [ ] Cross-project install verified by running (isolated CLAUDE_CONFIG_DIR): `claude plugin marketplace add <repo>` -> `claude plugin install codemaster@codemaster` -> `details` shows Skills (10) + Agents + Hooks (2), installed at USER scope (available in any project); real ~/.claude untouched.
-- [ ] CI validates the marketplace manifest too: ci.sh rung 6 + ci.yml run `claude plugin validate .claude-plugin/marketplace.json` alongside `claude plugin validate plugin`.
-- [ ] `scripts/plugin_install_smoke.sh` updated to install from THIS repo's real marketplace (`marketplace add $ROOT` -> `install codemaster@codemaster`) under a throwaway config — exercising the actual shipping artifact + the cross-project path.
-- [ ] Docs: `docs/03-delivery-process.md` §6 gains an 'Installing CodeMaster in another project' subsection (the two-audience model: symlinks for dev, marketplace for consumers) + the cache-refresh caveat + the CodeMaster-specific-primitives heads-up. CHANGELOG `[Unreleased]` Added entry.
-- [ ] Symlinks + native dogfood loop unchanged; scripts/ci.sh green (9 rungs)
+- [x] `.claude-plugin/marketplace.json` at repo root: name `codemaster`, owner, lists the `codemaster` plugin with `source: "./plugin"`. No invalid fields (the `repository` key is not a marketplace field — omitted to avoid the validate warning).
+- [x] Cross-project install verified by running (isolated CLAUDE_CONFIG_DIR): `claude plugin marketplace add <repo>` -> `claude plugin install codemaster@codemaster` -> `details` shows Skills (10) + Agents + Hooks (2), installed at USER scope (available in any project); real ~/.claude untouched.
+- [x] CI validates the marketplace manifest too: ci.sh rung 6 + ci.yml run `claude plugin validate .claude-plugin/marketplace.json` alongside `claude plugin validate plugin`.
+- [x] `scripts/plugin_install_smoke.sh` updated to install from THIS repo's real marketplace (`marketplace add $ROOT` -> `install codemaster@codemaster`) under a throwaway config — exercising the actual shipping artifact + the cross-project path.
+- [x] Docs: `docs/03-delivery-process.md` §6 gains an 'Installing CodeMaster in another project' subsection (the two-audience model: symlinks for dev, marketplace for consumers) + the cache-refresh caveat + the CodeMaster-specific-primitives heads-up. CHANGELOG `[Unreleased]` Added entry.
+- [x] Symlinks + native dogfood loop unchanged; scripts/ci.sh green (9 rungs)
 
 ## Verification
 `claude plugin validate .claude-plugin/marketplace.json` passes (removed the invalid `repository` field that warned). Isolated cross-project probe: `marketplace add $PWD` -> `install codemaster@codemaster` (scope: user) -> details showed Skills (10), Agents (8), Hooks (2); real ~/.claude clean after. `sh scripts/plugin_install_smoke.sh` green on the real marketplace. bash scripts/ci.sh green (rung 6 validates plugin + marketplace).
