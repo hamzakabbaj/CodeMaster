@@ -3,7 +3,7 @@
   "title": "Add plugin/README.md — the consumer-facing front page",
   "epic": "phase-5-package-as-plugin-track-b",
   "type": "task",
-  "status": "in_progress",
+  "status": "done",
   "slug": "plugin-readme",
   "goal": "Give the codemaster plugin a README at its root (plugin/README.md) so that anyone who installs it — or browses the in-repo marketplace — lands on a clear orientation page, matching the convention every substantial official plugin follows (feature-dev, frontend-design).",
   "acceptance_criteria": [
