@@ -66,7 +66,16 @@ These are what actually make the flow portable:
 ## Providers
 
 - [`providers/folder.md`](providers/folder.md) — files + git in the repo (the default; what CodeMaster has always done).
-- `providers/plane.md` — a Plane instance over its REST API via CLI *(in progress)*.
+- [`providers/plane.md`](providers/plane.md) — a [Plane](https://plane.so) instance over its REST API via the bundled `plane-api.sh` CLI.
+
+## Materializing into a project — `tracker init`
+
+A consuming repo doesn't reference the plugin's files directly (an installed plugin's path isn't
+resolvable from skill-body bash). Instead, **`/tracker-init <provider>`** copies the chosen provider's
+mechanics — and, for `plane`, its wrapper + an env template — into the project's `.codemaster/`:
+`config.json` + `provider.md` are committed; `plane.env` (secrets) is gitignored. Skills then read
+only cwd-relative `.codemaster/…`. Inside the CodeMaster source repo the bundled `plugin/tracker/…`
+paths also resolve, so `folder` needs no init here.
 
 > Scope: the tracker seam covers **work items + status only.** Design artifacts (the
 > `/spec` output, design-thinking maps, blueprints) stay as repo files regardless of
