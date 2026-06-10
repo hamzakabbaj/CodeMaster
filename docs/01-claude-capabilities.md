@@ -11,7 +11,7 @@ Claude Code is a **layered, programmable platform**. The model is probabilistic;
 | **CLAUDE.md** | Always-on project memory | Every turn | Model still decides | High (always in context) |
 | **Skill** | On-demand procedure (`SKILL.md` + optional scripts/resources) | When its `description` matches, or `/name` | Model-driven | Body loads only when invoked |
 | **Subagent** | Isolated agent with its own context window | When delegated to | Model-driven | Returns only a conclusion to main thread |
-| **Slash command** | Reusable prompt template (`.claude/commands/*.md`) | When you type `/name` | Model-driven | Injected on use |
+| **Slash command** | Reusable prompt template (`plugin/commands/*.md`) | When you type `/name` | Model-driven | Injected on use |
 | **Hook** | Deterministic shell script on a lifecycle event | On the event, always | **Deterministic** (cannot hallucinate) | None (runs outside model) |
 | **MCP server** | External tool/data integration | When its tools are called | Tool is deterministic; use is model-driven | Tool schemas in context |
 | **Output style** | Replaces/extends the base system prompt | Whole session | Model-driven | Persistent |
