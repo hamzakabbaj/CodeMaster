@@ -71,7 +71,34 @@ claude plugin install codemaster@codemaster
 
 ## How it composes — the greenfield flow
 
-`feature-intake` → `/spec` → `backlog` → `/start-ticket` → `build` → `/ship` (commands carry the `/`; skills are bare, matching the catalog above — though a skill is also invocable as `/build`). Each step stops at a human checkpoint; the hooks and CI enforce the invariants regardless of what the model decides. The doctrine behind each is in [docs/02 (robust-code loop)](../docs/02-robust-code-process.md) and [docs/03 (delivery)](../docs/03-delivery-process.md).
+`feature-intake` → `/spec` → `backlog` → `/start-ticket` → `build` → `/ship` (commands carry the `/`; skills are bare, matching the catalog above — though a skill is also invocable as `/build`). Each step stops at a human checkpoint; the hooks and CI enforce the invariants regardless of what the model decides.
+
+```
+   a request
+      |
+   feature-intake     triage to the right altitude (fix / story / stories / epic)
+      |
+   /spec              produce a spec + plan
+      |               > plan review            (human checkpoint)
+   backlog            slice the plan into Ready tickets
+      |
+   /start-ticket      feature branch + status -> in_progress
+      |
+   build              the robust-code loop:
+      |                  generate -> verify -> checkpoint -> critique
+      |                  (repeat until acceptance criteria met & the ladder is green)
+      |
+   /ship              open PR -> both CI gates -> reviewer
+      |               > merge confirm           (human checkpoint)
+      v
+   main               squash-merged, branch deleted
+
+   ── the deterministic cage runs underneath the whole flow ──
+   git hooks (commit-msg, pre-commit) + the CI ladder enforce the
+   invariants no matter what the model decides.
+```
+
+The doctrine behind each step is in [docs/02 (robust-code loop)](../docs/02-robust-code-process.md) and [docs/03 (delivery)](../docs/03-delivery-process.md).
 
 ## Heads-up: CodeMaster ships its own primitives
 

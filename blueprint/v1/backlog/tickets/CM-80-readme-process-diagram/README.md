@@ -1,0 +1,25 @@
+# CM-80: Add a process diagram to plugin/README.md
+
+> Generated from `ticket.json` — do not edit by hand (`scripts/gen_tickets.py`).
+
+- **Epic:** phase-5-package-as-plugin-track-b
+- **Type:** task
+- **Status:** ✅ done
+
+## Goal
+Make the plugin README's 'How it composes' section show the greenfield flow as a diagram, not just an inline arrow line — so an installer can see the spec → backlog → build → ship pipeline, the robust-code loop inside build, the human checkpoints, and the deterministic cage at a glance.
+
+## Acceptance criteria
+- [x] plugin/README.md's 'How it composes' section contains a diagram (ASCII box/flow in a fenced code block — chosen over Mermaid so it renders identically in every viewer: GitHub, terminal, and marketplace UIs).
+- [x] The diagram shows the full flow (feature-intake → /spec → backlog → /start-ticket → build → /ship → main), marks the two human checkpoints (plan review, merge confirm), depicts the robust-code loop (generate → verify → checkpoint → critique, repeating until the ladder is green), and notes the deterministic cage (git hooks + CI ladder) underneath.
+- [x] Pure-ASCII layout with no right-edge borders to mis-align; the existing prose + doc links are kept (diagram complements, doesn't replace them).
+- [x] scripts/ci.sh green (9 rungs); markdown links still resolve. Reopen + re-close the phase-5 epic to done in this same PR.
+
+## Verification
+Render-read README on the branch; bash scripts/ci.sh green; scripts/check_links.py green.
+
+## Plan
+1) Reopen phase-5 epic. 2) Add the ASCII process diagram under 'How it composes' in plugin/README.md. 3) check_links + ci green. 4) Re-close phase-5 epic in the same PR. 5) ship + refresh the installed plugin (README is bundled).
+
+## Notes
+User asked for a diagram of the process in the README. Format decision: ASCII (universal rendering) over Mermaid (GitHub-only styling) — user picked ASCII from a side-by-side preview. Single-ticket reopen/re-close of phase-5 (same pattern as CM-77), since the README is a phase-5 plugin artifact and epic-d is the docs/site showcase, not this file.
