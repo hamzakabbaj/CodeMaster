@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "codemaster",
+  "version": "0.1.0",
+  "description": "CodeMaster's in-repo marketplace — install the codemaster engineering-OS plugin into any project.",
+  "owner": {
+    "name": "hamzakabbaj",
+    "email": "hamza.kabbaj@live.fr"
+  },
+  "plugins": [
+    {
+      "name": "codemaster",
+      "source": "./plugin",
+      "description": "A Big-Tech-grade engineering operating system on Claude Code — skills, agents, commands, and hooks behind a deterministic cage."
+    }
+  ]
+}

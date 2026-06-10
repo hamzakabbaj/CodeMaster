@@ -42,7 +42,9 @@ jobs:
         # for reproducibility; `plugin validate` is a local, offline, no-auth check.
         env:
           CI: "true"
-        run: npx --yes @anthropic-ai/claude-code@2.1.169 plugin validate plugin
+        run: |
+          npx --yes @anthropic-ai/claude-code@2.1.169 plugin validate plugin
+          npx --yes @anthropic-ai/claude-code@2.1.169 plugin validate .claude-plugin/marketplace.json
 
       - name: Generated views in sync (ROADMAP + ticket READMEs)
         run: |

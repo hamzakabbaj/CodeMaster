@@ -47,11 +47,27 @@ Design (done) → Backlog → Sprint → Branch → Build+Verify → PR/Review �
 
 ### Releasing the CodeMaster plugin
 
-CodeMaster is packaged as a plugin *unit* in the **`plugin/`** folder (`plugin/.claude-plugin/plugin.json` + `skills/ agents/ commands/ hooks/`). It is **dogfooded in-repo**: `.claude/{skills,agents,commands,hooks}` are symlinks into `plugin/`, so Claude Code loads it natively (instant edits, plain `claude` launches) — it is not installed or published to a marketplace (per the CM-74 spike; layout per CM-75). The release ceremony is therefore lightweight:
+CodeMaster is packaged as a plugin *unit* in the **`plugin/`** folder (`plugin/.claude-plugin/plugin.json` + `skills/ agents/ commands/ hooks/`). Two audiences consume the **same** `plugin/` folder:
+
+- **This repo (development)** — `.claude/{skills,agents,commands,hooks}` are symlinks into `plugin/`, so Claude Code loads it natively with instant edits and plain `claude` launches. Nothing is installed (layout per CM-75).
+- **Other projects (consumption)** — an in-repo marketplace (`.claude-plugin/marketplace.json`, source `./plugin`) lets any project install it (CM-76); see *Installing CodeMaster in another project* below.
+
+The release ceremony is lightweight:
 
 1. **Version of record** is `plugin.json`'s `version` (SemVer). Bump it when the unit's behavior changes.
 2. **Accumulate** changes under `## [Unreleased]` in `plugin/CHANGELOG.md` as tickets merge.
 3. **Cut the release** with `claude plugin tag plugin` — it validates the manifest and creates an annotated git tag `codemaster--v<version>` (preview with `--dry-run`, publish with `--push --remote origin`). Then promote `[Unreleased]` → `[<version>] - <date>` in the changelog.
+
+### Installing CodeMaster in another project
+
+From any other project, install the plugin from this repo's marketplace (CM-76):
+
+```sh
+claude plugin marketplace add <path-or-github>/CodeMaster   # the repo (local path or GitHub)
+claude plugin install codemaster@codemaster                  # installs at user scope → every project
+```
+
+It installs at **user scope**, so the skills/agents/commands/hooks are then available in *all* your projects. To pull later edits into a consumer, `claude plugin uninstall codemaster && claude plugin install codemaster@codemaster` (installs run from a cached copy, so editing this repo's `plugin/` does not auto-propagate — that instant loop is the dev repo's, via the symlinks above). Note some primitives assume CodeMaster's own structure (`backlog`, `ship`, `start-ticket`, the trace hook target `blueprint/v1/backlog/`); the general ones (`build`, `spec`, `design-thinking`, the fleet agents) travel anywhere. Verify a clean install any time with `scripts/plugin_install_smoke.sh` (runs under a throwaway config, leaves `~/.claude` untouched).
 
 ## 7. Observability & operations
 
