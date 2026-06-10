@@ -110,6 +110,7 @@
 - [x] `CM-77` — Remove symlinks: one way to load the plugin — marketplace install (via `setup.sh`)
 - [x] `CM-78` — Add `plugin/README.md` — the consumer-facing front page
 - [x] `CM-79` — Inline next-number into `new-ticket`; drop the bundled-script reference
+- [x] `CM-80` — Add a process diagram to `plugin/README.md`
 
 **Exit:** CodeMaster installable as one unit.
 
