@@ -29,3 +29,6 @@ tmp/
 # Throwaway design galleries (the /design-options element-altitude wireframes).
 # Decision aids only — the durable artifact is the choice recorded in plan.md.
 prototypes/
+
+# CodeMaster tracker — local secrets (never commit)
+.codemaster/plane.env
