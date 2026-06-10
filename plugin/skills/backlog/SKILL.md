@@ -26,18 +26,24 @@ Read these directly from the project's `blueprint/` record; do not ask the user 
 5. **Meet the Definition of Ready** for each ticket — the canonical DoR lives in [`backlog/README.md`](../../../backlog/README.md) (single source of truth); the checklist below is a view of it, not a separate definition: clear single-sentence goal (task) or user story (story), testable acceptance criteria, known/unblocked deps, small enough for one branch, and an identified verification approach (which ladder rung proves it).
 6. **Refine just-in-time.** Only elaborate a ticket when it's pulled into work; `roadmap.json` is the index/order, the ticket file holds the detail. A ticket may carry an optional inline `plan` object for gnarly work (the Step-5 Plan beat, captured early).
 
-## Outputs — persist the structured record
+## Outputs — persist via the active tracker
 
-Write valid JSON conforming to the schemas, into the project's backlog:
+The slicing judgment here (vertical slices, dependency order, promoted enabler) is
+**provider-agnostic**. Persist each sliced ticket with the tracker `mint` verb — id assignment,
+storage, and registration belong to the active provider (resolve it from `.codemaster/config.json`;
+contract in [`plugin/tracker/README.md`](../../tracker/README.md)). Create epics first, then their
+tickets in dependency order, recording `depends_on`/`blocks`.
+
+**For the default `folder` provider**, `mint` writes the structured JSON backlog:
 
 ```
-blueprint/{version}/backlog/
-  roadmap.json            # the index: project, version, spec, epics[] (each with ordered tickets[])
-  tickets/<ID>.json       # one structured ticket per file
+<root>/                        # root from config, e.g. blueprint/v1/backlog
+  roadmap.json                 # the index: project, version, spec, epics[] (each with ordered tickets[])
+  tickets/<ID>.json            # one structured ticket per file (or tickets/<ID>-<slug>/ticket.json once foldered)
 ```
 
 - `roadmap.json` validates against `${CLAUDE_SKILL_DIR}/schema/roadmap.schema.json`.
-- each `tickets/<ID>.json` validates against `${CLAUDE_SKILL_DIR}/schema/ticket.schema.json`.
+- each ticket validates against `${CLAUDE_SKILL_DIR}/schema/ticket.schema.json`.
 
 Read a schema before producing output for it:
 

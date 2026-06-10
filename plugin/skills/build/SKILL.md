@@ -12,7 +12,7 @@ This is **greenfield Step 5** — the robust-code loop (doc 02). It runs after `
 ## Preconditions (assert, don't assume)
 - On `feat/CM-<n>-<slug>` (NOT `main`). If on `main`, stop — run `/start-ticket CM-<n>` first.
 - The ticket is **Ready** (DoR met): confirm the acceptance criteria are testable and the scope is **one concern**. If you can't reach Ready because of unknowns, **spike — don't start blind.**
-- You have the epic plan (`blueprint/v1/specs/`) the ticket was sliced from, and the ticket body (`blueprint/v1/backlog/tickets/CM-<n>-<slug>/ticket.json`).
+- You have the epic plan (`blueprint/.../specs/`, a repo file) the ticket was sliced from, and the ticket body — read it via the tracker `read` verb (the active provider; see [`plugin/tracker/README.md`](../../tracker/README.md)). Don't assume a folder path; a remote tracker has no `ticket.json`.
 
 ## Beat 1 — Plan the implementation (ALWAYS)
 Even if it's a sentence. Fidelity scales with **risk × uncertainty**, and three conditional hatches kick in by the *type* of uncertainty — each recovers or produces something the plan then uses. Most tickets need none of them; reach for a hatch only when its uncertainty is real.
