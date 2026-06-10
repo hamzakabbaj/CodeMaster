@@ -3,7 +3,7 @@
   "title": "Remove symlinks — one way to load the plugin: marketplace install",
   "epic": "phase-5-package-as-plugin-track-b",
   "type": "task",
-  "status": "in_progress",
+  "status": "done",
   "slug": "marketplace-only",
   "goal": "Collapse to a SINGLE loading mechanism: drop the `.claude/` symlinks (CM-75) so the codemaster plugin loads only by being installed from the in-repo marketplace (CM-76) — in this repo too, via setup.sh. Per the user's call: one consistent way to test, accepting the uninstall+reinstall refresh.",
   "acceptance_criteria": [
