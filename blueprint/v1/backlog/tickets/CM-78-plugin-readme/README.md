@@ -4,17 +4,17 @@
 
 - **Epic:** phase-5-package-as-plugin-track-b
 - **Type:** task
-- **Status:** 🟦 in progress
+- **Status:** ✅ done
 
 ## Goal
 Give the codemaster plugin a README at its root (plugin/README.md) so that anyone who installs it — or browses the in-repo marketplace — lands on a clear orientation page, matching the convention every substantial official plugin follows (feature-dev, frontend-design).
 
 ## Acceptance criteria
-- [ ] plugin/README.md exists at the plugin root (sibling of CHANGELOG.md and .claude-plugin/), and is the consumer-facing front page — written for someone who just installed codemaster@codemaster, not for a repo contributor.
-- [ ] It covers: what CodeMaster is in one paragraph; how to install + refresh (marketplace add -> install; uninstall+reinstall to update, per CM-77); and a catalog of what the plugin provides — the commands (spec, start-ticket, ship, design-options), the skills (build, backlog, new-ticket, feature-intake, design-thinking, technical-design), the agents (architect, tester, devops, security, reviewer, librarian, code-explorer), and the hooks (block-no-verify, trace-subagent).
-- [ ] It honestly states the cross-project caveat: several backlog/generation skills assume CodeMaster's own repo scripts, so installed into a foreign project the install primarily delivers the agents, hooks, and thin commands (links to docs/03 §6 for the full story). No overclaiming a turnkey foreign-repo experience.
-- [ ] Markdown links resolve (passes scripts/check_links.py); no broken relative links into docs/.
-- [ ] scripts/ci.sh green (9 rungs). The phase-5 epic is reopened to in_progress for the CM-78/CM-79 plugin-polish pair and re-closed to done in the final PR (CM-79) — this PR leaves it in_progress.
+- [x] plugin/README.md exists at the plugin root (sibling of CHANGELOG.md and .claude-plugin/), and is the consumer-facing front page — written for someone who just installed codemaster@codemaster, not for a repo contributor.
+- [x] It covers: what CodeMaster is in one paragraph; how to install + refresh (marketplace add -> install; uninstall+reinstall to update, per CM-77); and a catalog of what the plugin provides — the commands (spec, start-ticket, ship, design-options), the skills (build, backlog, new-ticket, feature-intake, design-thinking, technical-design), the agents (architect, tester, devops, security, reviewer, librarian, code-explorer), and the hooks (block-no-verify, trace-subagent).
+- [x] It honestly states the cross-project caveat: several backlog/generation skills assume CodeMaster's own repo scripts, so installed into a foreign project the install primarily delivers the agents, hooks, and thin commands (links to docs/03 §6 for the full story). No overclaiming a turnkey foreign-repo experience.
+- [x] Markdown links resolve (passes scripts/check_links.py); no broken relative links into docs/.
+- [x] scripts/ci.sh green (9 rungs). The phase-5 epic is reopened to in_progress for the CM-78/CM-79 plugin-polish pair and re-closed to done in the final PR (CM-79) — this PR leaves it in_progress.
 
 ## Verification
 Render-read the README; run scripts/check_links.py and bash scripts/ci.sh (both green). Confirm the file sits at plugin/README.md so it ships inside the plugin bundle (cross-checked against the official plugins' layout: feature-dev and frontend-design both ship LICENSE+README at plugin root).

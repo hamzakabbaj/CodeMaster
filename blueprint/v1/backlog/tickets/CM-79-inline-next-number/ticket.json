@@ -1,0 +1,19 @@
+{
+  "id": "CM-79",
+  "title": "Inline next-number into new-ticket — drop the bundled-script reference",
+  "epic": "phase-5-package-as-plugin-track-b",
+  "type": "task",
+  "status": "done",
+  "slug": "inline-next-number",
+  "goal": "Remove new-ticket's dependency on a path to a bundled helper script. The skill body currently says to run `plugin/skills/new-ticket/next-number.sh` — a repo-relative path that resolves only inside the source repo and cannot use ${CLAUDE_PLUGIN_ROOT} (verified unset in skill-body Bash). Inline the trivial computation instead, matching the official convention that skills carry no scripts.",
+  "acceptance_criteria": [
+    "plugin/skills/new-ticket/SKILL.md step 1 no longer references a bundled script path; it inlines the next-number computation (the same `grep -rhoE 'CM-[0-9]+' ROADMAP.md backlog/ | grep -oE '[0-9]+' | sort -n | tail -1`, then +1) so the step is self-contained and path-independent.",
+    "plugin/skills/new-ticket/next-number.sh is deleted (no longer referenced anywhere — confirmed by grep across plugin/ and scripts/).",
+    "The guardrails note in SKILL.md that mentions `next-number.sh` is updated to match (no dangling reference to the removed script).",
+    "Verified equivalence: the inlined command returns the same next free CM-<n> the script did (spot-check against the current max).",
+    "scripts/ci.sh green (9 rungs). This is the final PR of the CM-78/CM-79 plugin-polish pair, so it re-closes the phase-5 epic to done."
+  ],
+  "verification": "Findings recorded under CM-78's diff review: ${CLAUDE_PLUGIN_ROOT} is a harness config-time substitution (works in hooks.json), NOT a runtime env var in skill-body Bash (echo showed it unset); official skills bundle zero scripts (grep of their SKILL.md bodies = no matches); the repo-relative path fails from a foreign cwd (proven from /tmp) and the whole new-ticket skill is CodeMaster-self-hosting anyway. So the robust, convention-aligned fix is to inline. Confirm by running the inlined grep and matching it to next-number.sh's output before deleting the script; bash scripts/ci.sh green.",
+  "notes": "Scoped per the user's pick (inline, not a ${CLAUDE_PLUGIN_ROOT} rewrite — which would expand to empty and break the working in-repo case). Sibling self-hosting references in new-ticket (scripts/gen_roadmap.py, the plugin/skills/backlog/schema/ticket.schema.json read) are left as-is: they belong to the deferred 'cross-project script strategy' decision, not this ticket. This ticket only removes the one fragile bundled-SCRIPT dependency.",
+  "plan_md": "1) Inline the next-number grep into new-ticket SKILL.md step 1. 2) git rm plugin/skills/new-ticket/next-number.sh. 3) Update the guardrails line that references next-number.sh. 4) grep to confirm zero dangling refs. 5) ci green. 6) ship + re-close the phase-5 epic to done in this PR."
+}

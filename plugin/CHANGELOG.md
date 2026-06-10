@@ -10,9 +10,11 @@ All notable changes to the **CodeMaster** plugin — the `plugin/` unit declared
 ## [Unreleased]
 
 ### Added
+- `plugin/README.md` — a consumer-facing front page (overview, install + uninstall/reinstall refresh, a catalog of the commands/skills/agents/hooks, the greenfield flow, and the cross-project self-hosting caveat), matching the convention every substantial official plugin follows. (CM-78)
 - In-repo marketplace (`.claude-plugin/marketplace.json`, source `./plugin`) so the plugin installs into **any project**: `claude plugin marketplace add <repo>` → `claude plugin install codemaster@codemaster` (user scope). CI validates the marketplace manifest; `scripts/plugin_install_smoke.sh` exercises the real marketplace. (CM-76)
 
 ### Changed
+- `new-ticket` now **inlines** its next-`CM-<n>` computation instead of pointing at a bundled `next-number.sh` (deleted) — skill bodies can't rely on `${CLAUDE_PLUGIN_ROOT}`, so the old repo-relative path resolved only inside the source repo. Matches the official convention that skills carry no scripts; `feature-intake`'s references updated to match. (CM-79)
 - Relocated the plugin into a dedicated **`plugin/`** folder (`.claude-plugin/`, `skills/`, `agents/`, `commands/`, `hooks/`, this `CHANGELOG.md`) so the unit is one obvious folder. (CM-75)
 - **One way to load the plugin: install it.** Removed the `.claude/{skills,agents,commands,hooks}` symlinks — the plugin no longer auto-loads natively; it loads only via marketplace install (in this repo too, through `scripts/setup.sh`). Hooks now come from the plugin's `hooks.json` (dropped from `.claude/settings.json`; retired the now-moot `test_hooks_sync.py` drift guard). Editing `plugin/` requires `uninstall` + `reinstall` to take effect. (CM-77)
 
