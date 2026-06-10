@@ -100,6 +100,37 @@ claude plugin install codemaster@codemaster
 
 The doctrine behind each step is in [docs/02 (robust-code loop)](../docs/02-robust-code-process.md) and [docs/03 (delivery)](../docs/03-delivery-process.md).
 
+## Using it — recipes
+
+What to actually run, in order, for the common starting points. (Commands carry the `/`; skills are bare but also work as `/name`.)
+
+**A brand-new feature — the full arc.** When a request might be several stories or an epic:
+1. Describe the request, then run `feature-intake` — it triages the altitude and, for anything epic-sized, routes you into spec.
+2. `/spec <feature-or-CM-n>` — produces the spec + plan, then **stops for your plan review**.
+3. `backlog` — slices the approved plan into Ready tickets.
+4. `/start-ticket <CM-n>` — branches and flips the ticket to in-progress.
+5. `/build` — runs the robust-code loop until the acceptance criteria are met and the ladder is green.
+6. `/ship` — opens the PR, waits for both gates + the reviewer, then **stops for your merge confirm**.
+7. Repeat 4–6 for each ticket.
+
+**A single, already-shaped ticket.** When you already know it's one well-formed unit of work:
+- `new-ticket` *(only if it doesn't exist yet)* → `/start-ticket <CM-n>` → `/build` → `/ship`.
+
+**A quick fix or chore.** The ticket exists and the change is small:
+- `/start-ticket <CM-n>` → `/build` → `/ship`.
+
+**Exploring a UI/UX decision.** Before committing to an implementation:
+- `/design-options <CM-n>` — generates 2–3 throwaway variants as a `file://` gallery and **stops for you to pick** → then `/build` the chosen one.
+
+**Upstream design, before any tickets exist.** For a greenfield product or a big feature:
+- `design-thinking` → `technical-design` → `/spec` (architecture decides ticket boundaries, so it precedes slicing).
+
+### Best-practice rules
+- **Don't skip the checkpoints.** Let `/spec` stop at plan review and `/ship` stop at merge confirm — those pauses are where *you* are the discriminator, not the model.
+- **One ticket = one branch = one PR.** `/start-ticket` and `/ship` assume this; the git hooks enforce it.
+- **Build only after a Ready ticket exists.** `/build` expects acceptance criteria to check against — that's what "Ready" means.
+- **Trust the cage, verify the output.** The hooks + CI guarantee the invariants; your job at each checkpoint is to review design, security, and correctness — not just "does it run".
+
 ## Heads-up: CodeMaster ships its own primitives
 
 CodeMaster is a **meta-project — it's dogfooded on its own repo.** Several backlog/generation skills (`new-ticket`, `backlog`, `build`) drive *this* repo's machinery — its JSON backlog under `blueprint/`, the `scripts/gen_roadmap.py` generators, the `scripts/ci.sh` verification ladder. Installed into a **foreign project**, the install reliably delivers the **agents, hooks, and thin commands**; the repo-specific backlog skills assume CodeMaster's own structure and won't be turnkey there. See [docs/03 §6](../docs/03-delivery-process.md#6-release-management) for the full picture. Treat a cross-project install as "borrow the fleet and the cage," not "drop in the whole backlog system."
