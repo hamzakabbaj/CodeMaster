@@ -118,7 +118,7 @@
       "phase": "5",
       "short_name": "Package as Plugin",
       "track": "B",
-      "status": "done",
+      "status": "in_progress",
       "goal": "Phase 5 — Package as Plugin *(Track B)*",
       "tickets": [
         "CM-26",
@@ -128,7 +128,8 @@
         "CM-74",
         "CM-75",
         "CM-76",
-        "CM-77"
+        "CM-77",
+        "CM-78"
       ],
       "description": "",
       "exit": "CodeMaster installable as one unit."
@@ -262,7 +263,8 @@
     "CM-74": "— Spike: can CodeMaster ship as an in-repo project @skills-dir plugin?",
     "CM-75": "— Dedicated `plugin/` folder (symlinked into `.claude/`) so the plugin is one obvious unit",
     "CM-76": "— In-repo marketplace (`marketplace.json` → `./plugin`) to install codemaster into other projects",
-    "CM-77": "— Remove symlinks: one way to load the plugin — marketplace install (via `setup.sh`)"
+    "CM-77": "— Remove symlinks: one way to load the plugin — marketplace install (via `setup.sh`)",
+    "CM-78": "— Add `plugin/README.md` — the consumer-facing front page"
   },
   "decisions_log": [
     "- **2026-06-08** — Backlog migrated to JSON as the source of truth (CM-62): `blueprint/v1/backlog/roadmap.json` + folder-per-ticket `tickets/CM-<n>-<slug>/ticket.json` (README.md → ticket.json; plan/evidence kept as files). `ROADMAP.md` is now **generated** by `scripts/gen_roadmap.py` (pre-commit hook + CI sync rung), and the blueprint conformance gate validates every ticket. Supersedes the 2026-06-05 decision to keep CodeMaster's own backlog in markdown — CodeMaster now fully eats its own dogfood. `new-ticket` / `/start-ticket` / `/spec` rewired to the JSON; `next-number.sh` unchanged (greps `CM-<n>`).",
