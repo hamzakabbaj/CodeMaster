@@ -28,7 +28,7 @@
 The architect's move: turn each role into a **specialized subagent** with scoped tools and a persistent memory dir.
 
 ```
-.claude/agents/
+plugin/agents/
   architect.md        # design review, boundary checks — read-heavy, capable model
   tester.md           # adversarial test authoring — finds edge cases
   devops.md           # CI/CD, IaC, deploy reasoning

@@ -23,8 +23,8 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const SKILL_STEP_DIRS = {
-  'design-thinking': path.join(ROOT, '.claude/skills/design-thinking/steps'),
-  'system-design': path.join(ROOT, '.claude/skills/technical-design/steps'),
+  'design-thinking': path.join(ROOT, 'plugin/skills/design-thinking/steps'),
+  'system-design': path.join(ROOT, 'plugin/skills/technical-design/steps'),
 };
 
 // step-folder-name -> schema.json path (only steps that actually have a schema)
@@ -46,8 +46,8 @@ const SCHEMA_MAPS = {
 
 // Step-4 backlog: a single skill with two artifact schemas (not per-step folders).
 const BACKLOG_SCHEMAS = {
-  roadmap: path.join(ROOT, '.claude/skills/backlog/schema/roadmap.schema.json'),
-  ticket: path.join(ROOT, '.claude/skills/backlog/schema/ticket.schema.json'),
+  roadmap: path.join(ROOT, 'plugin/skills/backlog/schema/roadmap.schema.json'),
+  ticket: path.join(ROOT, 'plugin/skills/backlog/schema/ticket.schema.json'),
 };
 
 function typeOk(val, t) {

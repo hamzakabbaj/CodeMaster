@@ -67,8 +67,8 @@ else
 fi
 
 echo "▸ 6/9 Plugin manifest validation"
-# The plugin/ folder IS the `codemaster` plugin (CM-26..28, relocated in CM-75; .claude/
-# symlinks into it for native loading). Validate the manifest + components — this catches
+# The plugin/ folder IS the `codemaster` plugin (CM-26..28; relocated in CM-75, and as of
+# CM-77 it loads only via marketplace install). Validate the manifest + components — catches
 # broken skill/agent frontmatter that would load as EMPTY metadata at runtime (it already
 # caught two such bugs). Lenient `validate`: component ERRORS fail the rung; the two
 # intentional agents/ README docs only warn. Needs the Claude CLI; graceful-degrade if

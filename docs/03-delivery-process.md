@@ -45,29 +45,24 @@ Design (done) → Backlog → Sprint → Branch → Build+Verify → PR/Review �
 - **Semantic versioning** + auto-generated changelog from commits.
 - Tagged releases, release notes link tickets, migration notes for breaking changes.
 
-### Releasing the CodeMaster plugin
+### The CodeMaster plugin — one way to load it: install
 
-CodeMaster is packaged as a plugin *unit* in the **`plugin/`** folder (`plugin/.claude-plugin/plugin.json` + `skills/ agents/ commands/ hooks/`). Two audiences consume the **same** `plugin/` folder:
-
-- **This repo (development)** — `.claude/{skills,agents,commands,hooks}` are symlinks into `plugin/`, so Claude Code loads it natively with instant edits and plain `claude` launches. Nothing is installed (layout per CM-75).
-- **Other projects (consumption)** — an in-repo marketplace (`.claude-plugin/marketplace.json`, source `./plugin`) lets any project install it (CM-76); see *Installing CodeMaster in another project* below.
-
-The release ceremony is lightweight:
-
-1. **Version of record** is `plugin.json`'s `version` (SemVer). Bump it when the unit's behavior changes.
-2. **Accumulate** changes under `## [Unreleased]` in `plugin/CHANGELOG.md` as tickets merge.
-3. **Cut the release** with `claude plugin tag plugin` — it validates the manifest and creates an annotated git tag `codemaster--v<version>` (preview with `--dry-run`, publish with `--push --remote origin`). Then promote `[Unreleased]` → `[<version>] - <date>` in the changelog.
-
-### Installing CodeMaster in another project
-
-From any other project, install the plugin from this repo's marketplace (CM-76):
+CodeMaster is packaged as a plugin *unit* in the **`plugin/`** folder (`plugin/.claude-plugin/plugin.json` + `skills/ agents/ commands/ hooks/`). There is **one** way it loads anywhere — including this repo: you **install** it from the in-repo marketplace (`.claude-plugin/marketplace.json`, source `./plugin`). No symlinks, no native auto-load (CM-77). `scripts/setup.sh` does the install for this repo; any other project installs the same way:
 
 ```sh
 claude plugin marketplace add <path-or-github>/CodeMaster   # the repo (local path or GitHub)
-claude plugin install codemaster@codemaster                  # installs at user scope → every project
+claude plugin install codemaster@codemaster                  # user scope → available in EVERY project
 ```
 
-It installs at **user scope**, so the skills/agents/commands/hooks are then available in *all* your projects. To pull later edits into a consumer, `claude plugin uninstall codemaster && claude plugin install codemaster@codemaster` (installs run from a cached copy, so editing this repo's `plugin/` does not auto-propagate — that instant loop is the dev repo's, via the symlinks above). Note some primitives assume CodeMaster's own structure (`backlog`, `ship`, `start-ticket`, the trace hook target `blueprint/v1/backlog/`); the general ones (`build`, `spec`, `design-thinking`, the fleet agents) travel anywhere. Verify a clean install any time with `scripts/plugin_install_smoke.sh` (runs under a throwaway config, leaves `~/.claude` untouched).
+It installs at **user scope**, so the skills/agents/commands/hooks are available in all your projects. Installs run from a **cached copy**, so after editing `plugin/` you refresh with:
+
+```sh
+claude plugin uninstall codemaster && claude plugin install codemaster@codemaster   # then restart
+```
+
+Note some primitives assume CodeMaster's own structure (`backlog`, `ship`, `start-ticket`, and the trace hook target `blueprint/v1/backlog/`); the general ones (`build`, `spec`, `design-thinking`, the fleet agents) travel anywhere. Verify a clean install any time with `scripts/plugin_install_smoke.sh` (runs under a throwaway config, leaves `~/.claude` untouched).
+
+**Releasing a version:** bump `plugin.json`'s `version` (SemVer), accumulate changes under `## [Unreleased]` in `plugin/CHANGELOG.md`, then `claude plugin tag plugin` (validates the manifest, creates the annotated tag `codemaster--v<version>`; `--dry-run` to preview, `--push --remote origin` to publish), and promote `[Unreleased]` → `[<version>] - <date>`.
 
 ## 7. Observability & operations
 

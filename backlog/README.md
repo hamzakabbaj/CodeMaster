@@ -32,7 +32,7 @@ blueprint/v1/backlog/tickets/CM-<n>-<slug>/
   evidence.md   # optional — proof of done: pointers to the CI run / PR / tests + small text
 ```
 
-- **ticket.json** is the only required, hand-edited file (validated by the conformance rung against `.claude/skills/backlog/schema/ticket.schema.json`). **README.md** is a synced, GitHub-rendered view generated from it (`scripts/gen_tickets.py`, kept in sync by the pre-commit hook + a CI rung) — never hand-edit it. `plan.md` and `evidence.md` are added when they earn their place (ceremony scales with the ticket).
+- **ticket.json** is the only required, hand-edited file (validated by the conformance rung against `plugin/skills/backlog/schema/ticket.schema.json`). **README.md** is a synced, GitHub-rendered view generated from it (`scripts/gen_tickets.py`, kept in sync by the pre-commit hook + a CI rung) — never hand-edit it. `plan.md` and `evidence.md` are added when they earn their place (ceremony scales with the ticket).
 - **Evidence points at the cage, never duplicates it.** The authoritative proof is the green CI run + the tests in the suite + the merged PR — `evidence.md` *links* those and pastes small text outputs only. **No committed binaries** (a screenshot bloats history and goes stale — link the PR instead).
 
 ## Ticket lifecycle

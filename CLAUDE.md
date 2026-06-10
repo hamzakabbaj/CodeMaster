@@ -19,7 +19,7 @@ It is a meta-project: we prove the process by dogfooding it on this repo itself.
 - **Conventional Commits**, enforced by `.githooks/commit-msg`. Never use `--no-verify`.
 - **Run `scripts/ci.sh` and make it green before pushing.** Local must mirror CI.
 - **One ticket → one branch → PR → green CI → merge.** Update ticket `status` in `blueprint/v1/backlog/` on merge (`ROADMAP.md` regenerates via the pre-commit hook).
-- New checkout? Run `scripts/setup.sh` once to activate hooks.
+- New checkout? Run `scripts/setup.sh` once — it activates the git hooks **and** installs the codemaster plugin (skills/agents/commands/hooks) from the in-repo marketplace.
 
 ## Guiding principle
 Guarantees come from the **deterministic cage** (hooks, tests, CI) around a probabilistic model —

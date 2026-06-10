@@ -7,7 +7,7 @@ This **is** CodeMaster's source-of-truth backlog (migrated from markdown in CM-6
 
 `ROADMAP.md` at the repo root is a **generated view** of these files (`scripts/gen_roadmap.py`), kept in sync by the pre-commit hook and a CI rung. **Edit the JSON, never `ROADMAP.md`.**
 
-Validated by the blueprint conformance rung against `.claude/skills/backlog/schema/{roadmap,ticket}.schema.json`.
+Validated by the blueprint conformance rung against `plugin/skills/backlog/schema/{roadmap,ticket}.schema.json`.
 
 Projects built *via* CodeMaster use this same model — see the worked example in
 [examples/etikets](../../../examples/etikets/README.md).

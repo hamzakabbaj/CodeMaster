@@ -14,7 +14,7 @@ Assume the happy path works; hunt the rest. Empty/null, boundaries (0, 1, max, o
 1. Read the change and its acceptance criteria (ticket under `backlog/tickets/`).
 2. Enumerate the untested behaviors and the riskiest edge cases.
 3. Propose concrete tests (this repo uses Python `unittest` in `tests/`; shell gates run via `scripts/ci.sh`). Mirror the existing test style.
-4. Consult `.claude/agents/memory/tester.md` if present.
+4. Consult `plugin/agents/memory/tester.md` if present.
 
 ## Output
 A short prioritized list of gaps (most likely to bite first), then ready-to-paste test code for the top ones. Note which verification rung each belongs to. Do not edit files — return the tests.
