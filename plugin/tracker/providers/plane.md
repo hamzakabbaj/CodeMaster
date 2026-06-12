@@ -73,8 +73,10 @@ TODO=$(state_id "$(jq -r '.statusMap.todo // "unstarted"' .codemaster/config.jso
 ```
 
 The response holds `id` (UUID) + `sequence_id`. **Return `<identifier>-<sequence_id>`** as the
-canonical id. Epics are ordinary work items (often a 👑-named, `type_id:null` item); a child links
-via `parent: <epic UUID>`.
+canonical id. Epics are ordinary work items (often a 👑-named, `type_id:null` item) minted by the
+`roadmap` skill — for an epic, `description_html` carries the **goal** and an
+`<h4>Riskiest assumption</h4>` block instead of acceptance criteria; a child links via
+`parent: <epic UUID>`.
 
 ### `read(id) → item`
 Resolve the UUID (above), then `"$API" "$BASE/work-items/$uuid/?expand=state"`. Map back:

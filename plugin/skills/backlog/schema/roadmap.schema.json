@@ -22,10 +22,13 @@
             "enum": ["todo", "in_progress", "done", "blocked"],
             "description": "Epic lifecycle state."
           },
-          "goal": { "type": "string", "description": "One-sentence epic goal." },
+          "goal": { "type": "string", "description": "One-sentence epic goal — an outcome, not a task." },
+          "riskiest_assumption": { "type": "string", "description": "The one thing most likely to be wrong that would kill or reshape the epic. Named at roadmap-time, de-risked in /spec, promoted to an enabler ticket at backlog." },
+          "depends_on": { "type": "array", "items": { "type": "string" }, "description": "Epic ids that must land before this one." },
+          "blocks": { "type": "array", "items": { "type": "string" }, "description": "Epic ids this one blocks." },
           "tickets": {
             "type": "array",
-            "description": "Ticket ids in dependency order (enablers first, then stories). Each must have a matching tickets/<ID>.json.",
+            "description": "Ticket ids in dependency order (enablers first, then stories). Empty when roadmap scaffolds the epic; filled by the backlog skill. Each must have a matching tickets/<ID>.json.",
             "items": { "type": "string" }
           }
         }

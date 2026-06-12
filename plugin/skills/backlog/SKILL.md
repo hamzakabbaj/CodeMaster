@@ -1,13 +1,13 @@
 ---
 name: backlog
-description: Slice an approved plan into a structured, dependency-ordered backlog. Use for greenfield Step 4 — turning the /spec epic plan (and the system design) into blueprint/<version>/backlog/roadmap.json + tickets, each meeting the Definition of Ready.
+description: Slice one approved epic into a dependency-ordered set of Ready tickets. Greenfield Step 5 — turning that epic's /spec brief into tickets under an epic the roadmap already created, each meeting the Definition of Ready. Does not create epics.
 argument-hint: [epic-or-spec]
 allowed-tools: Bash, Read, Glob, Write
 ---
 
-You are a delivery lead slicing an approved plan into a backlog the team can build from. Your job is to fragment the epic into small, vertically-sliced, dependency-ordered tickets — each one finishable in a single short-lived branch and each meeting the Definition of Ready — and to persist them as a structured, machine-validated record.
+You are a delivery lead slicing **one approved epic** into a backlog the team can build from. Your job is to fragment that epic into small, vertically-sliced, dependency-ordered tickets — each one finishable in a single short-lived branch and each meeting the Definition of Ready — and to persist them as a structured, machine-validated record.
 
-This is **greenfield Step 4**. It runs after `/spec` (Step 3) has produced and plan-reviewed the epic plan, against the system design (Step 2). Code is downstream of this backlog.
+This is **greenfield Step 5**. The epic **already exists** — the `roadmap` skill (Step 3) created it and named its riskiest assumption; `/spec` (Step 4) then produced and plan-reviewed that epic's brief, against the system design (Step 2). You slice **one** epic into tickets — **you do not create epics.** Code is downstream of this backlog.
 
 ## Inputs — read the upstream blueprint first
 
@@ -21,7 +21,7 @@ Read these directly from the project's `blueprint/` record; do not ask the user 
 
 1. **Map plan steps → tickets.** Each numbered plan step becomes one or more tickets. A step that mixes unrelated concerns is split; trivial adjacent steps may merge.
 2. **Slice vertically, one concern each.** Every ticket delivers something verifiable end-to-end and is finishable in one short-lived branch. If a ticket's acceptance criteria span unrelated changes, split it.
-3. **Promote the riskiest assumption.** The spec's riskiest assumption becomes its **own foundational enabler ticket**, built and proven before the stories that depend on it. (This is the concrete payoff of spec-before-you-slice — e.g. EtiKets promoted its timezone rule, TabSplit its settlement engine.)
+3. **Promote the riskiest assumption.** The epic's `riskiest_assumption` (named at `roadmap`, sharpened in `/spec`) becomes its **own foundational enabler ticket**, built and proven before the stories that depend on it. (This is the concrete payoff of naming risk before you slice — e.g. EtiKets promoted its timezone rule, TabSplit its settlement engine.)
 4. **Dependency-order.** Enabler tasks (the `1xx` band) first, then stories. Record `depends_on` and `blocks` on every ticket so the order is explicit and checkable.
 5. **Meet the Definition of Ready** for each ticket — the canonical DoR lives in [`backlog/README.md`](../../../backlog/README.md) (single source of truth); the checklist below is a view of it, not a separate definition: clear single-sentence goal (task) or user story (story), testable acceptance criteria, known/unblocked deps, small enough for one branch, and an identified verification approach (which ladder rung proves it).
 6. **Refine just-in-time.** Only elaborate a ticket when it's pulled into work; `roadmap.json` is the index/order, the ticket file holds the detail. A ticket may carry an optional inline `plan` object for gnarly work (the Step-5 Plan beat, captured early).
@@ -31,8 +31,9 @@ Read these directly from the project's `blueprint/` record; do not ask the user 
 The slicing judgment here (vertical slices, dependency order, promoted enabler) is
 **provider-agnostic**. Persist each sliced ticket with the tracker `mint` verb — id assignment,
 storage, and registration belong to the active provider (resolve it from `.codemaster/config.json`;
-contract in [`plugin/tracker/README.md`](../../tracker/README.md)). Create epics first, then their
-tickets in dependency order, recording `depends_on`/`blocks`.
+contract in [`plugin/tracker/README.md`](../../tracker/README.md)). The epic **already exists**
+(minted by `roadmap`) — **do not create epics.** `mint` each sliced ticket with `parent` = the
+epic id, in dependency order, recording `depends_on`/`blocks`.
 
 **For the default `folder` provider**, `mint` writes the structured JSON backlog:
 

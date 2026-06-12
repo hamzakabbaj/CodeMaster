@@ -33,6 +33,7 @@ skills know about; each provider maps them to its native schema.
 | `status` | `todo` · `in_progress` · `done` · `blocked` |
 | `goal` *or* `story` | a task carries `goal` (one sentence); a story carries `story` ("As a … I want … so that …") |
 | `acceptance_criteria[]` | testable, checkable |
+| `riskiest_assumption` | **epics only** — the one thing most likely to be wrong (named by `roadmap`, sharpened by `/spec`, promoted to an enabler ticket by `backlog`) |
 | `parent` | id of the epic/parent, if any |
 | `links` | `{ branch?, pr? }` — VCS artifacts attached to the item |
 
