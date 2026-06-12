@@ -1,5 +1,5 @@
 ---
-description: Explore a UI/UX choice for a ticket — generate 2–3 throwaway variants of the element as a file://-openable gallery, then stop for the user to pick. The design-altitude parallel of /spec. Greenfield Step 5 (element altitude).
+description: Explore a UI/UX choice for a ticket — generate 2–3 throwaway variants of the element as a file://-openable gallery, then stop for the user to pick. The design-altitude parallel of /spec — element altitude, used during a ticket's plan step.
 argument-hint: <CM-number>  (e.g. /design-options 68) — defaults to the current branch's ticket
 ---
 
@@ -8,7 +8,7 @@ You are exploring the **look & interaction** of one element for ticket **CM-$ARG
 Do exactly this:
 
 1. **Resolve the ticket.** If `$ARGUMENTS` is empty, infer `CM-<n>` from the current branch (`feat/CM-<n>-<slug>`). Read its `ticket.json` — the goal, acceptance criteria, and the **specific element** in question (a button, a card, a form, a view).
-2. **Confirm a choice is actually open.** This runs inside `build`'s Plan beat, on the ticket's branch. If the element's look is **already determined** by the Step-2 design system (`blueprint/v1/system-design/design_system/`), say so and **stop — reuse the system, don't re-explore.** Only proceed when there's a genuine visual/interaction decision to make.
+2. **Confirm a choice is actually open.** This runs inside `build`'s Plan beat, on the ticket's branch. If the element's look is **already determined** by the system design's design system (`blueprint/v1/system-design/design_system/`), say so and **stop — reuse the system, don't re-explore.** Only proceed when there's a genuine visual/interaction decision to make.
 3. **Generate 2–3 DISTINCT variants** of the element with the `frontend-design` skill (or directly, if that plugin isn't installed), written as a **single self-contained, `file://`-openable gallery** at `prototypes/CM-$ARGUMENTS-<slug>/index.html`. Requirements:
    - All variants on one page, clearly labelled, shown side by side, each with a one-line note on its tradeoff.
    - Genuinely different directions (layout / interaction / emphasis) — **not recolours of one idea.**
@@ -22,4 +22,4 @@ Guardrails:
 - **`prototypes/` is gitignored — never commit the gallery.** The durable artifact is the decision recorded in `plan.md`. No committed binaries or screenshots (they bloat history and go stale).
 - **The prototype is a decision aid, never the implementation.** Build the pick with real project components, then run the verify → checkpoint → critique loop on *that*.
 - **Reuse the design system first.** If the look is already dictated, don't re-explore — stop (step 2).
-- **Element altitude only.** This is one element/screen for one ticket. Whole-project UX is Step-1 `design-thinking`; the system's component language is the Step-2 `design_system`. Same wireframe-and-pick loop, smallest scale.
+- **Element altitude only.** This is one element/screen for one ticket. Whole-project UX is `design-thinking`; the system's component language is the system design's `design_system`. Same wireframe-and-pick loop, smallest scale.

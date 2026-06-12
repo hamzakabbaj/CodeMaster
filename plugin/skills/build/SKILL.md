@@ -1,13 +1,13 @@
 ---
 name: build
-description: Implement ONE Ready ticket on its branch via the robust-code loop — plan → (generate → verify → checkpoint → critique) until acceptance criteria are met and the ladder is green. Use after /start-ticket has branched. Stops at green; it does NOT open the PR (that's ship). Greenfield Step 5 / the robust-code loop.
+description: Implement ONE Ready ticket on its branch via the robust-code loop — plan → (generate → verify → checkpoint → critique) until acceptance criteria are met and the ladder is green. Runs after /start-ticket has branched. Stops at green; it does NOT open the PR (that's ship).
 argument-hint: [CM-n]
 allowed-tools: Bash, Read, Edit, Write, Glob, Grep, Workflow, Agent
 ---
 
 You are the engineer running the robust-code loop on ONE Ready ticket, on its branch. Your output is working, verified code checkpointed green — **not** a PR. Ship is a separate step; build stops at green.
 
-This is **greenfield Step 5** — the robust-code loop (doc 02). It runs after `/start-ticket` has cut the branch and flipped status to in-progress.
+This is the **robust-code loop**. It runs after `/start-ticket` has cut the branch and flipped status to in-progress.
 
 ## Preconditions (assert, don't assume)
 - On `feat/CM-<n>-<slug>` (NOT `main`). If on `main`, stop — run `/start-ticket CM-<n>` first.
@@ -16,10 +16,10 @@ This is **greenfield Step 5** — the robust-code loop (doc 02). It runs after `
 
 ## Beat 1 — Plan the implementation (ALWAYS)
 Even if it's a sentence. Fidelity scales with **risk × uncertainty**, and three conditional hatches kick in by the *type* of uncertainty — each recovers or produces something the plan then uses. Most tickets need none of them; reach for a hatch only when its uncertainty is real.
-- **Most tickets** inherit the epic plan from Step 3 — a short in-head sketch is enough.
+- **Most tickets** inherit the epic's `/spec` brief — a short in-head sketch is enough.
 - **Terrain uncertainty** (the code you're about to change isn't in your context: brownfield, or grown greenfield where early code has fallen out of the window) → send the **`code-explorer`** agent to recover the map — execution paths, dependencies, **blast radius** — *before* you plan. Its map feeds the plan (and `/spec`, if you also run it). For a **brownfield** change, also **pin the existing behaviour with characterization tests before you touch it**, so a regression is loud, not silent.
 - **Logic uncertainty** (gnarly) → run `/spec CM-<n>` at ticket altitude and save it as `plan.md` beside the ticket.
-- **Design uncertainty** (the ticket sets `needs_design: true`, **or** you judge it implies an open visual/interaction decision) → run `/design-options CM-<n>`: it generates a 2–3 variant `.html` gallery in gitignored `prototypes/` (via the `frontend-design` skill, or direct HTML/CSS if that plugin isn't installed), **stops for the user to pick**, and records the choice in `plan.md`. The chosen variant is then built **for real** with the project's components. Skip it when the Step-2 design system already dictates the look.
+- **Design uncertainty** (the ticket sets `needs_design: true`, **or** you judge it implies an open visual/interaction decision) → run `/design-options CM-<n>`: it generates a 2–3 variant `.html` gallery in gitignored `prototypes/` (via the `frontend-design` skill, or direct HTML/CSS if that plugin isn't installed), **stops for the user to pick**, and records the choice in `plan.md`. The chosen variant is then built **for real** with the project's components. Skip it when the system design's design system already dictates the look.
 
 These compose: a brownfield UI change can recover the map (`code-explorer`) *and* pick a variant (`/design-options`) before the plan is written.
 
@@ -55,7 +55,7 @@ Workflow({ scriptPath: ".claude/workflows/build-critique.mjs",
 | `tester` — always | edge cases the AC missed + concrete tests to add |
 | `security` — `risky: true` | injection, secrets, untrusted input, authz, blast radius |
 | `architect` — `gnarly: true` | wrong-layer choices, coupling, abstractions that will rot |
-| `reviewer` — **never here** | diff review belongs to `ship` (Step 6) |
+| `reviewer` — **never here** | diff review belongs to `ship` |
 
 ## Exits
 - **AC met + ladder green → STOP.** Hand off to `ship`. Build does **not** open the PR.
@@ -65,5 +65,5 @@ Workflow({ scriptPath: ".claude/workflows/build-critique.mjs",
 ## Guardrails
 - **Never checkpoint on red; never `git commit --no-verify`** (a PreToolUse hook blocks it anyway).
 - **One concern per branch.** The cage — `ci.sh` + `checkpoint.sh` + the commit hooks — stays on the whole time. Guarantees come from the cage, not from remembering to be careful.
-- **Build ends at green.** Opening the PR, automated + human review, merge, and flipping the ticket to `done` are `ship`'s job (Step 6).
+- **Build ends at green.** Opening the PR, automated + human review, merge, and flipping the ticket to `done` are `ship`'s job.
 - **Reuse, don't restate.** Branch via `/start-ticket`, plan a gnarly ticket via `/spec`, verify via `ci.sh`, checkpoint via `checkpoint.sh`, park discoveries via `feature-intake` — point at them; don't reimplement them here.

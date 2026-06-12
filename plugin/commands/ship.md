@@ -1,5 +1,5 @@
 ---
-description: Ship a finished CodeMaster ticket — PR → both gates → review → (confirm) → squash-merge → verify main. Greenfield Step 6.
+description: Ship a finished CodeMaster ticket — PR → both gates → review → (confirm) → squash-merge → verify main. Runs after build; the only outward-facing, irreversible step.
 argument-hint: <CM-number>  (e.g. /ship 67) — defaults to the current branch's ticket
 ---
 
@@ -30,5 +30,5 @@ Guardrails:
 - **Never merge on red CI or a failing gate**, and **never `--no-verify`** (a PreToolUse hook blocks it).
 - **The PR title is the squash subject** — validate it through `.githooks/commit-msg` (step 5) before opening the PR. One definition of "valid," reused.
 - **Confirm before the squash-merge** — it's outward-facing and hard to reverse. Branch protection is staged (CM-35); until it lands, this command + the discipline are the enforcement.
-- One ticket → one PR. `ship` is Step 6 only — it does **not** write feature code (that's `build`) and assumes the branch is already green.
+- One ticket → one PR. `ship` does **not** write feature code (that's `build`) and assumes the branch is already green.
 - Optional: for a ticket that warrants proof-of-done, record pointers (green CI run / PR / tests) in the ticket's `evidence.md` — link the cage, don't duplicate it; no committed binaries.

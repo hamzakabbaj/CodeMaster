@@ -9,7 +9,7 @@ You are the intake lead. A request just arrived "out of the blue" — a feature,
 
 This is the **front door**. Two doors sit behind you, and picking between them is the whole point:
 - **[`new-ticket`](../new-ticket/SKILL.md)** — the mechanical "scaffold ONE already-shaped ticket" skill. You delegate to its procedure once you've decided the work is one (or a few) tickets.
-- **the heavy arc** — Design-Thinking → System-Design → **`/spec`** → **[`backlog`](../backlog/SKILL.md)** (Step 4, bulk-slice). You route here when the request is epic-sized.
+- **the heavy arc** — Design-Thinking → System-Design → **`roadmap`** → **`/spec`** (per epic) → **[`backlog`](../backlog/SKILL.md)** (per epic). You route here when the request is epic-sized.
 
 ## Step 1 — Understand the request
 Restate it in **one sentence** as a user-visible outcome. Then surface the two things that decide altitude:

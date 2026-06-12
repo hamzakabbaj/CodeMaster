@@ -1,8 +1,8 @@
 ---
 name: roadmap
 description: Decompose a designed product into a dependency-ordered set of epics — each
-  with its riskiest assumption — and scaffold the backlog. Greenfield Step 3, between
-  system design and /spec. Epics only; spec.md and tickets come just-in-time downstream.
+  with its riskiest assumption — and scaffold the backlog. Runs after system design,
+  before /spec. Epics only; spec.md and tickets come just-in-time downstream.
 argument-hint: [product-or-version]
 allowed-tools: Bash, Read, Glob, Write
 ---
@@ -12,8 +12,8 @@ vertically-sliced, dependency-ordered **epics**, each carrying the one assumptio
 likely to be wrong. You name and order the epics — you do **not** spec them or slice
 tickets. Depth is added just-in-time downstream (`/spec` per epic, then `backlog`).
 
-This is **greenfield Step 3**, between the system design (Step 2) and `/spec` (Step 4).
-Specs, tickets, and code all hang off the epics you create here.
+This runs **after the system design and before `/spec`**. Specs, tickets, and code all
+hang off the epics you create here.
 
 ## Inputs — read the design record first
 

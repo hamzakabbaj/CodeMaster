@@ -1,13 +1,13 @@
 ---
 name: backlog
-description: Slice one approved epic into a dependency-ordered set of Ready tickets. Greenfield Step 5 — turning that epic's /spec brief into tickets under an epic the roadmap already created, each meeting the Definition of Ready. Does not create epics.
+description: Slice one approved epic into a dependency-ordered set of Ready tickets. Runs after the epic's /spec, before start-ticket — turning that epic's /spec brief into tickets under an epic the roadmap already created, each meeting the Definition of Ready. Does not create epics.
 argument-hint: [epic-or-spec]
 allowed-tools: Bash, Read, Glob, Write
 ---
 
 You are a delivery lead slicing **one approved epic** into a backlog the team can build from. Your job is to fragment that epic into small, vertically-sliced, dependency-ordered tickets — each one finishable in a single short-lived branch and each meeting the Definition of Ready — and to persist them as a structured, machine-validated record.
 
-This is **greenfield Step 5**. The epic **already exists** — the `roadmap` skill (Step 3) created it and named its riskiest assumption; `/spec` (Step 4) then produced and plan-reviewed that epic's brief, against the system design (Step 2). You slice **one** epic into tickets — **you do not create epics.** Code is downstream of this backlog.
+The epic **already exists** — `roadmap` created it and named its riskiest assumption; `/spec` then produced and plan-reviewed that epic's brief, against the system design. You slice **one** epic into tickets — **you do not create epics.** Code is downstream of this backlog.
 
 ## Inputs — read the upstream blueprint first
 
