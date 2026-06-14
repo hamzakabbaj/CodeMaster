@@ -10,8 +10,10 @@ original backlog and the default provider. All mechanics that used to live insid
 { "tracker": "folder", "folder": { "root": "blueprint/v1/backlog", "idPrefix": "CM" } }
 ```
 
-- `root` — backlog directory, repo-relative. Holds `roadmap.json` + `tickets/<id>-<slug>/ticket.json`.
-- `idPrefix` — uppercase tag; ids are `<idPrefix>-<n>` (e.g. `CM-80`).
+- `root` — backlog directory, repo-relative. Holds `roadmap.json` + co-located epics:
+  `epics/<epic-id>/{spec.md, tickets/<id>-<slug>/ticket.json}`. Everything about one epic —
+  its brief and all its tickets — lives in that epic's folder.
+- `idPrefix` — uppercase tag; ticket ids are `<idPrefix>-<n>` (e.g. `CM-80`); epic ids are kebab-case.
 
 Resolve `ROOT` and `PREFIX` from config (fall back to `blueprint/v1/backlog` + `CM` if
 `.codemaster/config.json` is absent). All paths below are relative to the repo root.
@@ -39,10 +41,12 @@ Identity: `todo / in_progress / done / blocked` are stored verbatim in `ticket.j
 scaffolds its folder; everything else mints a ticket.
 
 **Ticket** (`type: task | story | spike | fix`):
-1. Compute the next id (above). Derive `slug` = kebab-case of the title.
-2. Write `"$ROOT"/tickets/<id>-<slug>/ticket.json` with the vocabulary fields
+1. Compute the next id (above). Derive `slug` = kebab-case of the title. The ticket's `epic`
+   (parent) names the epic folder it lands in — that epic must already exist (minted by `roadmap`).
+2. Write `"$ROOT"/epics/<epic-id>/tickets/<id>-<slug>/ticket.json` with the vocabulary fields
    (`id`, `title`, `epic`→parent, `type`, `status: "todo"`, `goal` **or** `story`,
-   `acceptance_criteria`). Conforms to the ticket schema bundled with the `backlog` skill.
+   `acceptance_criteria`). Co-located under its epic. Conforms to the ticket schema bundled with
+   the `backlog` skill.
 3. Register in `"$ROOT"/roadmap.json`: append `<id>` to the right epic's `tickets[]` and add a
    `board_summaries["<id>"] = "— <title>"` line.
 4. Regenerate the board: `python3 scripts/gen_roadmap.py` (and `gen_tickets.py` for the per-ticket
@@ -64,14 +68,15 @@ scaffolds its folder; everything else mints a ticket.
 > JSON write convention: end every `json.dump` with a trailing newline.
 
 ### `read(id) → item`
-Read `"$ROOT"/tickets/<id>-*/ticket.json` (the `<slug>` is the folder suffix). Return its fields.
+Read `"$ROOT"/epics/*/tickets/<id>-*/ticket.json` (the id is unique across epics; the `<slug>`
+is the folder suffix). Return its fields.
 
 ### `list(query) → [item]`
-Glob `"$ROOT"/tickets/*/ticket.json`, parse each, filter by `status` / `epic` as asked.
+Glob `"$ROOT"/epics/*/tickets/*/ticket.json`, parse each, filter by `status` / `epic` as asked.
 The generated `ROADMAP.md` is a fast human view of the same data.
 
 ### `transition(id, status)`
-Set `"status"` in `"$ROOT"/tickets/<id>-*/ticket.json`, then `python3 scripts/gen_roadmap.py`
+Set `"status"` in `"$ROOT"/epics/*/tickets/<id>-*/ticket.json`, then `python3 scripts/gen_roadmap.py`
 to refresh the board. This is the only writer of status. (Closing an epic? flip each child
 ticket's status too — the board check verifies markdown==JSON, not JSON self-consistency.)
 
@@ -85,3 +90,8 @@ record `links` in `ticket.json` if a project wants them explicit.
   the folder provider assumes a repo that carries them (CodeMaster itself, or the `backlog`
   skill's output structure). A non-CodeMaster repo using `folder` supplies its own equivalent
   or drops the regen step.
+- **Co-location vs. the bundled generators:** the verb paths above are co-located
+  (`epics/<epic-id>/tickets/…`). CodeMaster's own `gen_roadmap.py`/`gen_tickets.py` and its
+  historical `blueprint/v1/backlog/` predate this and still read the **flat** `tickets/…` layout —
+  they need updating before the regen step works against a co-located board. Until then, a
+  co-located project drops the regen step (the `roadmap.json` index is still authoritative).

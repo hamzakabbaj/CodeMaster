@@ -15,7 +15,7 @@ Do exactly this:
    - Reuse the project's **design tokens** where they exist; this is exploration of *direction*, not a license to ignore the system.
    - Self-contained HTML/CSS/JS (no server, no fetch, no modules) so it opens straight off disk — same `file://` constraint as the rest of CodeMaster's static surfaces.
 4. **Present + STOP for the pick.** Give the user the `file://` path to open and a short summary of each variant and its tradeoff. **Stop and let the user choose** — this is the human gate, exactly as `/spec` stops for plan-review. Do not start building.
-5. **Record the decision in `plan.md`** beside the ticket (`blueprint/v1/backlog/tickets/CM-$ARGUMENTS-<slug>/plan.md`, create if absent): the **chosen variant, why, and why-not the rejected ones** — a lightweight ADR. (This `plan.md` is also the `gnarly` signal for `build-critique`, so the design decision and the architect lens travel together.)
+5. **Record the decision in `plan.md`** beside the ticket — in the ticket's own folder (co-located under its epic, `epics/<epic-id>/tickets/<id>-<slug>/plan.md`; create if absent): the **chosen variant, why, and why-not the rejected ones** — a lightweight ADR. (This `plan.md` is also the `gnarly` signal for `build-critique`, so the design decision and the architect lens travel together.)
 6. **Hand back to `build`.** The chosen direction is now built **for real** with the project's components in the loop — the prototype is discarded.
 
 Guardrails:

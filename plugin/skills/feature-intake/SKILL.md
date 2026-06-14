@@ -57,7 +57,7 @@ Follow the **[`new-ticket`](../new-ticket/SKILL.md)** procedure for each ticket 
    }
    ```
    Required by schema: `id, name, status, goal, tickets`. Required by the generator on top of that: **`phase`, `short_name`, `track`** (and `description`/`exit` render if present). Confirm the `phase` letter is unused by reading the existing epics first.
-2. **Scaffold one placeholder `spike`** via the `new-ticket` procedure — `tickets/CM-<n>-spec-<slug>/ticket.json`, `type: "spike"`, goal "Spec the <feature> epic (design-thinking as needed → /spec)" — so the work has a home and a next action. Add its id to the epic's `tickets[]` **and** to `board_summaries`.
+2. **Scaffold one placeholder `spike`** via the `new-ticket` procedure — co-located under the new epic at `epics/<epic-id>/tickets/CM-<n>-spec-<slug>/ticket.json`, `type: "spike"`, goal "Spec the <feature> epic (design-thinking as needed → /spec)" — so the work has a home and a next action. Add its id to the epic's `tickets[]` **and** to `board_summaries`.
 3. **Regenerate** views: `python3 scripts/gen_roadmap.py && python3 scripts/gen_tickets.py` (the pre-commit hook also does this; running it now catches crashes early).
 4. **Recommend the arc**, don't run it: tell the user this is epic-sized and the next step is `/spec` (preceded by design-thinking if the problem/users are themselves unclear). Leave design-thinking, system-design, and the spec to their own skills.
 

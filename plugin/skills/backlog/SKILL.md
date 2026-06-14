@@ -13,7 +13,7 @@ The epic **already exists** — `roadmap` created it and named its riskiest assu
 
 Read these directly from the project's `blueprint/` record; do not ask the user to paste them:
 
-- `blueprint/{version}/specs/<epic>.spec.md` — the approved plan. Its numbered plan steps are the raw material the tickets are sliced from, and its **riskiest-assumption** section names what to promote.
+- `<root>/epics/<epic-id>/spec.md` — the approved epic brief (from `/spec`). Its **Approach** and **Validating outcome** are the raw material the tickets are sliced from, and its **sharpened riskiest assumption** names what to promote to an enabler. (`<root>` from `.codemaster/config.json`, e.g. `blueprint/v1/backlog`.)
 - `blueprint/{version}/system-design/` — architecture, API, data model. Architecture decides ticket boundaries: slice along the seams it defines (services, modules, the API contract) so tickets are independent.
 - `blueprint/{version}/design-thinking/goal_statement/data.json` — the MVP scope and **non-goals**; never slice a ticket for a non-goal.
 
@@ -38,9 +38,10 @@ epic id, in dependency order, recording `depends_on`/`blocks`.
 **For the default `folder` provider**, `mint` writes the structured JSON backlog:
 
 ```
-<root>/                        # root from config, e.g. blueprint/v1/backlog
-  roadmap.json                 # the index: project, version, spec, epics[] (each with ordered tickets[])
-  tickets/<ID>.json            # one structured ticket per file (or tickets/<ID>-<slug>/ticket.json once foldered)
+<root>/                                       # root from config, e.g. blueprint/v1/backlog
+  roadmap.json                                # the index: project, version, epics[] (each with ordered tickets[])
+  epics/<epic-id>/                            # the epic roadmap minted; spec.md from /spec
+    tickets/<ID>-<slug>/ticket.json           # each sliced ticket, co-located under its epic
 ```
 
 - `roadmap.json` validates against `${CLAUDE_SKILL_DIR}/schema/roadmap.schema.json`.
@@ -58,10 +59,10 @@ cat "${CLAUDE_SKILL_DIR}/schema/ticket.schema.json"
 - **`type`**: `task` (with a one-sentence `goal`) · `story` (with a `story`: "As a … I want … so that …") · `spike` · `fix`. A ticket carries **either `goal` or `story`** — task uses `goal`, story uses `story`.
 - **`subtype: "enabler"`** marks a task that exists to unblock stories (data model, the riskiest-assumption ticket).
 - **`verification`** names how the ticket is proven — almost always pointing at a ladder rung (e.g. "property tests → test rung").
-- **Two ticket shapes; the validator accepts both.** A freshly *sliced* Step-4 ticket can be a flat `tickets/<ID>.json` (the planning slice). Once a ticket is pulled into work it becomes a **folder** `tickets/<ID>-<slug>/ticket.json` carrying its build artifacts as files (`plan.md`, `evidence.md`). CodeMaster's own meta-repo backlog is fully foldered — see `blueprint/v1/backlog/`.
+- **Each ticket is a folder, co-located under its epic.** `mint` writes `epics/<epic-id>/tickets/<ID>-<slug>/ticket.json`; the same folder later carries the ticket's build artifacts as files (`plan.md`, `evidence.md`). Everything about one epic — its `spec.md` and all its tickets — lives in `epics/<epic-id>/`.
 
 ## Output rules
 
 - All output is **valid JSON** conforming to its schema (enforced by the blueprint conformance rung in `scripts/ci.sh`).
 - Use **real content** derived from the spec and system design — never placeholder data.
-- When the user provides `$ARGUMENTS`, treat it as the epic id or spec path to slice. If absent, find the spec under `blueprint/*/specs/` and confirm which epic to slice.
+- When the user provides `$ARGUMENTS`, treat it as the epic id to slice. If absent, find the epic briefs under `<root>/epics/*/spec.md` and confirm which epic to slice.
