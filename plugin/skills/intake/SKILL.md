@@ -8,8 +8,8 @@ allowed-tools: Bash, Read, Glob, Write
 You are the intake lead. A request just arrived "out of the blue" — a feature, an idea, a change, a bug — and **its altitude is not yet decided.** Your job is **triage and routing**, not building: name the right altitude, then either scaffold the ticket(s) or scaffold an epic shell and hand it to the spec arc. You mint *structure* and a recommendation — never feature code, never a spec.
 
 This is the **front door**. Two doors sit behind you, and picking between them is the whole point:
-- **[`new-ticket`](../new-ticket/SKILL.md)** — the mechanical "scaffold ONE already-shaped ticket" skill. You delegate to its procedure once you've decided the work is one (or a few) tickets.
-- **the heavy arc** — Design-Thinking → System-Design → **`roadmap`** → **`/spec`** (per epic) → **[`backlog`](../backlog/SKILL.md)** (per epic). You route here when the request is epic-sized.
+- **small → [`new-ticket`](../new-ticket/SKILL.md)** — mint one (or a few) already-shaped tickets **under a parent epic**. You delegate to its procedure once the work is clearly one-to-a-few tickets.
+- **epic-sized → `mint` one epic, then `/spec`** — when the request needs a spec before slicing. This mints a **single** epic and routes to `/spec`; it **bypasses `roadmap`** (roadmap decomposes a whole *designed* product into many epics — intake adds just one). `backlog` slices it later.
 
 ## Step 1 — Understand the request
 Restate it in **one sentence** as a user-visible outcome. Then surface the two things that decide altitude:
@@ -23,10 +23,10 @@ Classify against this table. **The dividing line is the last column: real unknow
 
 | Altitude | Looks like | Route |
 |---|---|---|
-| **Fix / chore** | a bug, a config/copy/one-file change | **one `fix`/`chore` ticket** under an existing epic |
-| **One story** | a feature that's one vertical slice — one screen/endpoint/behavior, no design unknowns | **one `story`** (or `task`) under an existing epic |
-| **A few stories** | a feature spanning several independent slices, but **no** architecture unknowns and **no** riskiest assumption | **2–4 stories** (+ an enabler if they share new groundwork), under an existing or new epic |
-| **Epic-sized** | new surface area, an architecture decision to make, or a **riskiest assumption** to de-risk | **escalate** — scaffold an epic shell, then `/spec` |
+| **Fix / chore** | a bug, a config/copy/one-file change | **one `fix`/`chore` ticket** under the relevant existing epic — or the catch-all **`maintenance`** epic if none fits |
+| **One story** | a feature that's one vertical slice — one screen/endpoint/behavior, no design unknowns | **one `story`** (or `task`) under the relevant existing epic |
+| **A few stories** | a feature spanning several independent slices, but **no** architecture unknowns and **no** riskiest assumption | **2–4 stories** (+ an enabler if they share new groundwork), under the relevant existing epic |
+| **Epic-sized** | new surface area, an architecture decision to make, or a **riskiest assumption** to de-risk | **escalate** — `mint` one epic, then `/spec` |
 
 **The escalation test (apply it honestly):** *Is there a riskiest assumption or architecture decision that a spec should settle before slicing?* If **yes → Epic-sized**, even if it feels small. Spec-before-you-slice exists precisely so this work isn't hand-sliced into speculative stories. If **no**, pick the smallest row that fits.
 
@@ -34,32 +34,17 @@ State the verdict and the one-line reason before you create anything.
 
 ## Step 3 — Route
 
-### Small (fix / one story / a few stories) → delegate to `new-ticket`
-Follow the **[`new-ticket`](../new-ticket/SKILL.md)** procedure for each ticket — it `mint`s the item via the active tracker (id assignment + persistence + registration all belong to the provider; you don't compute ids or write files here). For **a few stories**, put them under the right epic in dependency order (enabler first if one is needed) and record `depends_on`/`blocks`. Each ticket must meet the Definition of Ready (canonical in [`backlog/README.md`](../../../backlog/README.md)).
+Every ticket lives **under a parent epic** — there is no flat ticket bucket. So routing always resolves a parent epic first, then mints through the active tracker (id assignment, persistence, and registration all belong to the provider; you never compute ids or write backlog files by hand).
 
-### Epic-sized → scaffold an epic shell, then send to `/spec`
-**Do not hand-slice the feature into stories — there's no spec yet.** Instead, create an **epic** (a `type: epic` item) plus one placeholder spike via the active tracker, then route to `/spec`. How the epic is persisted is the provider's concern: a remote tracker (Plane) `mint`s an epic work-item and links the spike to it as `parent`; the **`folder`** provider appends to `roadmap.json` as below.
+### Small (fix / one story / a few stories) → `new-ticket` under a parent epic
+1. **Resolve the parent epic.** Pick the existing epic the work belongs to (via the `list` verb / the `folder` board `roadmap.json`). If it's a fix/chore that fits **no** existing epic, use the standing **`maintenance`** epic — and if that epic doesn't exist yet, `mint` it once (`type: epic`, goal "Standing home for ad-hoc fixes and chores that don't belong to a feature epic"). **Don't spawn a micro-epic per fix.**
+2. **Mint the ticket(s)** via the **[`new-ticket`](../new-ticket/SKILL.md)** procedure with `parent` = that epic id. For **a few stories**, order them (enabler first if one is needed) and record `depends_on`/`blocks`. Each must meet the Definition of Ready ([`backlog/README.md`](../../../backlog/README.md)).
 
-**For the `folder` provider:**
-1. **Append a new epic** to `epics[]` in `<root>/roadmap.json`. It must be schema-valid **and** carry the fields `scripts/gen_roadmap.py` reads non-optionally, or the generator crashes:
-   ```json
-   {
-     "id": "epic-<slug>",
-     "name": "Epic <L> — <Title>",
-     "phase": "<L>",            // next FREE letter (A–Z); ad-hoc feature epics use letters, distinct from the numbered roadmap phases
-     "short_name": "<Title>",   // name without the "Epic <L> — " prefix
-     "track": "A",              // A proving-ground · B plugin · C real-repo — pick per context
-     "status": "todo",
-     "goal": "<one sentence>",
-     "description": "<one sentence; rendered under the epic heading>",
-     "exit": "<observable done condition>",
-     "tickets": ["CM-<n>"]      // the placeholder spike below
-   }
-   ```
-   Required by schema: `id, name, status, goal, tickets`. Required by the generator on top of that: **`phase`, `short_name`, `track`** (and `description`/`exit` render if present). Confirm the `phase` letter is unused by reading the existing epics first.
-2. **Scaffold one placeholder `spike`** via the `new-ticket` procedure — co-located under the new epic at `epics/<epic-id>/tickets/CM-<n>-spec-<slug>/ticket.json`, `type: "spike"`, goal "Spec the <feature> epic (design-thinking as needed → /spec)" — so the work has a home and a next action. Add its id to the epic's `tickets[]` **and** to `board_summaries`.
-3. **Regenerate** views: `python3 scripts/gen_roadmap.py && python3 scripts/gen_tickets.py` (the pre-commit hook also does this; running it now catches crashes early).
-4. **Recommend the arc**, don't run it: tell the user this is epic-sized and the next step is `/spec` (preceded by design-thinking if the problem/users are themselves unclear). Leave design-thinking, system-design, and the spec to their own skills.
+### Epic-sized → `mint` one epic, then send to `/spec`
+**Do not hand-slice the feature into stories — there's no spec yet.** Instead:
+1. **`mint` the epic** (`type: epic`) via the active tracker, with a one-sentence `goal` and a first-cut `riskiest_assumption` (what a spec must settle). The provider assigns the id and scaffolds its home — the `folder` provider adds the `epics[]` entry **and** `epics/<epic-id>/`; a remote tracker (Plane) mints an epic work-item. **Don't hand-write `roadmap.json`** — the `mint` verb owns that.
+2. **Mint one placeholder `spike`** under the new epic via `new-ticket` (`parent` = the epic id, `type: spike`, goal "Spec the <feature> epic (design-thinking as needed → /spec)") — so the work has a home and a next action.
+3. **Recommend the arc**, don't run it: tell the user this is epic-sized and the next step is `/spec` (preceded by design-thinking if the problem/users are themselves unclear). Leave design-thinking, system-design, and the spec to their own skills.
 
 ## Step 4 — Confirm
 Report: the **altitude verdict + one-line reason**, what you created (ticket ids and/or the epic shell + spike), and the **single next action** (`/start-ticket <n>` for small work, or `/spec` for an epic). **Do not start building** — intake ends at routing.
