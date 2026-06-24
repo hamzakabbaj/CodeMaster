@@ -39,6 +39,10 @@ Repeat until the acceptance tests pass and the ladder is green:
    - **Add the workflow's `proposed_tests`** (the `test-designer` lens's edge cases) and re-enter
      the loop (test-first).
    - A trivial increment may substitute a single inline `test-designer` pass for the full workflow.
+   - **Record the trail in `evidence.md`** (beside the ticket): which lenses ran, the surviving
+     findings, and what you acted on vs. deferred to `ship`. One durable evidence file per the
+     CodeMaster convention — *not* a separate `security.md` / `architect-review.md` / `edge-cases.md`
+     per lens (those go stale the moment you act on them). This is the trail `ship`'s reviewer reads.
 
 If the code you're touching drifts out of context mid-loop, **re-ground** with the `code-explorer`
 agent — `frame` did the first pass, but the loop can recover the map again when needed.
