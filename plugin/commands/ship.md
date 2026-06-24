@@ -31,4 +31,4 @@ Guardrails:
 - **The PR title is the squash subject** — validate it through `.githooks/commit-msg` (step 5) before opening the PR. One definition of "valid," reused.
 - **Confirm before the squash-merge** — it's outward-facing and hard to reverse. Branch protection is staged (CM-35); until it lands, this command + the discipline are the enforcement.
 - One ticket → one PR. `ship` does **not** write feature code (that's `build`) and assumes the branch is already green.
-- Optional: for a ticket that warrants proof-of-done, record pointers (green CI run / PR / tests) in the ticket's `evidence.md` — link the cage, don't duplicate it; no committed binaries.
+- Optional: for a ticket that warrants proof-of-done, record pointers (green CI run / PR / tests) via `attach_doc(<id>, "evidence", …)` — link the cage, don't duplicate it; no committed binaries.

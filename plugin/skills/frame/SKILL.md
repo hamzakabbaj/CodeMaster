@@ -17,7 +17,7 @@ any code exists.
 ## Preconditions
 - On `feat/<id>-<slug>` (NOT `main`). If on `main`, stop — run `/start-ticket <id>` first.
 - `read` the ticket via the active tracker ([`plugin/tracker/README.md`](../../tracker/README.md))
-  and read its epic brief (`epics/<epic-id>/spec.md`) for the approach this ticket sits in.
+  and `read_doc(<epic-id>, "spec")` for the epic brief this ticket sits in.
 
 ## 1. DoR gate → refine / spike / split
 Confirm the ticket is **Ready**: acceptance criteria are testable, and the scope is **one concern**.
@@ -36,37 +36,39 @@ only when the uncertainty is real (the code isn't in context); most small change
 **brownfield** change, also **pin the existing behaviour with characterization tests** before you
 touch it, so a regression is loud, not silent.
 
-## 3. Plan (if gnarly → `plan.md`)
+## 3. Plan (if gnarly → a `plan` doc)
 Fidelity scales with **risk × uncertainty**. Most tickets inherit the epic's `/spec` brief — a short
 in-head sketch is enough. When the work is gnarly, sketch the change across layers (backend /
 frontend / data), the files each touches, the order, and **which ladder rung verifies each** — then
-save it as `plan.md` beside the ticket. Two conditional forks, taken only when their uncertainty is real:
+persist it via **`attach_doc(<id>, "plan", …)`**. Two conditional forks, taken only when their
+uncertainty is real:
 - **3b. Design fork — `/design-options <id>`** *(when an open UI/interaction decision exists)*:
-  generates a 2–3 variant gallery, **stops for the user to pick**, records the choice in `plan.md`.
+  generates a 2–3 variant gallery, **stops for the user to pick**, records the choice in the `plan` doc.
   Skip it when the system design's design system already dictates the look.
 - **3c. Approach fork — `architect` agent** *(when the approach itself is hard)*: review the design
-  before code — wrong-layer choices, coupling, abstractions that will rot. Capture the verdict in
-  `architecture.md`.
+  before code — wrong-layer choices, coupling, abstractions that will rot. Capture the verdict via
+  **`attach_doc(<id>, "architecture", …)`**.
 
 ## 4. Design the acceptance tests (the done-contract)
 Send the **`test-designer`** agent to design the **acceptance tests from the ticket's acceptance
 criteria** — derived from the AC, **independent of any implementation**, so they assert what the
-ticket *requires*, not what code happens to do. Save its proposal as **`acceptance-tests.md`** beside
-the ticket: the human-readable contract for "done".
+ticket *requires*, not what code happens to do. Persist its proposal via
+**`attach_doc(<id>, "acceptance-tests", …)`**: the human-readable contract for "done".
 
-> These stay **text** here — `test-designer` is read-only. The build loop transcribes them into
-> **executable** tests **test-first** (red) before writing code; the frozen, reviewed contract is
-> what keeps that transcription honest (not reverse-engineered from the code).
+> These stay **text** here — `test-designer` is read-only. The build loop `read_doc`s them and
+> transcribes them into **executable** tests **test-first** (red) before writing code; the frozen,
+> reviewed contract is what keeps that transcription honest (not reverse-engineered from the code).
 
 ## 5. STOP at the done-contract
 Present the plan (if any) and the acceptance tests, and **stop for review.** This is the cheapest
 place to catch a wrong target — you're the discriminator. Only after approval does `build` run.
 
-## Outputs — co-located in the ticket folder
-Under `epics/<epic-id>/tickets/<id>-<slug>/` (folder provider): `plan.md` (if gnarly),
-`architecture.md` (if the architect ran), `acceptance-tests.md` (always — the contract), and the
-ticket.json updated with any DoR refinements. The `/design-options` gallery itself lives in
-gitignored `prototypes/` — only the *decision* is committed (in `plan.md`).
+## Outputs — via the tracker, never committed
+Attach to the ticket via `attach_doc`: `plan` (if gnarly), `architecture` (if the architect ran),
+`acceptance-tests` (always — the contract). The provider decides where they live (folder → a
+gitignored local file; plane → the card). Also `transition` any DoR refinements onto the ticket.
+The `/design-options` gallery itself lives in gitignored `prototypes/` — only the *decision* is
+recorded (in the `plan` doc).
 
 ## Guardrails
 - **Frame writes no product code** and opens no PR. It ends at the done-contract; `build` does the

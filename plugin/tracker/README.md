@@ -39,8 +39,8 @@ skills know about; each provider maps them to its native schema.
 
 ## The verbs
 
-A provider is **defined by implementing these five.** Signatures are conceptual — each
-provider doc says exactly how it realizes them.
+A provider is **defined by implementing these seven** — five for the work-item, two for its
+docs. Signatures are conceptual — each provider doc says exactly how it realizes them.
 
 | Verb | Used by | Contract |
 |---|---|---|
@@ -49,6 +49,8 @@ provider doc says exactly how it realizes them.
 | `list(query) → [item]` | `intake`, "what's ready/next" | Enumerate items, filterable by status / parent. |
 | `transition(id, status)` | `start-ticket`, `ship` | The **only** writer of `status`. Maps the CodeMaster status to the provider's native state. |
 | `link(id, {branch?, pr?})` | `start-ticket`, `ship` | Attach VCS artifacts to the item (and, in reverse, the branch name is derived from `id`). |
+| `attach_doc(id, name, markdown)` | `/spec`, `frame`, `build` | Store a markdown **doc** against an item (`spec` · `plan` · `architecture` · `acceptance-tests` · `evidence`). **Never committed to the repo** — the provider decides where it lives. |
+| `read_doc(id, name) → markdown` | `backlog`, `frame`, `build` | Fetch a doc previously attached. (e.g. `build` reads the `acceptance-tests` doc to transcribe it into executable tests.) |
 
 ## Two things every provider must declare
 
@@ -78,6 +80,10 @@ mechanics — and, for `plane`, its wrapper + an env template — into the proje
 only cwd-relative `.codemaster/…`. Inside the CodeMaster source repo the bundled `plugin/tracker/…`
 paths also resolve, so `folder` needs no init here.
 
-> Scope: the tracker seam covers **work items + status only.** Design artifacts (the
-> `/spec` output, design-thinking maps, blueprints) stay as repo files regardless of
-> provider — they version with the code and are reviewed in the PR.
+> Scope: the tracker owns **the whole backlog — work-items, status, *and* docs.** The git repo
+> holds only the **product**: the code and its executable tests. Everything process — the backlog
+> records and the markdown docs (`spec` · `plan` · `architecture` · `acceptance-tests` · `evidence`)
+> — lives in the tracker and is **never committed**. For `plane` that means cards + comments (the
+> team's shared surface); for `folder` it's gitignored local files (the solo dev's private scratch).
+> The acceptance-tests doc is the one bridge: `build` reads it back and transcribes it into
+> executable tests, which *are* committed — the contract is ephemeral, its executable form durable.

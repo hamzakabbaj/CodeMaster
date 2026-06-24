@@ -152,7 +152,7 @@ the fleet, or the cage.
 
 | Provider | Backlog lives in | Use when |
 |---|---|---|
-| `folder` *(default)* | repo files (`<root>/roadmap.json` + co-located `epics/<id>/{spec.md, tickets/…}`) | solo / repo-native, no external tool |
+| `folder` *(default)* | a **gitignored** local backlog (`<root>/roadmap.json` + `epics/<id>/{spec, tickets/…}`) | solo / repo-native, no external tool |
 | `plane` | a [Plane](https://plane.so) project, via its REST API | the team tracks work in Plane |
 
 **Switch it on:**
@@ -166,8 +166,11 @@ provider's mechanics; for `plane` it also drops in the API wrapper and a gitigno
 for your token. From then on `intake` / `roadmap` / `new-ticket` / `backlog` / `/start-ticket` / `/ship`
 route through the active provider automatically. Full contract: [`tracker/README.md`](tracker/README.md).
 
-> Status + work items are pluggable; **design artifacts** (`/spec` output, blueprints) stay as repo
-> files either way — they version with the code and are reviewed in the PR.
+> The tracker owns the **whole backlog** — work-items, status, **and** the markdown docs (`spec` ·
+> `plan` · `acceptance-tests` · `evidence`), via the `attach_doc`/`read_doc` verbs. The git repo
+> holds only the **product** (code + tests); the backlog and its docs are **never committed** —
+> Plane cards for teams, a gitignored local backlog for solo. The lone bridge: `build` reads the
+> `acceptance-tests` doc and transcribes it into executable tests, which *are* committed.
 
 ## Heads-up: CodeMaster ships its own primitives
 

@@ -13,7 +13,7 @@ The epic **already exists** — `roadmap` created it and named its riskiest assu
 
 Read these directly from the project's `blueprint/` record; do not ask the user to paste them:
 
-- `<root>/epics/<epic-id>/spec.md` — the approved epic brief (from `/spec`). Its **Approach** and **Validating outcome** are the raw material the tickets are sliced from, and its **sharpened riskiest assumption** names what to promote to an enabler. (`<root>` from `.codemaster/config.json`, e.g. `blueprint/v1/backlog`.)
+- **`read_doc(<epic-id>, "spec")`** — the approved epic brief (from `/spec`), via the active tracker. Its **Approach** and **Validating outcome** are the raw material the tickets are sliced from, and its **sharpened riskiest assumption** names what to promote to an enabler.
 - `blueprint/{version}/system-design/` — architecture, API, data model. Architecture decides ticket boundaries: slice along the seams it defines (services, modules, the API contract) so tickets are independent.
 - `blueprint/{version}/design-thinking/goal_statement/data.json` — the MVP scope and **non-goals**; never slice a ticket for a non-goal.
 
@@ -65,4 +65,4 @@ cat "${CLAUDE_SKILL_DIR}/schema/ticket.schema.json"
 
 - All output is **valid JSON** conforming to its schema (enforced by the blueprint conformance rung in `scripts/ci.sh`).
 - Use **real content** derived from the spec and system design — never placeholder data.
-- When the user provides `$ARGUMENTS`, treat it as the epic id to slice. If absent, find the epic briefs under `<root>/epics/*/spec.md` and confirm which epic to slice.
+- When the user provides `$ARGUMENTS`, treat it as the epic id to slice. If absent, `list` the epics via the active tracker and confirm which one to slice.

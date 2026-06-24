@@ -63,7 +63,7 @@ For the default **`folder`** provider, `mint` writes the skeleton into the backl
 <root>/                  # root from config, e.g. blueprint/v1/backlog
   roadmap.json           # the index: project, version, epics[] — each with id, name, goal,
                          #   riskiest_assumption, depends_on/blocks, and an empty tickets[]
-  epics/<id>/            # scaffolded folder per epic, empty until /spec writes spec.md
+  epics/<id>/            # scaffolded folder per epic, empty until /spec attaches the brief
 ```
 
 `roadmap.json` validates against the roadmap schema bundled with the `backlog` skill

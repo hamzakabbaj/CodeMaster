@@ -101,11 +101,36 @@ channel — no guaranteed issue-links endpoint):
   -d "$(jq -n --arg html "<p>PR: <a href=\"$PR_URL\">$PR_URL</a> · branch <code>$BRANCH</code></p>" '{comment_html:$html}')"
 ```
 
+### `attach_doc(id, name, markdown)`
+The card **is** the home for docs — nothing goes to the repo. Convert the markdown to HTML and
+attach it to the work item, by `name`:
+- **`spec`** (epic) / **`plan`** (ticket) → the work item's **description** (`description_html`).
+  Set the relevant `<h4>` section so the body stays readable. These are the durable, reviewed-on-the-card docs.
+- **`architecture` · `acceptance-tests` · `evidence`** → a **comment** on the work item
+  (`comments/`, `comment_html`), each prefixed with an `<h4>` naming the doc. Comments keep the
+  agent-output trail without bloating the description.
+
+```sh
+# description docs (spec/plan): PATCH the work item
+"$API" --raw PATCH "$BASE/work-items/$uuid/" -H "Content-Type: application/json" \
+  -d "$(jq -n --arg html "$DOC_HTML" '{description_html:$html}')"
+# trail docs (architecture/acceptance-tests/evidence): POST a comment
+"$API" --raw POST "$BASE/work-items/$uuid/comments/" -H "Content-Type: application/json" \
+  -d "$(jq -n --arg html "<h4>$NAME</h4>$DOC_HTML" '{comment_html:$html}')"
+```
+
+### `read_doc(id, name) → markdown`
+Resolve the UUID; fetch the work item (`?expand=state` is unneeded here). For `spec`/`plan`, return
+the `description_html`; for the trail docs, GET `comments/` and return the latest comment whose
+`<h4>` matches `name`. (`build` calls `read_doc(id, "acceptance-tests")` to transcribe the contract
+into executable tests in the repo.)
+
 ## Assumptions (confirm against your instance when you test)
 - `todo → unstarted` (default Plane projects also have a `backlog` group — switch in `statusMap` if you prefer it).
 - `blocked` is a **label**, not a state.
 - VCS links go in a **comment** (vs. a custom field / external-link integration).
-- `mint` puts goal + acceptance criteria in the work item's **description**; the `/spec` design doc stays a repo file.
+- `mint` puts goal + acceptance criteria in the work item's **description**; `attach_doc` adds the
+  spec/plan to the description and the agent-output docs as comments — **all docs live in Plane, none in the repo.**
 
 ## Rate limits & bulk
 60 req/min. Prefer `--all` + `expand`/`fields` over many calls. For a bulk `mint` (the `backlog`

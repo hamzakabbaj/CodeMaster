@@ -1,5 +1,5 @@
 ---
-description: Produce the epic brief (spec.md) for ONE epic — sharpen its riskiest assumption and lay out the approach at epic altitude — then stop for plan-review before the backlog is sliced. Runs after roadmap, before backlog. Epic-only; ticket-level planning is Frame's plan.md.
+description: Produce the epic brief for ONE epic — sharpen its riskiest assumption and lay out the approach at epic altitude — then stop for plan-review before the backlog is sliced. Runs after roadmap, before backlog. Epic-only; ticket-level planning is Frame's job. Persists via the tracker's attach_doc (never committed to the repo).
 argument-hint: <epic-id>   (the kebab-case id from roadmap, e.g. daily-pick-loop)
 ---
 
@@ -7,8 +7,8 @@ Produce the **epic brief** for epic **$ARGUMENTS**: sharpen what's uncertain and
 approach at *epic* altitude, then **STOP for review** — the brief is reviewed before the epic is
 sliced into tickets (review the plan before any code exists).
 
-This is **epic-only.** It writes one `spec.md` and nothing below it: ticket-level planning is
-Frame's `plan.md`, and UI variant exploration is `/design-options`. `/spec` writes no tickets and
+This is **epic-only.** It writes one `spec` doc and nothing below it: ticket-level planning is
+Frame's `plan`, and UI variant exploration is `/design-options`. `/spec` writes no tickets and
 no code.
 
 ## 1. Read the epic — via the active tracker
@@ -19,11 +19,11 @@ Resolve the tracker from `.codemaster/config.json` (default `folder`; contract
 recorded. Then read the upstream design record (design-thinking + system-design) for the
 architecture this epic sits in.
 
-## 2. Write the brief → `<root>/epics/<id>/spec.md`
+## 2. Write the brief → `attach_doc(<id>, "spec", …)`
 
-`<root>` is the folder root from config (e.g. `blueprint/v1/backlog`); `roadmap` already scaffolded
-`epics/<id>/`. The brief is a **repo file regardless of tracker provider** — design artifacts
-version with the code and are reviewed in the PR. Keep it concise, at epic altitude:
+Persist the brief via the active provider's **`attach_doc`** verb (folder → a gitignored local
+file; plane → the epic card's description). **Never write it to a committed repo file** — the
+backlog and its docs live in the tracker, not in git. Keep it concise, at epic altitude:
 
 - **Problem / intent** — what this epic delivers and why, in 1–2 sentences (the outcome, from the
   epic `goal`).

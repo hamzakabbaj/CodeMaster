@@ -1,8 +1,9 @@
 # Provider: `folder`
 
-Work items are files in the repo, ordered by a generated board. This is CodeMaster's
-original backlog and the default provider. All mechanics that used to live inside
-`new-ticket` / `start-ticket` / `ship` live here now — those skills just call the verbs.
+Work items and their docs are files in a **gitignored local backlog** — the solo dev's private
+scratch, never committed. This is CodeMaster's default provider; only the product (code + tests)
+reaches git. All mechanics that used to live inside `new-ticket` / `start-ticket` / `ship` live
+here now — those skills just call the verbs.
 
 ## Config
 
@@ -10,9 +11,11 @@ original backlog and the default provider. All mechanics that used to live insid
 { "tracker": "folder", "folder": { "root": "blueprint/v1/backlog", "idPrefix": "CM" } }
 ```
 
-- `root` — backlog directory, repo-relative. Holds `roadmap.json` + co-located epics:
-  `epics/<epic-id>/{spec.md, tickets/<id>-<slug>/ticket.json}`. Everything about one epic —
-  its brief and all its tickets — lives in that epic's folder.
+- `root` — backlog directory, repo-relative, **gitignored in its entirety** (`tracker init` adds it
+  to `.gitignore`). Holds `roadmap.json` + co-located epics:
+  `epics/<epic-id>/{spec.md, tickets/<id>-<slug>/{ticket.json, plan.md, acceptance-tests.md, …}}`.
+  Everything about one epic — its brief, its tickets, and their docs — lives in that epic's folder,
+  and **none of it is committed.**
 - `idPrefix` — uppercase tag; ticket ids are `<idPrefix>-<n>` (e.g. `CM-80`); epic ids are kebab-case.
 
 Resolve `ROOT` and `PREFIX` from config (fall back to `blueprint/v1/backlog` + `CM` if
@@ -84,6 +87,18 @@ ticket's status too — the board check verifies markdown==JSON, not JSON self-c
 The branch name **is** the link: `feat/<id>-<slug>`. No separate write is required for the
 folder provider (the PR references the ticket via `Closes <id>` / the branch name). Optionally
 record `links` in `ticket.json` if a project wants them explicit.
+
+### `attach_doc(id, name, markdown)`
+Write the doc as a **gitignored** markdown file in the item's own folder:
+- an **epic** id → `"$ROOT"/epics/<id>/<name>.md` (e.g. `spec.md`).
+- a **ticket** id → `"$ROOT"/epics/*/tickets/<id>-*/<name>.md` (e.g. `plan.md`,
+  `acceptance-tests.md`, `architecture.md`, `evidence.md`).
+
+Overwrite if it exists. `name` is the bare doc name (no extension); the provider adds `.md`.
+
+### `read_doc(id, name) → markdown`
+Read `<name>.md` from that same folder (resolve the item's folder as in `read`). Return its
+contents, or empty if absent.
 
 ## Notes
 - Generators (`gen_roadmap.py`, `gen_tickets.py`) and the schema are CodeMaster-repo scripts;

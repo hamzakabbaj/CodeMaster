@@ -12,19 +12,19 @@ stops at green.
 
 ## Preconditions (assert, don't assume)
 - On `feat/<id>-<slug>` (NOT `main`). If on `main`, stop — run `/start-ticket <id>` first.
-- **The done-contract exists.** `frame` must have run: the ticket's `acceptance-tests.md` is present
-  beside the ticket (and `plan.md` if it was gnarly). **If the contract is missing, stop — run
-  `/frame <id>` first.** Build does not invent the target; it builds to a reviewed one.
-- Read the ticket via the tracker `read` verb and the done-contract (`acceptance-tests.md`,
-  `plan.md`) before generating. Don't assume a folder path; a remote tracker has no `ticket.json`.
+- **The done-contract exists.** `frame` must have run: `read_doc(<id>, "acceptance-tests")` returns
+  the contract (and `read_doc(<id>, "plan")` if it was gnarly). **If the contract is missing, stop —
+  run `/frame <id>` first.** Build does not invent the target; it builds to a reviewed one.
+- Read the ticket via the tracker `read` verb and the done-contract via `read_doc` before
+  generating. The docs live in the tracker (a card or a gitignored local file), never the repo.
 
 ## The loop: generate → verify → checkpoint → critique
 Repeat until the acceptance tests pass and the ladder is green:
 
 1. **Generate (test-first).**
-   a. **Transcribe `acceptance-tests.md` → executable tests** in the project's suite (they go
-      **RED** — no code yet). This is faithful transcription of the frozen contract, not invention
-      from the code. *(Skip for any case already encoded.)*
+   a. **Transcribe the `acceptance-tests` doc → executable tests** in the project's suite — fetch it
+      with `read_doc(<id>, "acceptance-tests")`. They go **RED** — no code yet. This is faithful
+      transcription of the frozen contract, not invention from the code. *(Skip any case already encoded.)*
    b. **Write the next increment of code** against the plan, driving those tests toward **GREEN**.
    c. Add the **dev/unit/scaffolding tests** the increment needs.
 2. **Verify (the gate):** `sh scripts/ci.sh` — fail-fast, cheapest rung first. **Red? Fix, or
@@ -39,10 +39,10 @@ Repeat until the acceptance tests pass and the ladder is green:
    - **Add the workflow's `proposed_tests`** (the `test-designer` lens's edge cases) and re-enter
      the loop (test-first).
    - A trivial increment may substitute a single inline `test-designer` pass for the full workflow.
-   - **Record the trail in `evidence.md`** (beside the ticket): which lenses ran, the surviving
-     findings, and what you acted on vs. deferred to `ship`. One durable evidence file per the
-     CodeMaster convention — *not* a separate `security.md` / `architect-review.md` / `edge-cases.md`
-     per lens (those go stale the moment you act on them). This is the trail `ship`'s reviewer reads.
+   - **Record the trail via `attach_doc(<id>, "evidence", …)`**: which lenses ran, the surviving
+     findings, and what you acted on vs. deferred to `ship`. One evidence doc — *not* a separate
+     `security` / `architect-review` / `edge-cases` doc per lens (those go stale the moment you act
+     on them). This is the trail `ship`'s reviewer reads (on the card, or the gitignored local file).
 
 If the code you're touching drifts out of context mid-loop, **re-ground** with the `code-explorer`
 agent — `frame` did the first pass, but the loop can recover the map again when needed.
@@ -54,7 +54,7 @@ per branch keeps the PR focused; the parked ticket is refined when *it* is pulle
 
 ## Critique wiring — the flags the skill computes and passes to `build-critique`
 Compute these from **deterministic-ish signals**, then pass them as the workflow's `args`:
-- **`gnarly`** = the ticket carries a **`plan.md`** (it earned ticket-altitude planning in frame).
+- **`gnarly`** = the ticket has a **`plan` doc** (`read_doc(<id>, "plan")` returns one — it earned ticket-altitude planning in frame).
 - **`risky`** = the diff touches any of: **auth/authz · input parsing/deserialization · secrets/env
   · shell/exec · file I/O on untrusted paths · network/external calls · crypto**. **When uncertain,
   pass `risky: true`** — a security pass is cheap insurance.

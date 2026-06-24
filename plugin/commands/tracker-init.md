@@ -28,6 +28,9 @@ fi
   { "tracker": "folder", "folder": { "root": "<root>", "idPrefix": "<PREFIX>" } }
   ```
 - `cp "$SRC/providers/folder.md" .codemaster/provider.md`.
+- **Gitignore the backlog** — ensure `.gitignore` contains `<root>/` (add it if missing). The folder
+  backlog (work-items **and** docs) is the solo dev's private scratch; only the product (code + tests)
+  is committed. **Never commit `<root>/`.**
 
 ### `plane`
 - Ask for the workspace slug and project id (UUID) — or tell the user where to find them (the web URL path segment; the project settings).
