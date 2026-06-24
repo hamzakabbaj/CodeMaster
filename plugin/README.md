@@ -51,7 +51,7 @@ claude plugin install codemaster@codemaster
 | `frame` | Set one ticket up to build — DoR gate → ground the code → plan if gnarly → design the acceptance tests — then stop at the done-contract. |
 | `build` | Run the robust-code loop on a framed ticket — generate (test-first) → verify → checkpoint → critique — until the acceptance tests pass and the ladder is green. |
 | `new-ticket` | Scaffold one already-shaped ticket via the tracker, under its parent epic. |
-| `intake` | Front door for an out-of-the-blue request — triage it to the right altitude (fix · story · stories · epic) and route it (mint tickets, or mint an epic → `/spec`). |
+| `intake` | Front door for an out-of-the-blue request — triage it to the right altitude (fix · story · stories · epic) and route it (mint tickets, or mint an epic → `/spec`). With Plane, can pull from its **Intake** queue. |
 
 ### Agents — specialist subagents the fleet delegates to
 

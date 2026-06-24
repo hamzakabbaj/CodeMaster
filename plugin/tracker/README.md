@@ -52,6 +52,19 @@ docs. Signatures are conceptual — each provider doc says exactly how it realiz
 | `attach_doc(id, name, markdown)` | `/spec`, `frame`, `build` | Store a markdown **doc** against an item (`spec` · `plan` · `architecture` · `acceptance-tests` · `evidence`). **Never committed to the repo** — the provider decides where it lives. |
 | `read_doc(id, name) → markdown` | `backlog`, `frame`, `build` | Fetch a doc previously attached. (e.g. `build` reads the `acceptance-tests` doc to transcribe it into executable tests.) |
 
+### Optional — inbox verbs (providers with an incoming-report queue)
+
+Some trackers expose a queue where anyone files a request *before* it's triaged. A provider may
+implement two more verbs so `intake` can pull from it:
+
+| Verb | Used by | Contract |
+|---|---|---|
+| `inbox_list() → [report]` | `intake` | List untriaged user-reported requests waiting to enter the backlog. **Empty** for providers without a queue. |
+| `inbox_resolve(id, decision)` | `intake` | Resolve a report — `accept` (→ route into the backlog) · `decline` · `snooze` · `duplicate`. |
+
+The `folder` provider has **no inbox** (solo: requests come straight to `intake`); `plane` maps
+these to its **Intake** module (`intake-issues`).
+
 ## Two things every provider must declare
 
 These are what actually make the flow portable:

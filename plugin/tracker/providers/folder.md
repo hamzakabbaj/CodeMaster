@@ -101,6 +101,8 @@ Read `<name>.md` from that same folder (resolve the item's folder as in `read`).
 contents, or empty if absent.
 
 ## Notes
+- **No inbox.** The folder provider has no incoming-report queue — `inbox_list` is empty; a solo
+  dev's requests come straight to `intake`. (That's Plane's `intake-issues` module's job.)
 - Generators (`gen_roadmap.py`, `gen_tickets.py`) and the schema are CodeMaster-repo scripts;
   the folder provider assumes a repo that carries them (CodeMaster itself, or the `backlog`
   skill's output structure). A non-CodeMaster repo using `folder` supplies its own equivalent

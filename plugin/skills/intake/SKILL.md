@@ -1,7 +1,7 @@
 ---
 name: intake
 description: Front door for an out-of-the-blue request — a new feature, idea, change, or bug — whose size and shape are NOT yet decided. Triage the request to the right altitude (one fix/chore · one story · a few stories · epic-sized) and route it — scaffold the ticket(s), or scaffold an epic shell and send it to the spec arc. Use when someone says "I want feature X", "can we add Y", "we should build Z", or files a bug, and it isn't already clear it's a single well-shaped ticket.
-argument-hint: [the request, in the user's words]
+argument-hint: [the request, in the user's words — or empty to pull from the tracker's inbox]
 allowed-tools: Bash, Read, Glob, Write
 ---
 
@@ -10,6 +10,16 @@ You are the intake lead. A request just arrived "out of the blue" — a feature,
 This is the **front door**. Two doors sit behind you, and picking between them is the whole point:
 - **small → [`new-ticket`](../new-ticket/SKILL.md)** — mint one (or a few) already-shaped tickets **under a parent epic**. You delegate to its procedure once the work is clearly one-to-a-few tickets.
 - **epic-sized → `mint` one epic, then `/spec`** — when the request needs a spec before slicing. This mints a **single** epic and routes to `/spec`; it **bypasses `roadmap`** (roadmap decomposes a whole *designed* product into many epics — intake adds just one). `backlog` slices it later.
+
+## Step 0 — Where the request comes from
+A request reaches you two ways:
+- **Direct** — the user describes it (`$ARGUMENTS`). The default.
+- **From the inbox** — if the active provider has an incoming-report queue (`inbox_list` returns
+  items; **Plane's Intake module** is one), pull the **pending** reports and triage each. For every
+  item, run Steps 1–3 below, then **`inbox_resolve(<intake_id>, <decision>)`**: `accept` it (→ route
+  into the backlog as usual) or `decline` / `snooze` / `duplicate` if it's not actionable. Accepting
+  is what promotes a user's raw report into real, tracked work. Providers without a queue
+  (`folder`) skip this — requests only ever arrive direct.
 
 ## Step 1 — Understand the request
 Restate it in **one sentence** as a user-visible outcome. Then surface the two things that decide altitude:

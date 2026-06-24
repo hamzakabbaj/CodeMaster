@@ -125,6 +125,50 @@ the `description_html`; for the trail docs, GET `comments/` and return the lates
 `<h4>` matches `name`. (`build` calls `read_doc(id, "acceptance-tests")` to transcribe the contract
 into executable tests in the repo.)
 
+## Intake queue — `intake-issues` (user-reported requests)
+
+Plane's **Intake** module (formerly "Inbox") is a queue where anyone files a request before it's
+triaged into the backlog — the natural source for CodeMaster's `intake` skill. An intake item is a
+**wrapper around a work item**, not a work item itself:
+
+- top-level `id` (the intake-entry id, **distinct** from the issue id) + `status` (the triage status, enum below);
+- `issue_detail{}` — the embedded work item (`id`, `name`, `state` with group `triage`, `priority`, `description_html`, …).
+
+New items land in a special **Triage** state group (`group: "triage"`), separate from
+backlog/unstarted/started/completed/cancelled.
+
+**Triage status enum** (Plane's intake values):
+
+| value | meaning |
+|---|---|
+| `-2` | Pending — awaiting triage |
+| `-1` | Rejected / declined |
+| `0`  | Snoozed |
+| `1`  | Accepted |
+| `2`  | Marked as duplicate |
+
+### `inbox_list() → [report]`
+List the **pending** reports for `intake` to triage:
+
+```sh
+"$API" --all "$BASE/intake-issues/" \
+  | jq '[.[] | select(.status==-2) | {intake_id:.id, issue_id:.issue_detail.id, title:.issue_detail.name, priority:.issue_detail.priority, desc:.issue_detail.description_html}]'
+```
+
+### `inbox_resolve(intake_id, decision)`
+PATCH the **intake entry's** `status` (not the embedded issue): `accept`=1 · `decline`=-1 · `snooze`=0 · `duplicate`=2.
+
+```sh
+"$API" --raw PATCH "$BASE/intake-issues/<intake_id>/" -H "Content-Type: application/json" -d '{"status": 1}'
+```
+
+On **accept**, Plane moves the embedded work item out of Triage into the backlog; `intake` then
+routes it (set `parent` epic + `type`, or escalate to a new epic) per its altitude table.
+
+> ⚠️ **Verified vs. not:** the **read path** (`intake-issues/` list) and the **status enum** are
+> confirmed against a live instance. The **write payloads** (`inbox_resolve` accept/decline/snooze)
+> are **not yet exercised** — confirm the exact PATCH body against your Plane before relying on them.
+
 ## Assumptions (confirm against your instance when you test)
 - `todo → unstarted` (default Plane projects also have a `backlog` group — switch in `statusMap` if you prefer it).
 - `blocked` is a **label**, not a state.
