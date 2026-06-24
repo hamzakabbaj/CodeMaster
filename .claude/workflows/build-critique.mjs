@@ -2,8 +2,8 @@
 // Reviews the CURRENT BRANCH DIFF through role lenses, then ADVERSARIAL
 // VERIFICATION: each finding is challenged by skeptics that try to refute it; only
 // survivors are reported. Lenses are conditional on risk flags the build skill
-// passes (tester always; security if risky; architect if gnarly). The tester lens
-// also proposes concrete tests to add.
+// passes (test-designer always; security if risky; architect if gnarly). The
+// test-designer lens also proposes concrete tests to add.
 //
 // INLINE role prompts (no custom fleet dependency) so it rides into Track B/C repos
 // — the same portability rationale as review-board (CM-23/24), whose skeptic core
@@ -16,7 +16,7 @@
 
 export const meta = {
   name: 'build-critique',
-  description: 'Review the branch diff through tester/security/architect lenses with adversarial verification; returns surviving findings + proposed tests.',
+  description: 'Review the branch diff through test-designer/security/architect lenses with adversarial verification; returns surviving findings + proposed tests.',
   phases: [
     { title: 'Review', detail: 'one agent per active lens (sonnet)' },
     { title: 'Verify', detail: 'haiku skeptics try to refute each finding' },
@@ -35,7 +35,7 @@ const DIFF = `git diff $(git merge-base ${base} HEAD)`
 
 // Lenses built from the flags — proportionate to risk. Prompts inlined for portability.
 const LENSES = [
-  { key: 'tester', tests: true,
+  { key: 'test-designer', tests: true,
     lens: 'edge cases, boundary inputs, error paths, and behaviours the acceptance criteria miss' },
   ...(risky ? [{ key: 'security',
     lens: 'injection, secrets, untrusted input, unsafe quoting, authz, blast radius' }] : []),
@@ -61,7 +61,7 @@ const FINDINGS = {
         required: ['title', 'severity', 'detail'],
       },
     },
-    proposed_tests: { type: 'array', items: { type: 'string' } }, // tester lens only
+    proposed_tests: { type: 'array', items: { type: 'string' } }, // test-designer lens only
   },
   required: ['findings'],
 }

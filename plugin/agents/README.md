@@ -9,7 +9,7 @@ Role-based subagents that encode CodeMaster's doctrine (not generic helpers). Ea
 | `librarian` | navigate/consistency-check our docs | Read, Grep, Glob | sonnet | read+summarize = grunt work |
 | `code-explorer` | map existing code before changing it | Read, Grep, Glob | sonnet | trace + enumerate, not judge |
 | `architect` | design review vs doctrine | Read, Grep, Glob | opus | deep tradeoff reasoning |
-| `tester` | adversarial test design | Read, Grep, Glob | sonnet | enumerate + draft tests |
+| `test-designer` | adversarial test design — acceptance tests (Frame) + edge cases (critique) | Read, Grep, Glob | sonnet | enumerate + draft tests |
 | `devops` | gates/CI/reproducibility | Read, Grep, Glob | sonnet | targeted analysis |
 | `security` | threat model / AppSec | Read, Grep, Glob | opus | adversarial depth |
 | `reviewer` | PR review vs conventions/DoD | Read, Grep, Glob, Bash | sonnet | needs read-only `git diff` |
@@ -23,4 +23,4 @@ Role-based subagents that encode CodeMaster's doctrine (not generic helpers). Ea
 Custom agents register at **session start** (confirmed in CM-9). After adding/editing an agent, reload before invoking via its `subagent_type`.
 
 ## Orchestration
-A workflow can fan these out as a review board (dev → tester → security → reviewer) — see docs/05. That is Phase 4.
+A workflow can fan these out as a review board (dev → test-designer → security → reviewer) — see docs/05. That is Phase 4.

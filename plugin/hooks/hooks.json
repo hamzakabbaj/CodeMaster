@@ -16,7 +16,7 @@
     ],
     "SubagentStop": [
       {
-        "matcher": "code-explorer|reviewer|architect|security|tester",
+        "matcher": "code-explorer|reviewer|architect|security|test-designer",
         "hooks": [
           {
             "type": "command",
