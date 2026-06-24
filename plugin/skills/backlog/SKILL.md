@@ -22,7 +22,7 @@ Read these directly from the project's `blueprint/` record; do not ask the user 
 1. **Map plan steps → tickets.** Each numbered plan step becomes one or more tickets. A step that mixes unrelated concerns is split; trivial adjacent steps may merge.
 2. **Slice vertically, one concern each.** Every ticket delivers something verifiable end-to-end and is finishable in one short-lived branch. If a ticket's acceptance criteria span unrelated changes, split it.
 3. **Promote the riskiest assumption.** The epic's `riskiest_assumption` (named at `roadmap`, sharpened in `/spec`) becomes its **own foundational enabler ticket**, built and proven before the stories that depend on it. (This is the concrete payoff of naming risk before you slice — e.g. EtiKets promoted its timezone rule, TabSplit its settlement engine.)
-4. **Dependency-order.** Enabler tasks (the `1xx` band) first, then stories. Record `depends_on` and `blocks` on every ticket so the order is explicit and checkable.
+4. **Dependency-order.** Enablers first (marked `subtype: enabler`), then the stories that depend on them. Record `depends_on`/`blocks` on every ticket — the build *order* lives in those edges, **never in the id**.
 5. **Meet the Definition of Ready** for each ticket — the canonical DoR lives in [`backlog/README.md`](../../../backlog/README.md) (single source of truth); the checklist below is a view of it, not a separate definition: clear single-sentence goal (task) or user story (story), testable acceptance criteria, known/unblocked deps, small enough for one branch, and an identified verification approach (which ladder rung proves it).
 6. **Refine just-in-time.** Only elaborate a ticket when it's pulled into work; `roadmap.json` is the index/order, the ticket file holds the detail. A ticket may carry an optional inline `plan` object for gnarly work (the Step-5 Plan beat, captured early).
 
@@ -55,9 +55,9 @@ cat "${CLAUDE_SKILL_DIR}/schema/ticket.schema.json"
 
 ## Conventions
 
-- **Ticket id = `<PREFIX>-<n>`**, where `PREFIX` is a short uppercase project tag (e.g. `ETK`, `TS`), **not** `CM-` — `CM-` is reserved for CodeMaster's own meta-repo backlog. Reserve a `1xx` band for enabler tasks, low numbers for stories.
+- **Ticket id = `<PREFIX>-<n>`**, assigned by the tracker as a plain **monotonic** counter (`1, 2, 3, …`) — the id is just an identifier and carries **no** meaning. `PREFIX` is a short uppercase project tag (e.g. `ETK`, `TS`), **not** `CM-` (reserved for CodeMaster's own meta-repo backlog). **Don't reserve number bands** (e.g. a `1xx` band for enablers): it collides once a project passes 99 tickets, and it fights the folder provider's `max+1` minter (after a `101` exists, the next id is `102`, not `3`). Encode the role and order in fields, not the number.
 - **`type`**: `task` (with a one-sentence `goal`) · `story` (with a `story`: "As a … I want … so that …") · `spike` · `fix`. A ticket carries **either `goal` or `story`** — task uses `goal`, story uses `story`.
-- **`subtype: "enabler"`** marks a task that exists to unblock stories (data model, the riskiest-assumption ticket).
+- **`subtype: "enabler"`** is the **only** marker of an enabler — a task that exists to unblock stories (data model, the riskiest-assumption ticket). It's built first by its `depends_on` edges, not by a special id range.
 - **`verification`** names how the ticket is proven — almost always pointing at a ladder rung (e.g. "property tests → test rung").
 - **Each ticket is a folder, co-located under its epic.** `mint` writes `epics/<epic-id>/tickets/<ID>-<slug>/ticket.json`; the same folder later carries the ticket's build artifacts as files (`plan.md`, `evidence.md`). Everything about one epic — its `spec.md` and all its tickets — lives in `epics/<epic-id>/`.
 
