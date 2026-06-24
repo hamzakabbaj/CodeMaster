@@ -1,5 +1,5 @@
 ---
-name: feature-intake
+name: intake
 description: Front door for an out-of-the-blue request — a new feature, idea, change, or bug — whose size and shape are NOT yet decided. Triage the request to the right altitude (one fix/chore · one story · a few stories · epic-sized) and route it — scaffold the ticket(s), or scaffold an epic shell and send it to the spec arc. Use when someone says "I want feature X", "can we add Y", "we should build Z", or files a bug, and it isn't already clear it's a single well-shaped ticket.
 argument-hint: [the request, in the user's words]
 allowed-tools: Bash, Read, Glob, Write

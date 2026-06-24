@@ -1,6 +1,6 @@
 ---
 name: new-ticket
-description: Scaffold ONE already-shaped work item (a ticket) via the active tracker and register it in the backlog. Use when it's already clear the work is a single, well-formed ticket. If the request is out of the blue and its size/shape is undecided (a feature, idea, or bug that might be several stories or a whole epic), use feature-intake first to triage the altitude.
+description: Scaffold ONE already-shaped work item (a ticket) via the active tracker and register it in the backlog. Use when it's already clear the work is a single, well-formed ticket. If the request is out of the blue and its size/shape is undecided (a feature, idea, or bug that might be several stories or a whole epic), use intake first to triage the altitude.
 ---
 
 # new-ticket
@@ -11,7 +11,7 @@ skill. This skill owns the *shaping* (DoR); the provider owns the *persistence*.
 
 > **Scope:** this skill mints **one ticket whose shape is already decided.** It does **not** triage
 > altitude — if you don't yet know whether the request is one ticket, several stories, or an epic,
-> start at [`feature-intake`](../feature-intake/SKILL.md) (the front door), which routes back here for
+> start at [`intake`](../intake/SKILL.md) (the front door), which routes back here for
 > the small cases.
 
 ## Resolve the tracker (do this first)

@@ -49,7 +49,7 @@ agent — `frame` did the first pass, but the loop can recover the map again whe
 
 ## The feedback arrow (don't scope-creep)
 Building ticket N is where you discover ticket N+3 — the edge case, the missing concern. When you
-find one: **park it as a NEW ticket via `feature-intake` — do not widen this branch.** One concern
+find one: **park it as a NEW ticket via `intake` — do not widen this branch.** One concern
 per branch keeps the PR focused; the parked ticket is refined when *it* is pulled.
 
 ## Critique wiring — the flags the skill computes and passes to `build-critique`
@@ -73,7 +73,7 @@ Workflow({ scriptPath: ".claude/workflows/build-critique.mjs",
 
 ## Exits
 - **Acceptance tests pass + ladder green → STOP.** Hand off to `ship`. Build does **not** open the PR.
-- Grew too big mid-build → stop, split via `feature-intake`.
+- Grew too big mid-build → stop, split via `intake`.
 - Contract turned out wrong / blocked on an unknown → back to `frame` (or spike). Build doesn't
   rewrite the target on the fly.
 
@@ -84,5 +84,5 @@ Workflow({ scriptPath: ".claude/workflows/build-critique.mjs",
 - **Build ends at green.** Opening the PR, automated + human review, merge, and flipping the ticket
   to `done` are `ship`'s job.
 - **Reuse, don't restate.** Frame the ticket via `/frame`, branch via `/start-ticket`, verify via
-  `ci.sh`, checkpoint via `checkpoint.sh`, park discoveries via `feature-intake` — point at them;
+  `ci.sh`, checkpoint via `checkpoint.sh`, park discoveries via `intake` — point at them;
   don't reimplement them here.

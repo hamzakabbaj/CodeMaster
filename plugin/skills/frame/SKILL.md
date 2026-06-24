@@ -24,7 +24,7 @@ Confirm the ticket is **Ready**: acceptance criteria are testable, and the scope
 If it isn't, don't push forward blind — take the escape that fits:
 - **vague** → *refine* the AC until they're checkable.
 - **unknown** → *spike* (a timeboxed investigation) — don't start building on an unknown.
-- **too big** → *split* via `feature-intake`; frame one slice.
+- **too big** → *split* via `intake`; frame one slice.
 
 These exits leave the loop entirely — you only proceed past here on a genuinely Ready ticket.
 

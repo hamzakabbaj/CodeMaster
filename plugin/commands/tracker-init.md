@@ -48,7 +48,7 @@ fi
 - Validate `.codemaster/config.json` against the schema (`"$SRC/config.schema.json"`) — at minimum, it's valid JSON and `tracker` matches `$ARGUMENTS`.
 - Confirm what was written. For `plane`, tell the user to **fill `.codemaster/plane.env`** with their `PLANE_API_URL` / `PLANE_API_KEY` / `PLANE_WORKSPACE_SLUG`, then sanity-check connectivity:
   `.codemaster/bin/plane-api.sh "workspaces/<slug>/projects/<pid>/states/" | jq '.results[]|{name,group}'` (lists the states the status map relies on).
-- From here, `feature-intake` / `new-ticket` / `backlog` / `/start-ticket` / `/ship` all route through the active provider automatically.
+- From here, `intake` / `new-ticket` / `backlog` / `/start-ticket` / `/ship` all route through the active provider automatically.
 
 ## Guardrails
 - `.codemaster/config.json` and `.codemaster/provider.md` are **committed** (project config); `.codemaster/plane.env` is **gitignored** (secret).

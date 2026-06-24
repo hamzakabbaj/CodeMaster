@@ -44,9 +44,9 @@ provider doc says exactly how it realizes them.
 
 | Verb | Used by | Contract |
 |---|---|---|
-| `mint(item) → id` | `feature-intake`, `backlog`, `new-ticket` | Create a tracked item from the vocabulary fields at initial status `todo`; **return the canonical `id`.** Folds "assign id + persist + register". |
+| `mint(item) → id` | `intake`, `backlog`, `new-ticket` | Create a tracked item from the vocabulary fields at initial status `todo`; **return the canonical `id`.** Folds "assign id + persist + register". |
 | `read(id) → item` | `start-ticket`, `build` | Fetch the full item (title, type, status, goal/story, acceptance_criteria, parent, links). |
-| `list(query) → [item]` | `feature-intake`, "what's ready/next" | Enumerate items, filterable by status / parent. |
+| `list(query) → [item]` | `intake`, "what's ready/next" | Enumerate items, filterable by status / parent. |
 | `transition(id, status)` | `start-ticket`, `ship` | The **only** writer of `status`. Maps the CodeMaster status to the provider's native state. |
 | `link(id, {branch?, pr?})` | `start-ticket`, `ship` | Attach VCS artifacts to the item (and, in reverse, the branch name is derived from `id`). |
 
