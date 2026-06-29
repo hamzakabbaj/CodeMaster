@@ -23,7 +23,11 @@ Do exactly this:
 8. **Automated review (review second is human).** Run the automated review on the branch diff — the `reviewer` agent for a normal diff, or the `review-board` workflow for a larger/riskier change. Surface findings: **act on `high`/`critical` now** (loop back to `build` if code must change), note `low`/`nit`. This complements `build`'s in-loop `build-critique`; it is the conventions + Definition-of-Done pass.
 9. **STOP for confirmation.** Present: the PR link, both gates green, and the review summary. **Ask the user for explicit go before merging** — the squash-merge changes `main` and deletes the branch, and it's the one step you can't cheaply undo.
 10. **Merge.** On confirmation: `gh pr merge <pr> --squash --delete-branch`.
-11. **Sync, close, verify.** `git checkout main && git pull`. Then `link(<id>, {pr})` to attach the PR to the item, and — for a **remote** tracker — fire `transition(<id>, done)` now (the `folder` provider already closed it in-PR). Finally **verify the post-merge `main` CI is green** (`gh run list --branch main --limit 1`) — a standing step after every merge, because the squash subject and merge skew are only exercised on `main`. If it's red, surface it immediately.
+11. **Sync, close, verify.** Return to `main` and pull:
+    - **Normal checkout:** `git checkout main && git pull`.
+    - **Worktree (you're shipping from a `--worktree`):** you can't `checkout main` here — it's checked out in the main worktree. Instead `cd` to the main checkout, `git checkout main && git pull`, then **remove the spent worktree**: `git worktree remove ../<repo>-worktrees/<id>-<slug>` (`--force` only if it complains about the now-merged branch). Detect the case with `git rev-parse --git-common-dir` ≠ `--git-dir`.
+
+    Then `link(<id>, {pr})` to attach the PR to the item, and — for a **remote** tracker — fire `transition(<id>, done)` now (the `folder` provider already closed it in-PR). Finally **verify the post-merge `main` CI is green** (`gh run list --branch main --limit 1`) — a standing step after every merge, because the squash subject and merge skew are only exercised on `main`. If it's red, surface it immediately.
 12. **Report.** The merged commit SHA, the ticket now `done` in the tracker, and `main` green.
 
 Guardrails:

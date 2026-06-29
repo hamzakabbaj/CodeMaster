@@ -35,7 +35,7 @@ claude plugin install codemaster@codemaster
 | Command | What it does |
 |---|---|
 | `/spec` | Produce the epic brief (`spec.md`) for one epic — sharpen its riskiest assumption — then stop for plan-review before slicing. |
-| `/start-ticket` | Create a ticket's feature branch and flip its status to in progress. |
+| `/start-ticket` | Create a ticket's feature branch and flip its status to in progress. `--worktree` cuts an isolated git worktree, so independent tickets build in parallel (pairs with `plane`; `ship` cleans it up). |
 | `/design-options` | Generate 2–3 throwaway UI variants as a `file://`-openable gallery, then stop for you to pick. |
 | `/ship` | PR → both gates → review → (confirm) → squash-merge → verify main. |
 | `/tracker-init` | Set up where the backlog lives — scaffold `.codemaster/` for the `folder` or `plane` provider (see **Tracker** below). |
