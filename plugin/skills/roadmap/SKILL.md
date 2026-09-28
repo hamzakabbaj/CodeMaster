@@ -50,7 +50,7 @@ record and the relevant code.
 **Method:**
 1. **Decompose into features.** Each is one shippable capability of **2–5 stories**. Bigger than
    that → it's two features; one story → it's a ticket, not a feature. Absorb loose tickets already
-   under the epic into the feature they belong to (re-parent them).
+   under the epic into the feature they belong to (`set_parent` them onto it once it's minted).
 2. **Riskiest assumption per feature — only when there is one.** A feature with an open design or
    technical question (a new integration, a perf bet, an unsettled UI flow, a contested rule) carries
    that question as its `riskiest_assumption` → it gets a `/spec`. A feature with **no** real unknown

@@ -157,14 +157,14 @@ back here rather than guessing a default.
 
 ## Tracker — where the backlog lives (pluggable)
 
-The process skills never touch a backlog directly. They call seven **tracker verbs**
-(`mint · read · list · transition · link · attach_doc · read_doc`); a **provider** implements them; a one-line
+The process skills never touch a backlog directly. They call eight **tracker verbs**
+(`mint · read · list · transition · set_parent · link · attach_doc · read_doc`); a **provider** implements them; a one-line
 per-project config picks the provider. Swap where work items live without changing the loop,
 the fleet, or the cage.
 
 | Provider | Backlog lives in | Use when |
 |---|---|---|
-| `folder` *(default)* | a **gitignored** local backlog (`<root>/items/<id>-<slug>/` — one flat folder per item) | solo / repo-native, no external tool |
+| `folder` *(default)* | a **gitignored** local backlog you can read in the file explorer: `epics/`, `features/`, and tickets in `1-⬜ todo` · `2-🟡 doing` · `3-⛔ blocked` · `4-✅ done` | solo / repo-native, no external tool |
 | `plane` | a [Plane](https://plane.so) project, via its REST API | the team tracks work in Plane |
 
 **Switch it on — this is the first thing you run in a new repo:**

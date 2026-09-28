@@ -18,7 +18,7 @@ fresh project an un-gitignored backlog at CodeMaster's own historical path.
 | `--tracker=folder\|plane` | which provider to configure. A **bare positional** (`folder` / `plane`) means the same thing — that's the legacy `/tracker-init` form. |
 | `--verify="<cmd>"` | the project's green-check command (see §4 *Verify command*). |
 | `--root=<path>` | `folder` only — backlog root (default `.codemaster/backlog`). |
-| `--id-prefix=<PREFIX>` | `folder` only — uppercase id prefix (default: the repo name's initials, else `CM`). |
+| `--id-prefix=<PREFIX>` | `folder` only — uppercase **ticket** id prefix (default: the repo name's initials, else `CM`). Never `E` or `F` — those are the epic and feature id letters. |
 | `--workspace=<slug>` | `plane` only — workspace slug. |
 | `--project=<uuid>` | `plane` only — project id. |
 | `--check` | **doctor only**: run §1 + §2, report, write nothing. Exit non-zero-ish (say so plainly) if anything is broken. Useful in CI. |
@@ -58,6 +58,11 @@ Then the provider-specific checks — **these are the ones that actually catch b
 - `config.folder.root` and `idPrefix` present and schema-valid.
 - **`<root>/` is gitignored.** `git check-ignore -q "<root>" && echo ok` — if it isn't, the backlog
   is on a path to being committed, which violates the "repo holds only the product" rule. Broken.
+- **The six folders exist:** `epics/`, `features/`, `1-⬜ todo/`, `2-🟡 doing/`, `3-⛔ blocked/`,
+  `4-✅ done/` (quote the paths — they hold spaces and emoji). Missing ones are a safe repair.
+- **Old layout?** An `items/` folder, a `roadmap.json`, or an `epics/<id>/tickets/` tree means a
+  backlog from an earlier CodeMaster version. Report it as **stale** and say how many items it holds —
+  there's no automatic migration; offer to move them by hand, item by item, through `mint`.
 - If `<root>/` exists, report how many items are in it (that number decides §3).
 
 ### `plane`
@@ -104,12 +109,17 @@ Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env`
 *Verify command* at the end of this section. Then, by provider:
 
 ### `folder`
-- `root` default `.codemaster/backlog`; `idPrefix` default from the repo name (`CodeMaster` → `CM`), else `CM`.
+- `root` default `.codemaster/backlog`; `idPrefix` default from the repo name (`CodeMaster` → `CM`), else
+  `CM` — never `E` or `F`.
 - Write `.codemaster/config.json`:
   ```json
   { "tracker": "folder", "verify": "<cmd>", "folder": { "root": "<root>", "idPrefix": "<PREFIX>" } }
   ```
 - `cp "$SRC/providers/folder.md" .codemaster/provider.md`
+- Create the layout (see `providers/folder.md` §Layout):
+  ```sh
+  mkdir -p "<root>/epics" "<root>/features" "<root>/1-⬜ todo" "<root>/2-🟡 doing" "<root>/3-⛔ blocked" "<root>/4-✅ done"
+  ```
 - **Gitignore the backlog** — ensure `.gitignore` contains `<root>/`. The folder backlog (work-items
   **and** docs) is the solo dev's private scratch; only the product (code + tests) is committed.
   **Never commit `<root>/`.**

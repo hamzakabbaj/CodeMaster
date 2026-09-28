@@ -3,53 +3,214 @@
   "title": "CodeMaster — work item",
   "description": "One tracked item at any level: an epic, a feature, or a ticket (story · task · spike · fix). Every provider serializes this vocabulary; the folder provider stores it verbatim as item.json.",
   "type": "object",
-  "required": ["id", "title", "type", "status"],
+  "required": [
+    "id",
+    "title",
+    "type"
+  ],
   "properties": {
-    "id": { "type": "string", "description": "Canonical id, assigned by the provider on mint (e.g. 'ETK-12', 'PROJ-123'). Same scheme at every level." },
-    "title": { "type": "string", "description": "One line." },
+    "id": {
+      "type": "string",
+      "description": "Canonical id, assigned by the provider on mint. Format is provider-defined: the folder provider uses E<n> / F<n> / <PREFIX>-<n> per level; Plane uses <PROJECT>-<n> for everything. Skills treat it as opaque."
+    },
+    "title": {
+      "type": "string",
+      "description": "One line."
+    },
     "type": {
       "type": "string",
-      "enum": ["epic", "feature", "story", "task", "spike", "fix"],
+      "enum": [
+        "epic",
+        "feature",
+        "story",
+        "task",
+        "spike",
+        "fix"
+      ],
       "description": "Level + kind. epic and feature are containers; story · task · spike · fix are tickets (one branch, one PR)."
     },
     "subtype": {
       "type": "string",
-      "enum": ["enabler"],
+      "enum": [
+        "enabler"
+      ],
       "description": "Tasks only. Groundwork that unblocks stories — typically the feature's riskiest assumption, built first."
     },
-    "status": { "type": "string", "enum": ["todo", "in_progress", "done", "blocked"] },
+    "status": {
+      "type": "string",
+      "enum": [
+        "todo",
+        "in_progress",
+        "done",
+        "blocked"
+      ],
+      "description": "Always returned by read. Stored in item.json for epics and features; the folder provider stores a ticket's status as the status folder it sits in, so its item.json has none."
+    },
     "parent": {
       "type": "string",
       "description": "Optional. The id of a HIGHER-level item: a ticket's parent is a feature or an epic; a feature's parent is an epic; an epic has none. Absent = standalone."
     },
-    "goal": { "type": "string", "description": "epic · feature · task · spike · fix: one sentence. An outcome for epics/features ('users can X'), the change for a task/fix, the question for a spike." },
-    "story": { "type": "string", "description": "story only: 'As a <user>, I want <capability>, so that <benefit>.'" },
+    "goal": {
+      "type": "string",
+      "description": "epic · feature · task · spike · fix: one sentence. An outcome for epics/features ('users can X'), the change for a task/fix, the question for a spike."
+    },
+    "story": {
+      "type": "string",
+      "description": "story only: 'As a <user>, I want <capability>, so that <benefit>.'"
+    },
     "riskiest_assumption": {
       "type": "string",
       "description": "epic · feature only. Epic: the product-level bet — decides which feature goes first. Feature: the design/technical bet a /spec settles and backlog promotes to an enabler. Absent on a feature = no unknown, so it's sliced without a spec."
     },
     "acceptance_criteria": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Tickets: testable conditions that define done (required by the Definition of Ready). Optional on a feature (its validating outcome)."
     },
-    "depends_on": { "type": "array", "items": { "type": "string" }, "description": "Ids of same-level items that must be done first. Build order lives here, never in the id." },
-    "blocks": { "type": "array", "items": { "type": "string" }, "description": "Ids of same-level items this one unblocks." },
-    "verification": { "type": "string", "description": "Tickets: how it's proven — which tests, run by the project's verify command." },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Ids of same-level items that must be done first. Build order lives here, never in the id."
+    },
+    "blocks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Ids of same-level items this one unblocks."
+    },
+    "verification": {
+      "type": "string",
+      "description": "Tickets: how it's proven — which tests, run by the project's verify command."
+    },
     "links": {
       "type": "object",
-      "properties": { "branch": { "type": "string" }, "pr": { "type": "string" } },
+      "properties": {
+        "branch": {
+          "type": "string"
+        },
+        "pr": {
+          "type": "string"
+        }
+      },
       "additionalProperties": false,
       "description": "Tickets: VCS artifacts attached by start-ticket / ship."
     },
-    "notes": { "type": "string", "description": "Optional free text: slicing rationale, non-goals." }
+    "notes": {
+      "type": "string",
+      "description": "Optional free text: slicing rationale, non-goals."
+    }
   },
   "allOf": [
-    { "if": { "properties": { "type": { "const": "story" } } }, "then": { "required": ["story", "acceptance_criteria"] } },
-    { "if": { "properties": { "type": { "enum": ["task", "spike", "fix"] } } }, "then": { "required": ["goal", "acceptance_criteria"] } },
-    { "if": { "properties": { "type": { "enum": ["epic", "feature"] } } }, "then": { "required": ["goal"] } },
-    { "if": { "not": { "properties": { "type": { "const": "task" } } } }, "then": { "not": { "required": ["subtype"] } } },
-    { "if": { "not": { "properties": { "type": { "enum": ["epic", "feature"] } } } }, "then": { "not": { "required": ["riskiest_assumption"] } } },
-    { "if": { "properties": { "type": { "const": "epic" } } }, "then": { "not": { "required": ["parent"] } } }
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "story"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "story",
+          "acceptance_criteria"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "enum": [
+              "task",
+              "spike",
+              "fix"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "goal",
+          "acceptance_criteria"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "enum": [
+              "epic",
+              "feature"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "goal"
+        ]
+      }
+    },
+    {
+      "if": {
+        "not": {
+          "properties": {
+            "type": {
+              "const": "task"
+            }
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "subtype"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "not": {
+          "properties": {
+            "type": {
+              "enum": [
+                "epic",
+                "feature"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "riskiest_assumption"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "epic"
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "parent"
+          ]
+        }
+      }
+    }
   ]
 }

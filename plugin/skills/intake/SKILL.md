@@ -59,7 +59,8 @@ part of feature ETK-7, attach it?" — then let the user confirm, pick another, 
 
 Two nudges:
 - **Loose stories piling up.** If the chosen epic already holds several loose tickets (no feature)
-  that belong together with this one, say so and offer to group them under a new feature.
+  that belong together with this one, say so and offer to group them under a new feature
+  (`mint` the feature, then `set_parent` each ticket onto it).
 - **A feature that fits an open feature.** If an in-progress feature already covers this, the request
   is probably one more ticket under it, not a new feature.
 

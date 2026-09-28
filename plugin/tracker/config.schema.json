@@ -32,12 +32,18 @@
       "properties": {
         "root": {
           "type": "string",
-          "description": "Backlog root relative to the repo, e.g. '.codemaster/backlog'. Gitignored in its entirety. Holds items/<id>-<slug>/{item.json, <doc-slot>.md} — one flat folder per item."
+          "description": "Backlog root relative to the repo, e.g. '.codemaster/backlog'. Gitignored in its entirety. Holds epics/, features/, and the ticket status folders (1-⬜ todo · 2-🟡 doing · 3-⛔ blocked · 4-✅ done)."
         },
         "idPrefix": {
           "type": "string",
           "pattern": "^[A-Z][A-Z0-9]*$",
-          "description": "Uppercase id prefix, e.g. 'ETK'. Every item's id is <idPrefix>-<n>, at every level."
+          "description": "Uppercase ticket id prefix, e.g. 'ETK' -> ETK-12. Not 'E' or 'F' (the epic and feature id letters).",
+          "not": {
+            "enum": [
+              "E",
+              "F"
+            ]
+          }
         }
       }
     },

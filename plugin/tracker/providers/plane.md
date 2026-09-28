@@ -110,6 +110,11 @@ Resolve the UUID; resolve the target group's state id; `"$API" --raw PATCH "$BAS
 -H "Content-Type: application/json" -d '{"state":"<state_id>"}'`. For `blocked`, instead add/remove
 the `blocked` label (`labels: [...]`) and leave the state. This is the only writer of status.
 
+### `set_parent(id, parent | none)`
+Check the new parent's level (its type label), resolve both UUIDs, then `"$API" --raw PATCH
+"$BASE/work-items/$uuid/" -H "Content-Type: application/json" -d '{"parent":"<parent uuid>"}'`
+(`{"parent":null}` for none).
+
 ### `link(id, {branch?, pr?})`
 Resolve the UUID; attach the VCS artifact as a work-item **comment** (the public API's reliable
 channel — no guaranteed issue-links endpoint):

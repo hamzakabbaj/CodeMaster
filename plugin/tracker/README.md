@@ -57,7 +57,7 @@ skills know about; each provider maps them to its native schema. The canonical s
 
 | Field | Meaning |
 |---|---|
-| `id` | canonical handle — `ETK-12`, `PROJ-123`. Assigned by the provider on `mint`, same scheme at every level. |
+| `id` | canonical handle, assigned by the provider on `mint`. Format is provider-defined (`folder`: `E1` · `F1` · `ETK-12`; Plane: `PROJ-123` for everything) — skills treat it as opaque. |
 | `title` | one line |
 | `type` | `epic` · `feature` · `story` · `task` · `spike` · `fix` |
 | `subtype` | `enabler` — tasks only |
@@ -71,7 +71,7 @@ skills know about; each provider maps them to its native schema. The canonical s
 
 ## The verbs
 
-A provider is **defined by implementing these seven** — five for the work-item, two for its
+A provider is **defined by implementing these eight** — six for the work-item, two for its
 docs. Signatures are conceptual — each provider doc says exactly how it realizes them.
 
 | Verb | Used by | Contract |
@@ -80,6 +80,7 @@ docs. Signatures are conceptual — each provider doc says exactly how it realiz
 | `read(id) → item` | every skill | Fetch the full item (title, type, status, goal/story, riskiest_assumption, acceptance_criteria, parent, links). |
 | `list(query) → [item]` | `intake`, `roadmap`, "what's ready/next" | Enumerate items, filterable by `type` / `status` / `parent`. |
 | `transition(id, status)` | `start-ticket`, `ship` | The **only** writer of `status`. Maps the CodeMaster status to the provider's native state. |
+| `set_parent(id, parent \| none)` | `roadmap`, `intake` | Move an item under a different parent (or make it standalone). Same level rule as `mint`: the parent must be a higher level. |
 | `link(id, {branch?, pr?})` | `start-ticket`, `ship` | Attach VCS artifacts to the item (and, in reverse, the branch name is derived from `id`). |
 | `attach_doc(id, name, markdown)` | `/spec`, `/design-options`, `frame`, `build` | Store a markdown **doc** against an item — one of the **six named slots** below. **Never committed to the repo** — the provider decides where it lives. |
 | `read_doc(id, name) → markdown` | `backlog`, `frame`, `build`, `ship` | Fetch a doc previously attached. (e.g. `build` reads the `acceptance-tests` doc to transcribe it into executable tests.) |
