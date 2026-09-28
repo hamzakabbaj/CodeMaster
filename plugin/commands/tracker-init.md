@@ -29,15 +29,24 @@ scaffold silently on a bare invocation of an already-configured repo.
 
 Ask only for what a flag didn't supply, and only for the chosen provider.
 
-## 1. Locate the plugin source (no `${CLAUDE_PLUGIN_ROOT}` — discover it)
+## 1. Start from the repo root, and locate the plugin source
+
+**Everything below is relative to the git repo root** — never the current subfolder (in a monorepo,
+`.codemaster/` belongs at the top). Work from there:
+
 ```sh
+cd "$(git rev-parse --show-toplevel)" || { echo "not inside a git repo"; exit 1; }
+command -v jq >/dev/null || echo "jq missing — install it first (brew install jq · apt install jq)"
 if [ -d plugin/tracker ]; then
-  SRC="plugin/tracker"                                   # running inside the CodeMaster source repo
+  SRC="plugin/tracker"                    # running inside the CodeMaster source repo
 else
-  SRC="$(ls -d "$HOME"/.claude/plugins/cache/codemaster/codemaster/*/tracker 2>/dev/null | sort -V | tail -1)"
+  SRC="${CLAUDE_PLUGIN_ROOT}/tracker"     # the installed plugin (Claude Code fills this path in)
 fi
-[ -n "$SRC" ] && [ -d "$SRC" ] || { echo "codemaster plugin not found — install it first"; exit 1; }
+[ -d "$SRC" ] || { echo "codemaster plugin not found at $SRC — install it first"; exit 1; }
 ```
+
+`jq` is required — the checks below and the `plane` provider use it. If it's missing, report that as
+the first broken line and stop; don't let a later check fail with a cryptic error.
 
 ## 2. Doctor — report before you touch anything
 
@@ -46,6 +55,7 @@ Always run this first, whatever the flags. Report each line as **ok / missing / 
 ```sh
 test -f .codemaster/config.json && jq -e '.tracker' .codemaster/config.json    # configured? which provider?
 test -f .codemaster/provider.md                                                # mechanics materialized?
+cmp -s .codemaster/item.schema.json "$SRC/item.schema.json"                     # schema present + current?
 cmp -s .codemaster/provider.md "$SRC/providers/$(jq -r .tracker .codemaster/config.json).md"  # stale vs installed plugin?
 ```
 
@@ -91,7 +101,7 @@ From the doctor result, classify — say which one you're doing before you do it
 | State | Action |
 |---|---|
 | no `.codemaster/` | **fresh init** — scaffold §4. |
-| configured, same provider requested | **refresh** — re-copy `provider.md` (+ the `plane` wrapper) from `$SRC`, leave `config.json` and `plane.env` alone. Idempotent; this is what you run after a plugin update. |
+| configured, same provider requested | **refresh** — re-copy `provider.md` and `item.schema.json` (+ the `plane` wrapper) from `$SRC`, leave `config.json` and `plane.env` alone. Idempotent; this is what you run after a plugin update. |
 | configured, **different** provider requested | **switch — a migration, not a rewrite.** |
 
 **The switch guard.** Changing `tracker` orphans everything in the current backlog — the items don't
@@ -105,12 +115,18 @@ Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env`
 
 ## 4. Scaffold
 
-`mkdir -p .codemaster`. Every `config.json` below also carries **`"verify": "<cmd>"`** — see
-*Verify command* at the end of this section. Then, by provider:
+`mkdir -p .codemaster && cp "$SRC/item.schema.json" .codemaster/` — the item vocabulary every provider
+doc points at. Every `config.json` below also carries **`"verify": "<cmd>"`** — see *Verify command*
+at the end of this section. Then, by provider:
 
 ### `folder`
-- `root` default `.codemaster/backlog`; `idPrefix` default from the repo name (`CodeMaster` → `CM`), else
-  `CM` — never `E` or `F`.
+- `root` default `.codemaster/backlog`. `idPrefix` default: a **2–4 letter** uppercase tag from the
+  repo name — its initials if it has several words (`CodeMaster` → `CM`), else its first consonants
+  (`etikets` → `ETK`, `tigris` → `TGR`). Propose it; the user confirms. **Never `E` or `F`.**
+- **Gitignore the backlog first — before anything is written into it.** Ensure `.gitignore` (at the
+  repo root; create it if absent) holds the root-anchored line `/<root>/` (e.g. `/.codemaster/backlog/`),
+  then confirm with `git check-ignore -q "<root>/x"`. The folder backlog (work-items **and** docs) is
+  the solo dev's private scratch; only the product (code + tests) is committed. **Never commit `<root>/`.**
 - Write `.codemaster/config.json`:
   ```json
   { "tracker": "folder", "verify": "<cmd>", "folder": { "root": "<root>", "idPrefix": "<PREFIX>" } }
@@ -120,9 +136,16 @@ Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env`
   ```sh
   mkdir -p "<root>/epics" "<root>/features" "<root>/0-💡 backlog" "<root>/1-⬜ todo" "<root>/2-🟡 doing" "<root>/3-⛔ blocked" "<root>/4-✅ done"
   ```
-- **Gitignore the backlog** — ensure `.gitignore` contains `<root>/`. The folder backlog (work-items
-  **and** docs) is the solo dev's private scratch; only the product (code + tests) is committed.
-  **Never commit `<root>/`.**
+- **What you end up with:**
+  ```
+  .gitignore                 + /.codemaster/backlog/
+  .codemaster/
+    config.json              committed — tracker, verify, root, idPrefix
+    provider.md              committed — copied from the plugin
+    item.schema.json         committed — copied from the plugin
+    backlog/                 gitignored
+      epics/  features/  0-💡 backlog/  1-⬜ todo/  2-🟡 doing/  3-⛔ blocked/  4-✅ done/
+  ```
 
 ### `plane`
 - Need the workspace slug and project id (UUID). If a flag didn't supply them, ask — and say where to
@@ -139,8 +162,9 @@ Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env`
   ```
 - `cp "$SRC/providers/plane.md" .codemaster/provider.md`
 - `mkdir -p .codemaster/bin && cp "$SRC/providers/plane/bin/plane-api.sh" .codemaster/bin/ && chmod +x .codemaster/bin/plane-api.sh`
+- Ensure `.gitignore` holds the root-anchored line `/.codemaster/plane.env` — **before** copying the
+  template in. **Never commit it.**
 - `cp "$SRC/providers/plane/plane.env.template" .codemaster/plane.env && chmod 600 .codemaster/plane.env` — **only if it doesn't already exist**; never clobber filled-in credentials.
-- Ensure `.gitignore` contains `.codemaster/plane.env`. **Never commit it.**
 
 ### Verify command (every provider)
 `verify` is how `build` and `ship` prove the code is green — the project's own checks, not
@@ -176,7 +200,7 @@ Report: the action taken (fresh / refresh / switch), every file written, the doc
 `/ship` all route through the active provider automatically.
 
 ## Guardrails
-- `.codemaster/config.json` and `.codemaster/provider.md` are **committed** (project config);
+- `.codemaster/config.json`, `provider.md`, and `item.schema.json` are **committed** (project config);
   `.codemaster/plane.env` is **gitignored** (secret), as is the `folder` backlog root.
 - Don't hand-write provider mechanics — they're copied from the plugin so they stay in sync with the
   installed version. Re-run this after a plugin update to refresh `provider.md` + the wrapper.

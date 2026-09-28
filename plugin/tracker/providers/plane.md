@@ -129,7 +129,7 @@ channel — no guaranteed issue-links endpoint):
 ### `attach_doc(id, name, markdown)`
 The card **is** the home for docs — nothing goes to the repo. Convert the markdown to HTML and
 attach it to the work item, by `name`:
-`name` must be one of the **six named slots** ([`../README.md`](../README.md#the-six-doc-slots)).
+`name` must be one of the **six named slots** (the tracker contract's *six doc slots*).
 
 - **`spec`** (feature) / **`plan`** (ticket) → the work item's **description** (`description_html`).
   Set the relevant `<h4>` section so the body stays readable. These are the durable, reviewed-on-the-card docs.

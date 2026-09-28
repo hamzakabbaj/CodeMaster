@@ -48,7 +48,7 @@ All paths below are relative to the repo root.
   workflow order in any file explorer.
 - **Folder names are derived, never parsed.** The truth is in `item.json` (`id`, `parent`, `title`);
   the name is a readable view of it, rewritten by the verbs whenever the parent changes. Doc slots are
-  `<name>.md` files beside `item.json`, which conforms to [`../item.schema.json`](../item.schema.json).
+  `<name>.md` files beside `item.json`, which conforms to `.codemaster/item.schema.json`.
 
 ### Folder names
 
@@ -116,6 +116,8 @@ features. `backlog` holds ideas that don't meet the Definition of Ready yet; `to
    - epic → `epics/<name>/`, feature → `features/<name>/`, with `"status"` = the initial status;
    - ticket → the initial status's folder (`"$ROOT/0-💡 backlog/<name>/"` by default, `"$ROOT/1-⬜ todo/<name>/"`
      when minted Ready), **without** a `status` field.
+   Check it against `.codemaster/item.schema.json` before writing; reject rather than write an
+   invalid item.
 4. Return the id.
 
 > JSON write convention: end every `json.dump` with a trailing newline.
@@ -147,7 +149,7 @@ if a project wants them explicit.
 ### `attach_doc(id, name, markdown)`
 Write `resolve <id>/<name>.md` — a **gitignored** markdown file beside `item.json`. Overwrite if it
 exists. `name` is the bare doc name (no extension); it must be one of the **six named slots**
-([`../README.md`](../README.md#the-six-doc-slots)) **for that item's level** (`spec` on a feature;
+(the tracker contract's *six doc slots*) **for that item's level** (`spec` on a feature;
 the five ticket slots on a ticket) — reject anything else rather than creating a new file.
 
 ### `read_doc(id, name) → markdown`
