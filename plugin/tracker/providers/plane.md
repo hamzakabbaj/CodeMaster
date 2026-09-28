@@ -40,6 +40,22 @@ seq="${ID##*-}"
 uuid=$("$API" --all "$BASE/work-items/?fields=id,sequence_id" | jq -r --argjson s "$seq" '.[]|select(.sequence_id==$s)|.id')
 ```
 
+## Levels and types — by **label**
+
+Plane has one work-item kind with an arbitrary-depth `parent`, so CodeMaster's `type` rides on a
+**label** named after it: `epic` · `feature` · `story` · `task` · `spike` · `fix`, plus `enabler` for
+an enabler task. `mint` resolves each label's id (creating it once if the project lacks it) and sets
+it; `read` maps the label back to `type`. Hierarchy uses Plane's native `parent`, following the
+contract's rule — parents are optional and always point **up** a level.
+
+```sh
+label_id() { "$API" "$BASE/labels/" | jq -r --arg n "$1" '[.results[]|select(.name==$n)][0].id // empty'; }
+# absent → "$API" --raw POST "$BASE/labels/" -H "Content-Type: application/json" -d "{\"name\":\"$1\"}"
+```
+
+> Plane's paid tiers have native Epics / work-item types; labels work on every tier, so the provider
+> uses them. Not yet exercised against a live instance — confirm the label payloads when you test.
+
 ## Status map — by **state group**
 
 Plane states are per-project UUIDs, but each carries a stable `group`:
@@ -68,24 +84,26 @@ Render the vocabulary into a Plane work item. `description_html` carries the **g
 ```sh
 TODO=$(state_id "$(jq -r '.statusMap.todo // "unstarted"' .codemaster/config.json)")
 "$API" --raw POST "$BASE/work-items/" -H "Content-Type: application/json" -d "$(jq -n \
-  --arg name "$TITLE" --arg html "$DESC_HTML" --arg state "$TODO" --arg parent "$EPIC_UUID" \
-  '{name:$name, description_html:$html, state:$state} + (if $parent=="" then {} else {parent:$parent} end)')"
+  --arg name "$TITLE" --arg html "$DESC_HTML" --arg state "$TODO" --arg parent "$PARENT_UUID" \
+  --argjson labels "$LABEL_IDS" \
+  '{name:$name, description_html:$html, state:$state, labels:$labels} + (if $parent=="" then {} else {parent:$parent} end)')"
 ```
 
 The response holds `id` (UUID) + `sequence_id`. **Return `<identifier>-<sequence_id>`** as the
-canonical id. Epics are ordinary work items (often a 👑-named, `type_id:null` item) minted by the
-`roadmap` skill — for an epic, `description_html` carries the **goal** and an
-`<h4>Riskiest assumption</h4>` block instead of acceptance criteria; a child links via
-`parent: <epic UUID>`.
+canonical id. `LABEL_IDS` is the `type` label (+ `enabler` if set). Check the parent first: it
+must be a higher level (read its label). For an **epic or feature**, `description_html` carries the
+**goal** and an `<h4>Riskiest assumption</h4>` block (when there is one) instead of acceptance
+criteria.
 
 ### `read(id) → item`
 Resolve the UUID (above), then `"$API" "$BASE/work-items/$uuid/?expand=state"`. Map back:
-`name`→title, `state.group`→CodeMaster status (reverse of the table), `description_html`→goal +
-acceptance_criteria, `parent`→parent id.
+`name`→title, the type label→`type` (+ `enabler`→`subtype`), `state.group`→CodeMaster status
+(reverse of the table), `description_html`→goal/story + riskiest assumption + acceptance_criteria,
+`parent`→parent id.
 
 ### `list(query) → [item]`
-`"$API" --all "$BASE/work-items/?expand=state"` then `jq` filter by `.state.group` (and `.parent`
-for an epic's children). Reverse-map each `state.group` to a CodeMaster status.
+`"$API" --all "$BASE/work-items/?expand=state,labels"` then `jq` filter by `.state.group`, the type
+label, and `.parent` (a feature's tickets, an epic's features). Reverse-map each `state.group` to a CodeMaster status.
 
 ### `transition(id, status)`
 Resolve the UUID; resolve the target group's state id; `"$API" --raw PATCH "$BASE/work-items/$uuid/"
@@ -106,7 +124,7 @@ The card **is** the home for docs — nothing goes to the repo. Convert the mark
 attach it to the work item, by `name`:
 `name` must be one of the **six named slots** ([`../README.md`](../README.md#the-six-doc-slots)).
 
-- **`spec`** (epic) / **`plan`** (ticket) → the work item's **description** (`description_html`).
+- **`spec`** (feature) / **`plan`** (ticket) → the work item's **description** (`description_html`).
   Set the relevant `<h4>` section so the body stays readable. These are the durable, reviewed-on-the-card docs.
 - **`design-options` · `architecture` · `acceptance-tests` · `evidence`** → a **comment** on the work
   item (`comments/`, `comment_html`), each prefixed with an `<h4>` naming the doc. Comments keep the
@@ -169,7 +187,7 @@ PATCH the **intake entry's** `status` (not the embedded issue): `accept`=1 · `d
 ```
 
 On **accept**, Plane moves the embedded work item out of Triage into the backlog; `intake` then
-routes it (set `parent` epic + `type`, or escalate to a new epic) per its altitude table.
+routes it (set `type` + an optional `parent`, or turn it into a new feature / epic) per its level table.
 
 > ⚠️ **Verified vs. not:** the **read path** (`intake-issues/` list) and the **status enum** are
 > confirmed against a live instance. The **write payloads** (`inbox_resolve` accept/decline/snooze)

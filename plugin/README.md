@@ -34,7 +34,7 @@ claude plugin install codemaster@codemaster
 
 | Command | What it does |
 |---|---|
-| `/spec` | Produce the epic brief (`spec.md`) for one epic — sharpen its riskiest assumption — then stop for plan-review before slicing. |
+| `/spec` | Write the half-page brief for one **feature** that carries a riskiest assumption — sharpen the unknown, sketch the approach — then stop for review before slicing. Features without an unknown skip it. |
 | `/start-ticket` | Create a ticket's feature branch and flip its status to in progress. `--worktree` cuts an isolated git worktree, so independent tickets build in parallel (pairs with `plane`; `ship` cleans it up). |
 | `/design-options` | Generate 2–3 throwaway UI variants as a `file://`-openable gallery, then stop for you to pick. The decision lands in the ticket's `design-options` doc slot; the gallery is thrown away. |
 | `/ship` | PR → both gates → review → (confirm) → squash-merge → verify main. |
@@ -46,12 +46,12 @@ claude plugin install codemaster@codemaster
 |---|---|
 | `design-thinking` | Guide the Design Thinking methodology (brief, empathy maps, personas, wireframes…). |
 | `technical-design` | Guide technical architecture and system design (APIs, schema, design system). |
-| `roadmap` | Decompose a designed product into a dependency-ordered set of epics, each with its riskiest assumption — the backlog skeleton before `/spec`. |
-| `backlog` | Slice one approved epic's `/spec` brief into a dependency-ordered set of Ready tickets (promoting the epic's riskiest assumption to an enabler). |
+| `roadmap` | The structure above tickets: split a designed product into **epics** (each with its product-level bet), or — run on one epic, when you start it — split that epic into **features** of 2–5 stories. |
+| `backlog` | Slice one **feature** into its 2–5 Ready tickets, promoting the feature's riskiest assumption (if any) to an enabler that's built first. |
 | `frame` | Set one ticket up to build — DoR gate → ground the code → plan if gnarly → design the acceptance tests — then stop at the done-contract. |
 | `build` | Run the robust-code loop on a framed ticket — generate (test-first) → verify → checkpoint → critique — until the acceptance tests pass and `verify` is green. |
-| `new-ticket` | Scaffold one already-shaped ticket via the tracker, under its parent epic. |
-| `intake` | Front door for an out-of-the-blue request — triage it to the right altitude (fix · story · stories · epic) and route it (mint tickets, or mint an epic → `/spec`). With Plane, can pull from its **Intake** queue. |
+| `new-ticket` | Scaffold one already-shaped ticket via the tracker — optionally under a feature or an epic. |
+| `intake` | Front door for an out-of-the-blue request — triage it to the right level (ticket · feature · epic), suggest a parent, mint it, and name the next step. With Plane, can pull from its **Intake** queue. |
 
 ### Agents — specialist subagents the fleet delegates to
 
@@ -71,37 +71,49 @@ claude plugin install codemaster@codemaster
 |---|---|---|
 | `block-no-verify` | `PreToolUse` | Blocks `git commit --no-verify` (and friends) — the cage can't be bypassed. |
 
-## How it composes — the greenfield flow
+## How work is organized — epic → feature → ticket
 
-The greenfield line is `design-thinking` → `technical-design` → `roadmap` → `/spec` → `backlog` → `/start-ticket` → `frame` → `build` → `/ship` (commands carry the `/`; skills are bare, though a skill is also invocable as `/build`). An out-of-the-blue request instead enters through `intake`, which triages it and routes into this line at the right altitude. Each marked step stops at a human checkpoint; the hooks and CI enforce the invariants regardless of what the model decides.
+| Level | What it is | Size | Gets a spec? |
+|---|---|---|---|
+| **Epic** | a product area or big outcome | months | no — just a goal, a product-level bet, and its features |
+| **Feature** | one shippable capability | **2–5 stories** | **only if it has an unknown** (its riskiest assumption) |
+| **Ticket** — `story` · `task` · `spike` · `fix` | one branch, one PR | hours–days | no — `frame` gives it a plan and acceptance tests |
+
+Parents are **optional** and always point up: a ticket can sit under a feature, directly under an
+epic, or stand alone (a stray bug is just a `fix`). Full rules:
+[`tracker/README.md`](tracker/README.md#the-hierarchy--epic--feature--ticket).
+
+## How it composes — the flow
 
 ```
-   greenfield — a new product or big feature:
+   greenfield — a new product:
 
       design-thinking → technical-design   upstream design
             |
-      roadmap            decompose into epics (each with its riskiest assumption)
+      roadmap              product -> epics (each with its product-level bet)
             |
-      /spec              the epic brief: approach + sharpened riskiest assumption
-            |            > plan review               (human checkpoint)
-      backlog            slice the epic into Ready tickets (promote the riskiest assumption)
+      roadmap <epic>       when you start an epic: epic -> features of 2-5 stories
             |
-      /start-ticket      feature branch + status -> in_progress
+      /spec <feature>      only if the feature has an unknown: a half-page brief
+            |              > spec review                (human checkpoint)
+      backlog <feature>    slice into 2-5 Ready tickets (enabler first)
             |
-      frame              DoR -> ground -> plan -> acceptance tests
-            |            > done-contract review      (human checkpoint)
-      build              generate (test-first) -> verify -> checkpoint -> critique
-            |              (repeat until the acceptance tests pass & verify is green)
+      /start-ticket        feature branch + status -> in_progress
             |
-      /ship              verify -> PR -> checks -> reviewer
-            |            > merge confirm             (human checkpoint)
+      frame                DoR -> ground -> plan -> acceptance tests
+            |              > done-contract review       (human checkpoint)
+      build                generate (test-first) -> verify -> checkpoint -> critique
+            |                (repeat until the acceptance tests pass & verify is green)
+            |
+      /ship                verify -> PR -> checks -> reviewer
+            |              > merge confirm              (human checkpoint)
             v
-      main               squash-merged, branch deleted
+      main                 squash-merged, branch deleted
 
-   out-of-the-blue request → intake (triage):
-      epic-sized    → mint an epic → /spec                  (joins the line above)
-      a few / one   → new-ticket under an epic        → /start-ticket → frame → build → /ship
-      fix / chore   → new-ticket under `maintenance`  → /start-ticket → frame → build → /ship
+   out-of-the-blue request -> intake (size picks the level; an unknown picks a spec):
+      epic-sized       -> mint an epic      -> roadmap <epic>
+      2-5 stories      -> mint a feature    -> /spec (if unknown) -> backlog
+      one story / fix  -> mint a ticket     -> /start-ticket -> frame -> build -> /ship
 
    ── the deterministic cage runs underneath the whole flow ──
    your `verify` command + your repo's git hooks and CI (+ the plugin's
@@ -114,47 +126,45 @@ The doctrine behind each step is in [docs/02 (robust-code loop)](../docs/02-robu
 
 What to actually run, in order, for the common starting points. (Commands carry the `/`; skills are bare but also work as `/name`.)
 
-**Once per repo, before anything else:** `/codemaster-init` — picks where the backlog lives. Nothing
-below works until it has run; the skills stop and point you back here rather than guessing a default.
+**Once per repo, before anything else:** `/codemaster-init` — picks where the backlog lives and
+records your `verify` command. Nothing below works until it has run; the skills stop and point you
+back here rather than guessing a default.
 
-**A brand-new feature — the full arc.** When a request might be several stories or an epic:
-1. Describe the request, then run `intake` — it triages the altitude and, for anything epic-sized, **mints an epic** and routes you to spec.
-2. `/spec <epic-id>` — produces the epic brief, then **stops for your plan review**.
-3. `backlog <epic-id>` — slices the approved brief into Ready tickets.
+**A new feature (2–5 stories).**
+1. Describe the request and run `intake` — it mints a **feature**, suggests which epic it belongs to, and names the next step.
+2. `/spec <feature-id>` — **only if the feature has an unknown**: a half-page brief, then **stops for your review**.
+3. `backlog <feature-id>` — slices it into 2–5 Ready tickets.
 4. `/start-ticket <id>` — branches and flips the ticket to in-progress.
 5. `frame <id>` — grounds, plans, and designs the acceptance tests, then **stops at the done-contract**.
 6. `/build` — runs the robust-code loop until the acceptance tests pass and `verify` is green.
-7. `/ship` — opens the PR, waits for both gates + the reviewer, then **stops for your merge confirm**.
+7. `/ship` — opens the PR, waits for the checks + the reviewer, then **stops for your merge confirm**.
 8. Repeat 4–7 for each ticket.
 
-**A single, already-shaped ticket.** When you already know it's one well-formed unit of work:
-- `new-ticket` *(only if it doesn't exist yet)* → `/start-ticket <id>` → `frame <id>` → `/build` → `/ship`.
-
-**A quick fix or chore.** The ticket exists and the change is small:
-- `/start-ticket <id>` → `frame <id>` *(lightweight — the contract is small)* → `/build` → `/ship`.
+**A single ticket, a bug, or a chore.**
+- `intake` (or `new-ticket` if you already know its shape) → `/start-ticket <id>` → `frame <id>` *(lightweight — the contract is small)* → `/build` → `/ship`.
 
 **Exploring a UI/UX decision.** This happens *inside* `frame`'s plan step, not as a separate stage:
 - when a ticket hinges on an open UI choice, `frame` runs `/design-options <id>` — 2–3 throwaway variants as a `file://` gallery — **stops for you to pick**, records the choice in the ticket's `design-options` doc, and `build` reads it back and implements that variant for real.
 
-**Upstream design, before any tickets exist.** For a greenfield product or a big feature:
-- `design-thinking` → `technical-design` → `roadmap` (decompose into epics) → `/spec` (per epic, just-in-time).
+**A new product.**
+- `design-thinking` → `technical-design` → `roadmap` (epics) → then, per epic when you start it, `roadmap <epic-id>` (features) → per feature, the steps above.
 
 ### Best-practice rules
-- **Don't skip the checkpoints.** Let `/spec` stop at plan review, `frame` stop at the done-contract, and `/ship` stop at merge confirm — those pauses are where *you* are the discriminator, not the model.
+- **Don't skip the checkpoints.** Let `/spec` stop at review, `frame` stop at the done-contract, and `/ship` stop at merge confirm — those pauses are where *you* are the discriminator, not the model.
 - **One ticket = one branch = one PR.** `/start-ticket` and `/ship` assume this.
 - **Frame before build.** `build` refuses without `frame`'s done-contract — the acceptance tests that *define* done. Frame is where "done" gets made executable and reviewed; build just drives the code to it.
 - **Trust the cage, verify the output.** `verify`, the hooks, and your CI guarantee the invariants; your job at each checkpoint is to review design, security, and correctness — not just "does it run".
 
 ## Tracker — where the backlog lives (pluggable)
 
-The process skills never touch a backlog directly. They call five **tracker verbs**
-(`mint · read · list · transition · link`); a **provider** implements them; a one-line
+The process skills never touch a backlog directly. They call seven **tracker verbs**
+(`mint · read · list · transition · link · attach_doc · read_doc`); a **provider** implements them; a one-line
 per-project config picks the provider. Swap where work items live without changing the loop,
 the fleet, or the cage.
 
 | Provider | Backlog lives in | Use when |
 |---|---|---|
-| `folder` *(default)* | a **gitignored** local backlog (`<root>/roadmap.json` + `epics/<id>/{spec, tickets/…}`) | solo / repo-native, no external tool |
+| `folder` *(default)* | a **gitignored** local backlog (`<root>/items/<id>-<slug>/` — one flat folder per item) | solo / repo-native, no external tool |
 | `plane` | a [Plane](https://plane.so) project, via its REST API | the team tracks work in Plane |
 
 **Switch it on — this is the first thing you run in a new repo:**

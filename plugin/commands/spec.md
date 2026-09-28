@@ -1,42 +1,44 @@
 ---
-description: Produce the epic brief for ONE epic — sharpen its riskiest assumption and lay out the approach at epic altitude — then stop for plan-review before the backlog is sliced. Runs after roadmap, before backlog. Epic-only; ticket-level planning is Frame's job. Persists via the tracker's attach_doc (never committed to the repo).
-argument-hint: <epic-id>   (the kebab-case id from roadmap, e.g. daily-pick-loop)
+description: Write the brief for ONE feature that carries a riskiest assumption — sharpen the unknown, sketch the approach, then stop for review before the feature is sliced into tickets. Features without an unknown skip this and go straight to backlog. Persists via the tracker's attach_doc (never committed to the repo).
+argument-hint: <feature-id>
 ---
 
-Produce the **epic brief** for epic **$ARGUMENTS**: sharpen what's uncertain and lay out the
-approach at *epic* altitude, then **STOP for review** — the brief is reviewed before the epic is
-sliced into tickets (review the plan before any code exists).
+Write the **feature brief** for feature **$ARGUMENTS**: settle what's uncertain and sketch the
+approach, then **STOP for review** — the brief is reviewed before the feature is sliced into tickets
+(review the plan before any code exists).
 
-This is **epic-only.** It writes one `spec` doc and nothing below it: ticket-level planning is
-Frame's `plan`, and UI variant exploration is `/design-options`. `/spec` writes no tickets and
-no code.
+A feature is 2–5 stories, so **the brief is short — half a page.** It writes one `spec` doc and
+nothing else: ticket-level planning is `frame`'s `plan`, UI variant exploration is
+`/design-options`. `/spec` writes no tickets and no code.
 
-## 1. Read the epic — via the active tracker
+## 1. Read the feature — via the active tracker
 
 Resolve the tracker from `.codemaster/config.json` (**absent → stop and send the user to
 `/codemaster-init`**; there is no silent default. Contract:
-[`plugin/tracker/README.md`](../tracker/README.md)) and **`read`** epic **$ARGUMENTS** — its
-`goal`, `riskiest_assumption`, and `depends_on`. Don't ask the user to paste what `roadmap` already
-recorded. Then read the upstream design record (design-thinking + system-design) for the
-architecture this epic sits in.
+[`plugin/tracker/README.md`](../tracker/README.md)) and **`read`** **$ARGUMENTS**:
+- **Not a `feature`** → stop. Epics aren't specced (break one into features with `roadmap <epic-id>`);
+  a ticket's planning is `frame`'s job.
+- **No `riskiest_assumption`** → stop and say so: there's no unknown to settle, so the next step is
+  `backlog $ARGUMENTS`. (If you think there *is* a real unknown, propose it to the user first.)
+
+Then read context: the parent epic if any (its goal and product-level bet), the relevant design
+record (design-thinking + system-design, when the project has one), and the code the feature touches.
+Don't ask the user to paste what's already recorded.
 
 ## 2. Write the brief → `attach_doc(<id>, "spec", …)`
 
-Persist the brief via the active provider's **`attach_doc`** verb (folder → a gitignored local
-file; plane → the epic card's description). **Never write it to a committed repo file** — the
-backlog and its docs live in the tracker, not in git. Keep it concise, at epic altitude:
+Persist via the active provider's **`attach_doc`** (folder → a gitignored local file; plane → the
+feature card's description). **Never write it to a committed repo file.** Four short sections:
 
-- **Problem / intent** — what this epic delivers and why, in 1–2 sentences (the outcome, from the
-  epic `goal`).
-- **Constraints** — invariants from CLAUDE.md / the system design that apply; what must NOT change.
-- **Approach** — the *shape* of the solution at epic altitude: the modules/seams it touches, the
-  key flows, the data it owns. **Not file-level steps** — those are ticket plans (Frame).
-- **Validating outcome** — what proves the epic is actually done and the bet paid off (the loop it
-  closes, the behavior or metric). The tickets' acceptance criteria will ladder up to this.
-- **Riskiest assumption — sharpened.** Take the one-line `riskiest_assumption` from the epic and
-  make it **concrete and falsifiable**, then state **how you'll de-risk it first.** This de-risk
-  plan is exactly what `backlog` promotes to a foundational **enabler ticket**, built before the
-  stories that depend on it.
+- **Intent** — what the feature delivers and why, in 1–2 sentences (from its `goal`).
+- **Riskiest assumption — sharpened.** Make the one-line `riskiest_assumption` **concrete and
+  falsifiable**, then state **how you'll de-risk it first.** This is exactly what `backlog` promotes to
+  the **enabler ticket**, built before the stories that depend on it.
+- **Approach** — the *shape* of the solution: the modules/seams it touches, the key flow, the data it
+  owns, the constraints it must respect (from CLAUDE.md / the system design). **Not file-level
+  steps** — those are ticket plans (`frame`).
+- **Validating outcome** — what proves the feature is done and the bet paid off. The tickets'
+  acceptance criteria ladder up to this.
 
 ## 3. Be the discriminator
 
@@ -45,5 +47,5 @@ make the approach wrong — that is the point of a spec.
 
 ## 4. Stop for review
 
-Present the brief and **stop.** Offer to adjust it. Only after approval does the epic proceed to
-`backlog` (slicing). Keep it tight — a spec is for thinking and review, not ceremony.
+Present the brief and **stop.** Offer to adjust it. Only after approval does the feature proceed to
+`backlog $ARGUMENTS` (slicing).

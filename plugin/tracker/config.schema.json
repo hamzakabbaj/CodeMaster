@@ -32,12 +32,12 @@
       "properties": {
         "root": {
           "type": "string",
-          "description": "Backlog root relative to the repo, e.g. '.codemaster/backlog'. Gitignored in its entirety. Holds roadmap.json + epics/<epic-id>/tickets/<id>-<slug>/ticket.json."
+          "description": "Backlog root relative to the repo, e.g. '.codemaster/backlog'. Gitignored in its entirety. Holds items/<id>-<slug>/{item.json, <doc-slot>.md} — one flat folder per item."
         },
         "idPrefix": {
           "type": "string",
           "pattern": "^[A-Z][A-Z0-9]*$",
-          "description": "Uppercase ticket id prefix, e.g. 'CM', 'ETK'. Ids are <idPrefix>-<n>."
+          "description": "Uppercase id prefix, e.g. 'ETK'. Every item's id is <idPrefix>-<n>, at every level."
         }
       }
     },

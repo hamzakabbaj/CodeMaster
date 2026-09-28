@@ -10,9 +10,9 @@ item lives — repo folders, Plane, … — is decided by the active **tracker p
 skill. This skill owns the *shaping* (DoR); the provider owns the *persistence*.
 
 > **Scope:** this skill mints **one ticket whose shape is already decided.** It does **not** triage
-> altitude — if you don't yet know whether the request is one ticket, several stories, or an epic,
+> altitude — if you don't yet know whether the request is one ticket, a feature, or an epic,
 > start at [`intake`](../intake/SKILL.md) (the front door), which routes back here for
-> the small cases.
+> the small cases. Features and epics are minted by `intake` and `roadmap`, not here.
 
 ## Resolve the tracker (do this first)
 1. Read `.codemaster/config.json` at the repo root → its `tracker` field. **If the file is absent,
@@ -24,11 +24,12 @@ skill. This skill owns the *shaping* (DoR); the provider owns the *persistence*.
    [`plugin/tracker/README.md`](../../tracker/README.md).
 
 ## Steps
-1. **Gather inputs** (ask only for what's missing): title, epic/parent, type (`task|story|spike|fix`),
-   `goal` (one sentence, for a task) **or** `story` ("As a … I want … so that …", for a story), and
-   testable `acceptance_criteria`.
+1. **Gather inputs** (ask only for what's missing): title, type (`story|task|spike|fix`), `story`
+   ("As a … I want … so that …", for a story) **or** a one-sentence `goal` (every other type), testable
+   `acceptance_criteria`, and an **optional** `parent` — a feature or an epic, never another ticket.
+   No parent is fine: the ticket stands alone.
 2. **`mint` the item** via the active provider. Pass the vocabulary fields; the provider assigns the
-   `id`, persists the item at initial status `todo`, and (for `folder`) registers it on the board.
+   `id`, checks the parent's level, and persists the item at initial status `todo`.
    **Treat the provider's returned `id` as the source of truth** — don't assume a prefix or pre-compute it.
 3. **Confirm** the returned `id` and where it now lives. Do not start work — creating ≠ starting (that's
    `/start-ticket`).

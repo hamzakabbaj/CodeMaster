@@ -26,22 +26,48 @@ A consuming project carries `.codemaster/config.json` at its root:
 
 Config is validated by [`config.schema.json`](config.schema.json).
 
-## The ticket vocabulary (provider-agnostic)
+## The hierarchy — epic → feature → ticket
 
-Every provider serializes the same core item. These are the only fields the process
-skills know about; each provider maps them to its native schema.
+Three levels. Each has one job:
+
+| Level | `type` | What it is | Size | Owns |
+|---|---|---|---|---|
+| **Epic** | `epic` | A product area or big outcome | months | a goal, a **product-level** riskiest assumption (which feature goes first), its features |
+| **Feature** | `feature` | One shippable capability | **2–5 stories** | a goal, an optional **design/technical** riskiest assumption, the `spec` doc when it has one |
+| **Ticket** | `story` · `task` · `spike` · `fix` | One branch, one PR | hours–days | acceptance criteria + the ticket doc slots |
+
+**Parents are optional, but always point up.** A ticket's `parent` is a feature **or** an epic; a
+feature's `parent` is an epic; an epic has no parent. Any item may stand alone — a stray bug is a
+standalone `fix`, not a child of some catch-all. `intake` *suggests* a parent; it never forces one.
+(A ticket may skip a level and sit directly under an epic — but several loose stories under one epic
+are a feature waiting to be named, and `intake` says so.)
+
+**Ticket types:**
+- `story` — user-visible behaviour, written as a `story` ("As a … I want … so that …").
+- `task` — technical work with a one-sentence `goal`. `subtype: enabler` marks groundwork that
+  unblocks stories — typically a feature's riskiest assumption, built first. A chore is a `task`.
+- `spike` — a timeboxed investigation of an unknown; its `goal` is the question.
+- `fix` — a bug; its `goal` is the broken behaviour to correct.
+
+## The vocabulary (provider-agnostic)
+
+Every provider serializes the same item at every level. These are the only fields the process
+skills know about; each provider maps them to its native schema. The canonical shape is
+[`item.schema.json`](item.schema.json).
 
 | Field | Meaning |
 |---|---|
-| `id` | canonical handle — `CM-80`, `ETK-12`, `PROJ-123`. Format + when it's assigned is provider-defined. |
+| `id` | canonical handle — `ETK-12`, `PROJ-123`. Assigned by the provider on `mint`, same scheme at every level. |
 | `title` | one line |
-| `type` | `task` · `story` · `spike` · `fix` · `epic` |
+| `type` | `epic` · `feature` · `story` · `task` · `spike` · `fix` |
+| `subtype` | `enabler` — tasks only |
 | `status` | `todo` · `in_progress` · `done` · `blocked` |
-| `goal` *or* `story` | a task carries `goal` (one sentence); a story carries `story` ("As a … I want … so that …") |
-| `acceptance_criteria[]` | testable, checkable |
-| `riskiest_assumption` | **epics only** — the one thing most likely to be wrong (named by `roadmap`, sharpened by `/spec`, promoted to an enabler ticket by `backlog`) |
-| `parent` | id of the epic/parent, if any |
-| `links` | `{ branch?, pr? }` — VCS artifacts attached to the item |
+| `parent` | optional — id of a higher-level item (see the hierarchy rules above) |
+| `goal` *or* `story` | a story carries `story`; every other type carries a one-sentence `goal` |
+| `riskiest_assumption` | **epics and features only** — the one thing most likely to be wrong. Epic: named by `roadmap`, it orders the features. Feature: named when the feature is minted, sharpened by `/spec`, promoted to an enabler by `backlog`. **Absent on a feature = no unknown → sliced without a spec.** |
+| `acceptance_criteria[]` | tickets: testable, checkable (required by the Definition of Ready) |
+| `depends_on` / `blocks` | ids of same-level items — build order lives here, never in the id |
+| `links` | `{ branch?, pr? }` — VCS artifacts attached to a ticket |
 
 ## The verbs
 
@@ -50,13 +76,13 @@ docs. Signatures are conceptual — each provider doc says exactly how it realiz
 
 | Verb | Used by | Contract |
 |---|---|---|
-| `mint(item) → id` | `intake`, `backlog`, `new-ticket` | Create a tracked item from the vocabulary fields at initial status `todo`; **return the canonical `id`.** Folds "assign id + persist + register". |
-| `read(id) → item` | `start-ticket`, `build` | Fetch the full item (title, type, status, goal/story, acceptance_criteria, parent, links). |
-| `list(query) → [item]` | `intake`, "what's ready/next" | Enumerate items, filterable by status / parent. |
+| `mint(item) → id` | `roadmap`, `intake`, `backlog`, `new-ticket` | Create a tracked item from the vocabulary fields at initial status `todo`; **return the canonical `id`.** Folds "assign id + persist + register". |
+| `read(id) → item` | every skill | Fetch the full item (title, type, status, goal/story, riskiest_assumption, acceptance_criteria, parent, links). |
+| `list(query) → [item]` | `intake`, `roadmap`, "what's ready/next" | Enumerate items, filterable by `type` / `status` / `parent`. |
 | `transition(id, status)` | `start-ticket`, `ship` | The **only** writer of `status`. Maps the CodeMaster status to the provider's native state. |
 | `link(id, {branch?, pr?})` | `start-ticket`, `ship` | Attach VCS artifacts to the item (and, in reverse, the branch name is derived from `id`). |
 | `attach_doc(id, name, markdown)` | `/spec`, `/design-options`, `frame`, `build` | Store a markdown **doc** against an item — one of the **six named slots** below. **Never committed to the repo** — the provider decides where it lives. |
-| `read_doc(id, name) → markdown` | `backlog`, `frame`, `build` | Fetch a doc previously attached. (e.g. `build` reads the `acceptance-tests` doc to transcribe it into executable tests.) |
+| `read_doc(id, name) → markdown` | `backlog`, `frame`, `build`, `ship` | Fetch a doc previously attached. (e.g. `build` reads the `acceptance-tests` doc to transcribe it into executable tests.) |
 
 ### The six doc slots
 
@@ -65,7 +91,7 @@ every provider stores the same six things and any skill can ask for one by name.
 
 | Slot | Altitude | Written by | Read by | Holds |
 |---|---|---|---|---|
-| `spec` | **epic** | `/spec` | `backlog`, `frame` | The epic brief. Tickets **inherit** it — a ticket never owns one. |
+| `spec` | **feature** | `/spec` | `backlog`, `frame` | The feature brief — written **only when the feature has a riskiest assumption**. Its tickets **inherit** it; epics and tickets never own one. |
 | `design-options` | ticket | `/design-options` | `build` | The **UI/interaction decision**: which variant was chosen, why, and why not the others. The gallery itself is throwaway (gitignored `prototypes/`); only the decision is durable. |
 | `plan` | ticket | `frame` | `build` | The approach across layers, when the ticket is gnarly enough to earn one. Its presence is the `gnarly` signal that adds the `architect` lens to `build`'s critique. |
 | `architecture` | ticket | `frame` *or* `build` | `build`, `ship` | A boundary/coupling verdict — from the `architect` agent in frame, or from `build` when a critique round moves a boundary mid-loop. |

@@ -16,8 +16,11 @@ any code exists.
 
 ## Preconditions
 - On `feat/<id>-<slug>` (NOT `main`). If on `main`, stop — run `/start-ticket <id>` first.
-- `read` the ticket via the active tracker ([`plugin/tracker/README.md`](../../tracker/README.md))
-  and `read_doc(<epic-id>, "spec")` for the epic brief this ticket sits in.
+- `read` the ticket via the active tracker ([`plugin/tracker/README.md`](../../tracker/README.md)).
+- **Inherit the context above it, if any.** Parents are optional, so walk up what exists: if the
+  ticket's parent is a feature, `read` it and `read_doc(<feature-id>, "spec")` — the brief it was
+  sliced from (empty when the feature had no unknown); if there's an epic above, `read` it for the
+  goal. A standalone ticket is framed from its own acceptance criteria — that's fine, not a gap.
 
 ## 1. DoR gate → refine / spike / split
 Confirm the ticket is **Ready** against the [Definition of Ready](../../definitions.md): acceptance
@@ -38,7 +41,7 @@ only when the uncertainty is real (the code isn't in context); most small change
 touch it, so a regression is loud, not silent.
 
 ## 3. Plan (if gnarly → a `plan` doc)
-Fidelity scales with **risk × uncertainty**. Most tickets inherit the epic's `/spec` brief — a short
+Fidelity scales with **risk × uncertainty**. Most tickets inherit their feature's `/spec` brief (if it has one) — a short
 in-head sketch is enough. When the work is gnarly, sketch the change across layers (backend /
 frontend / data), the files each touches, the order, and **which ladder rung verifies each** — then
 persist it via **`attach_doc(<id>, "plan", …)`**. Two conditional forks, taken only when their

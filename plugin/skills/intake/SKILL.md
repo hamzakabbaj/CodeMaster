@@ -1,67 +1,90 @@
 ---
 name: intake
-description: Front door for an out-of-the-blue request — a new feature, idea, change, or bug — whose size and shape are NOT yet decided. Triage the request to the right altitude (one fix/chore · one story · a few stories · epic-sized) and route it — scaffold the ticket(s), or scaffold an epic shell and send it to the spec arc. Use when someone says "I want feature X", "can we add Y", "we should build Z", or files a bug, and it isn't already clear it's a single well-shaped ticket.
+description: Front door for an out-of-the-blue request — a new feature, idea, change, or bug — whose size and shape are NOT yet decided. Triage it to the right level (a ticket · a feature of 2–5 stories · an epic), suggest where it belongs, mint it, and name the next step. Use when someone says "I want feature X", "can we add Y", "we should build Z", or files a bug, and it isn't already clear it's a single well-shaped ticket.
 argument-hint: [the request, in the user's words — or empty to pull from the tracker's inbox]
 allowed-tools: Bash, Read, Glob, Write
 ---
 
-You are the intake lead. A request just arrived "out of the blue" — a feature, an idea, a change, a bug — and **its altitude is not yet decided.** Your job is **triage and routing**, not building: name the right altitude, then either scaffold the ticket(s) or scaffold an epic shell and hand it to the spec arc. You mint *structure* and a recommendation — never feature code, never a spec.
+You are the intake lead. A request just arrived "out of the blue" — a feature, an idea, a change, a
+bug — and **its size is not yet decided.** Your job is **triage and routing**, not building: pick the
+right level, suggest a parent, mint it, and name the next step. You mint *structure* and a
+recommendation — never feature code, never a spec, never a slice of a feature into stories.
 
-This is the **front door**. Two doors sit behind you, and picking between them is the whole point:
-- **small → [`new-ticket`](../new-ticket/SKILL.md)** — mint one (or a few) already-shaped tickets **under a parent epic**. You delegate to its procedure once the work is clearly one-to-a-few tickets.
-- **epic-sized → `mint` one epic, then `/spec`** — when the request needs a spec before slicing. This mints a **single** epic and routes to `/spec`; it **bypasses `roadmap`** (roadmap decomposes a whole *designed* product into many epics — intake adds just one). `backlog` slices it later.
+The levels and their rules live in the tracker contract
+([`../../tracker/README.md`](../../tracker/README.md#the-hierarchy--epic--feature--ticket)).
 
 ## Step 0 — Where the request comes from
-A request reaches you two ways:
 - **Direct** — the user describes it (`$ARGUMENTS`). The default.
 - **From the inbox** — if the active provider has an incoming-report queue (`inbox_list` returns
   items; **Plane's Intake module** is one), pull the **pending** reports and triage each. For every
-  item, run Steps 1–3 below, then **`inbox_resolve(<intake_id>, <decision>)`**: `accept` it (→ route
-  into the backlog as usual) or `decline` / `snooze` / `duplicate` if it's not actionable. Accepting
-  is what promotes a user's raw report into real, tracked work. Providers without a queue
-  (`folder`) skip this — requests only ever arrive direct.
+  item, run Steps 1–4, then **`inbox_resolve(<intake_id>, <decision>)`**: `accept` it (→ route into
+  the backlog as usual) or `decline` / `snooze` / `duplicate` if it's not actionable. Providers
+  without a queue (`folder`) skip this.
+
+Resolve the tracker from `.codemaster/config.json` first (**absent → stop and send the user to
+`/codemaster-init`**; there is no silent default).
 
 ## Step 1 — Understand the request
-Restate it in **one sentence** as a user-visible outcome. Then surface the two things that decide altitude:
-- **Surface area** — one behavior/screen/endpoint, or many?
-- **Unknowns** — is there a **riskiest assumption or architecture decision** that a spec should settle *before* anything is sliced? (This is the decisive test — see Step 2.)
+Restate it in **one sentence** as a user-visible outcome. Then answer the two questions that route it
+— they're **separate**, so answer both:
+- **Size** — how many independent vertical slices (stories) does it take? That picks the **level**.
+- **Unknowns** — is there a design or technical question that must be settled before slicing (a new
+  integration, a perf bet, an unsettled UI flow, a contested rule)? That decides whether a feature
+  gets a **`/spec`** — it does **not** make the request bigger.
 
-Read what you need to judge this — existing epics via the active tracker (the `list` verb, or the `folder` board `roadmap.json`) and the relevant code — don't ask the user for what you can read.
+Read what you need to judge this — existing items via `list` (epics, features, open tickets) and the
+relevant code. Don't ask the user for what you can read.
 
-## Step 2 — Triage to an altitude
-Classify against this table. **The dividing line is the last column: real unknowns force escalation, regardless of size.**
+## Step 2 — Triage to a level
 
-| Altitude | Looks like | Route |
+| Size | Looks like | Mint |
 |---|---|---|
-| **Fix / chore** | a bug, a config/copy/one-file change | **one `fix`/`chore` ticket** under the relevant existing epic — or the catch-all **`maintenance`** epic if none fits |
-| **One story** | a feature that's one vertical slice — one screen/endpoint/behavior, no design unknowns | **one `story`** (or `task`) under the relevant existing epic |
-| **A few stories** | a feature spanning several independent slices, but **no** architecture unknowns and **no** riskiest assumption | **2–4 stories** (+ an enabler if they share new groundwork), under the relevant existing epic |
-| **Epic-sized** | new surface area, an architecture decision to make, or a **riskiest assumption** to de-risk | **escalate** — `mint` one epic, then `/spec` |
+| **Fix / chore** | a bug, a config/copy/one-file change | one **`fix`** (bug) or **`task`** (chore) |
+| **One story** | one vertical slice — one screen/endpoint/behavior | one **`story`** (or `task`) |
+| **A feature** | **2–5** stories that ship one capability together | one **`feature`** — with a `riskiest_assumption` if there's an unknown |
+| **Epic-sized** | more than ~5 stories, or a whole new product area | one **`epic`** |
 
-**The escalation test (apply it honestly):** *Is there a riskiest assumption or architecture decision that a spec should settle before slicing?* If **yes → Epic-sized**, even if it feels small. Spec-before-you-slice exists precisely so this work isn't hand-sliced into speculative stories. If **no**, pick the smallest row that fits.
+Pick the **smallest** row that honestly fits. A small request with an unknown is still small: a
+feature with an unknown gets a `/spec`; a single ticket with an unknown gets a **`spike`** first
+(minted alongside it, with `depends_on`). Don't promote a request to an epic because it's uncertain.
 
 State the verdict and the one-line reason before you create anything.
 
-## Step 3 — Route
+## Step 3 — Suggest a parent (optional, never forced)
 
-Every ticket lives **under a parent epic** — there is no flat ticket bucket. So routing always resolves a parent epic first, then mints through the active tracker (id assignment, persistence, and registration all belong to the provider; you never compute ids or write backlog files by hand).
+Parents point **up**: a ticket under a feature or an epic, a feature under an epic, an epic under
+nothing. Look for the existing item the work clearly belongs to and **propose it** — "this looks like
+part of feature ETK-7, attach it?" — then let the user confirm, pick another, or say none.
+**Standalone is a valid answer**: a stray bug is a standalone `fix`, not a child of a catch-all.
 
-### Small (fix / one story / a few stories) → `new-ticket` under a parent epic
-1. **Resolve the parent epic.** Pick the existing epic the work belongs to (via the `list` verb / the `folder` board `roadmap.json`). If it's a fix/chore that fits **no** existing epic, use the standing **`maintenance`** epic — and if that epic doesn't exist yet, `mint` it once (`type: epic`, goal "Standing home for ad-hoc fixes and chores that don't belong to a feature epic"). **Don't spawn a micro-epic per fix.**
-2. **Mint the ticket(s)** via the **[`new-ticket`](../new-ticket/SKILL.md)** procedure with `parent` = that epic id. For **a few stories**, order them (enabler first if one is needed) and record `depends_on`/`blocks`. Each must meet the Definition of Ready ([`definitions.md`](../../definitions.md)).
+Two nudges:
+- **Loose stories piling up.** If the chosen epic already holds several loose tickets (no feature)
+  that belong together with this one, say so and offer to group them under a new feature.
+- **A feature that fits an open feature.** If an in-progress feature already covers this, the request
+  is probably one more ticket under it, not a new feature.
 
-### Epic-sized → `mint` one epic, then send to `/spec`
-**Do not hand-slice the feature into stories — there's no spec yet.** Instead:
-1. **`mint` the epic** (`type: epic`) via the active tracker, with a one-sentence `goal` and a first-cut `riskiest_assumption` (what a spec must settle). The provider assigns the id and scaffolds its home — the `folder` provider adds the `epics[]` entry **and** `epics/<epic-id>/`; a remote tracker (Plane) mints an epic work-item. **Don't hand-write `roadmap.json`** — the `mint` verb owns that.
-2. **Mint one placeholder `spike`** under the new epic via `new-ticket` (`parent` = the epic id, `type: spike`, goal "Spec the <feature> epic (design-thinking as needed → /spec)") — so the work has a home and a next action.
-3. **Recommend the arc**, don't run it: tell the user this is epic-sized and the next step is `/spec` (preceded by design-thinking if the problem/users are themselves unclear). Leave design-thinking, system-design, and the spec to their own skills.
+## Step 4 — Mint and route
 
-## Step 4 — Confirm
-Report: the **altitude verdict + one-line reason**, what you created (ticket ids and/or the epic shell + spike), and the **single next action** (`/start-ticket <n>` for small work, or `/spec` for an epic). **Do not start building** — intake ends at routing.
+Mint through the active tracker (`mint`; id assignment and persistence belong to the provider —
+never compute ids or write backlog files by hand):
+
+| Level | Mint | Next action |
+|---|---|---|
+| Fix / chore / one story | via the [`new-ticket`](../new-ticket/SKILL.md) procedure (+ a `spike` if there's an unknown) | `/start-ticket <id>` |
+| Feature | `type: feature`, a one-sentence `goal`, the `riskiest_assumption` if there's an unknown | `/spec <id>` if it has an unknown, else `backlog <id>` |
+| Epic | `type: epic`, a one-sentence `goal`, the product-level `riskiest_assumption` | `roadmap <id>` (break it into features) — preceded by `design-thinking` if the problem or users are themselves unclear |
+
+Every ticket must meet the [Definition of Ready](../../definitions.md). **Don't slice a feature into
+stories here** — that's `backlog`, after any `/spec`.
+
+## Step 5 — Confirm
+Report: the **level + one-line reason**, the parent (or "standalone"), what you minted, and the
+**single next action**. **Do not start building** — intake ends at routing.
 
 ## Guardrails
-- **Triage, don't build.** You mint tickets / an epic shell and a recommendation. Never write feature code or a spec here.
-- **Don't fake-slice an epic.** If there are unknowns, the honest output is "new epic → go spec it," not a pile of speculative stories. Promoting the riskiest assumption is the `backlog` skill's job *after* a spec exists, not yours.
-- **One concern per ticket** (DoR, [`definitions.md`](../../definitions.md)). If a single ticket's acceptance criteria span unrelated changes, split it.
-- **Reuse, don't duplicate.** Ticket mechanics come from `new-ticket` → the tracker `mint` verb (id assignment, persistence, registration all belong to the active provider); the DoR lives in [`definitions.md`](../../definitions.md) and the altitude table is Step 2 above. Point at them; don't restate them.
-- **Ids belong to the provider.** `CM-` is CodeMaster's own `folder` backlog; other projects use their own prefix (`TS-`, `ETK-`) or a remote tracker's scheme (`PROJ-123`). The triage is identical; the id/paths follow the active tracker — never hardcode a prefix.
+- **Triage, don't build.** You mint items and a recommendation. Never write feature code, a spec, or
+  a feature's stories.
+- **Size picks the level; unknowns pick the spec.** Keep the two questions apart.
+- **One concern per ticket** ([DoR](../../definitions.md)). If a single ticket's acceptance criteria
+  span unrelated changes, it's two tickets — or a feature.
+- **Ids belong to the provider** (`ETK-12`, `PROJ-123`) — never hardcode a prefix.
