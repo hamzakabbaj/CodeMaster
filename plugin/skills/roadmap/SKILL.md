@@ -73,7 +73,7 @@ riskiest assumption, and **STOP for the human to confirm** before anything is pe
 
 On approval, `mint` each item in dependency order — `type: epic` (Mode A, no parent) or
 `type: feature` with `parent: <epic-id>` (Mode B) — with its `goal`, `riskiest_assumption` (when it
-has one), and `depends_on`/`blocks`. `mint`'s return value is the canonical id; never assume a
+has one), and `depends_on`/`blocks`, at status `todo` (they're planned work, not ideas). `mint`'s return value is the canonical id; never assume a
 format. Contract: [`../../tracker/README.md`](../../tracker/README.md).
 
 ## Conventions

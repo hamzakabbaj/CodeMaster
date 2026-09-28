@@ -39,12 +39,13 @@
     "status": {
       "type": "string",
       "enum": [
+        "backlog",
         "todo",
         "in_progress",
         "done",
         "blocked"
       ],
-      "description": "Always returned by read. Stored in item.json for epics and features; the folder provider stores a ticket's status as the status folder it sits in, so its item.json has none."
+      "description": "backlog = an idea, not yet Ready; todo = meets the Definition of Ready. Always returned by read. Stored in item.json for epics and features; the folder provider stores a ticket's status as the status folder it sits in, so its item.json has none."
     },
     "parent": {
       "type": "string",

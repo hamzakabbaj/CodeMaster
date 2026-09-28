@@ -23,6 +23,8 @@ Do exactly this:
    `acceptance_criteria`. If it doesn't exist, offer to create one with `new-ticket` first, then stop.
    If it's a **`feature` or `epic`**, stop: only tickets get a branch — `list(parent: <id>)` and
    offer the next ticket in dependency order (or `backlog <id>` if the feature isn't sliced yet).
+   If its status is **`backlog`**, it isn't Ready yet: check it against the Definition of Ready with
+   the user, refine what's missing, and `transition(<id>, todo)` once it passes — only then continue.
 3. **Branch — in place, or in a worktree:**
    - **In place (default).** Run `git status`: you must be on `main`, up to date with origin
      (uncommitted scaffold is fine — it carries onto the branch). Then `git switch -c feat/<id>-<slug>`.

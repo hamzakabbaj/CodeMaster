@@ -58,7 +58,7 @@ Then the provider-specific checks — **these are the ones that actually catch b
 - `config.folder.root` and `idPrefix` present and schema-valid.
 - **`<root>/` is gitignored.** `git check-ignore -q "<root>" && echo ok` — if it isn't, the backlog
   is on a path to being committed, which violates the "repo holds only the product" rule. Broken.
-- **The six folders exist:** `epics/`, `features/`, `1-⬜ todo/`, `2-🟡 doing/`, `3-⛔ blocked/`,
+- **The seven folders exist:** `epics/`, `features/`, `0-💡 backlog/`, `1-⬜ todo/`, `2-🟡 doing/`, `3-⛔ blocked/`,
   `4-✅ done/` (quote the paths — they hold spaces and emoji). Missing ones are a safe repair.
 - **Old layout?** An `items/` folder, a `roadmap.json`, or an `epics/<id>/tickets/` tree means a
   backlog from an earlier CodeMaster version. Report it as **stale** and say how many items it holds —
@@ -118,7 +118,7 @@ Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env`
 - `cp "$SRC/providers/folder.md" .codemaster/provider.md`
 - Create the layout (see `providers/folder.md` §Layout):
   ```sh
-  mkdir -p "<root>/epics" "<root>/features" "<root>/1-⬜ todo" "<root>/2-🟡 doing" "<root>/3-⛔ blocked" "<root>/4-✅ done"
+  mkdir -p "<root>/epics" "<root>/features" "<root>/0-💡 backlog" "<root>/1-⬜ todo" "<root>/2-🟡 doing" "<root>/3-⛔ blocked" "<root>/4-✅ done"
   ```
 - **Gitignore the backlog** — ensure `.gitignore` contains `<root>/`. The folder backlog (work-items
   **and** docs) is the solo dev's private scratch; only the product (code + tests) is committed.
@@ -134,7 +134,7 @@ Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env`
     "tracker": "plane",
     "verify": "<cmd>",
     "plane": { "workspace": "<slug>", "project": "<pid>" },
-    "statusMap": { "todo": "unstarted", "in_progress": "started", "done": "completed" }
+    "statusMap": { "backlog": "backlog", "todo": "unstarted", "in_progress": "started", "done": "completed" }
   }
   ```
 - `cp "$SRC/providers/plane.md" .codemaster/provider.md`

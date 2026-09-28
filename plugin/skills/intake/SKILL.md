@@ -75,7 +75,11 @@ never compute ids or write backlog files by hand):
 | Feature | `type: feature`, a one-sentence `goal`, the `riskiest_assumption` if there's an unknown | `/spec <id>` if it has an unknown, else `backlog <id>` |
 | Epic | `type: epic`, a one-sentence `goal`, the product-level `riskiest_assumption` | `roadmap <id>` (break it into features) — preceded by `design-thinking` if the problem or users are themselves unclear |
 
-Every ticket must meet the [Definition of Ready](../../definitions.md). **Don't slice a feature into
+**Pick the starting status honestly.** A ticket that already meets the
+[Definition of Ready](../../definitions.md) is minted `todo`; anything vaguer — an idea, a wish, a bug
+without a reproduction — is minted `backlog`, and its next action becomes "refine it until it's
+Ready" instead of `/start-ticket`. Features and epics you mint to work on next are `todo`; one
+parked for later is `backlog`. **Don't slice a feature into
 stories here** — that's `backlog`, after any `/spec`.
 
 ## Step 5 — Confirm

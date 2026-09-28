@@ -49,7 +49,10 @@ Resolve the tracker from `.codemaster/config.json` (**absent → stop and send t
 
 ## Persist via the active tracker
 
-`mint` each ticket with `parent: <feature-id>`, in dependency order, recording `depends_on`/`blocks`.
+`mint` each ticket with `parent: <feature-id>` and status **`todo`** — they meet the Definition of
+Ready by construction — in dependency order, recording `depends_on`/`blocks`. If the feature already
+has `backlog` tickets (ideas parked under it), refine the ones that belong in this slice and
+`transition` them to `todo` rather than minting duplicates.
 Id assignment and storage belong to the provider — `mint`'s return value is the canonical id; never
 compute or assume one.
 

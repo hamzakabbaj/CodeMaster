@@ -28,8 +28,11 @@ All paths below are relative to the repo root.
   features/
       E1-F1-pick-reminders/                item.json · spec.md
       E1-F2-weekly-digest/                 item.json
+  0-💡 backlog/
+      E1-F1-ETK-7-snooze-presets/          item.json            ← ideas, not yet Ready
+      ETK-8-dark-mode/                     item.json
   1-⬜ todo/
-      E1-F1-ETK-3-snooze/                  item.json
+      E1-F1-ETK-3-snooze/                  item.json            ← Ready
       ETK-2-crash-on-empty-list/           item.json            ← standalone, no prefix
   2-🟡 doing/
       E1-F1-ETK-1-reminder-settings/       item.json · plan.md · acceptance-tests.md
@@ -40,7 +43,7 @@ All paths below are relative to the repo root.
 
 - **Epics and features** live in `epics/` and `features/`, one folder each, and never move between
   folders. Their status is the `status` field in their `item.json`.
-- **Tickets** live in the four **status folders**, and their status **is the folder they're in** —
+- **Tickets** live in the five **status folders**, and their status **is the folder they're in** —
   there is no `status` field in a ticket's `item.json`. The number prefix keeps the folders in
   workflow order in any file explorer.
 - **Folder names are derived, never parsed.** The truth is in `item.json` (`id`, `parent`, `title`);
@@ -74,7 +77,7 @@ max_n() {  # $1 = the id pattern; the other args = folders to scan
 }
 echo "E$((  $(max_n '^E[0-9]+-'              "$ROOT/epics")    + 1 ))"    # next epic
 echo "F$((  $(max_n '(^|-)F[0-9]+-'          "$ROOT/features") + 1 ))"    # next feature
-echo "$PREFIX-$(( $(max_n "(^|-)$PREFIX-[0-9]+-" "$ROOT"/[1-4]-*) + 1 ))" # next ticket
+echo "$PREFIX-$(( $(max_n "(^|-)$PREFIX-[0-9]+-" "$ROOT"/[0-4]-*) + 1 ))" # next ticket
 ```
 
 A branch can be named from a ticket id immediately (the id exists before persistence).
@@ -87,19 +90,20 @@ A branch can be named from a ticket id immediately (the id exists before persist
 |---|---|---|
 | `E<n>` | `epics/` | `^E<n>-` |
 | `F<n>` | `features/` | `^(E[0-9]+-)?F<n>-` |
-| `<PREFIX>-<n>` | the four status folders | `^(E[0-9]+-)?(F[0-9]+-)?<PREFIX>-<n>-` |
+| `<PREFIX>-<n>` | the five status folders | `^(E[0-9]+-)?(F[0-9]+-)?<PREFIX>-<n>-` |
 
 Match the whole segment (anchored, with the trailing `-`), so `F1` never matches `F12` and `ETK-3`
 never matches `ETK-31`. Status folder names contain spaces and emoji — **always quote paths**.
 
 ```sh
-for d in "$ROOT"/[1-4]-*; do ls "$d" | grep -E "^(E[0-9]+-)?(F[0-9]+-)?$ID-" | sed "s|^|$d/|"; done  # a ticket
+for d in "$ROOT"/[0-4]-*; do ls "$d" | grep -E "^(E[0-9]+-)?(F[0-9]+-)?$ID-" | sed "s|^|$d/|"; done  # a ticket
 ```
 
 ## Status map
 
-Identity: `todo · in_progress · done · blocked` ↔ `1-⬜ todo` · `2-🟡 doing` · `4-✅ done` ·
-`3-⛔ blocked` for tickets; the same four values verbatim in `item.json` for epics and features.
+Identity: `backlog · todo · in_progress · blocked · done` ↔ `0-💡 backlog` · `1-⬜ todo` · `2-🟡 doing` ·
+`3-⛔ blocked` · `4-✅ done` for tickets; the same five values verbatim in `item.json` for epics and
+features. `backlog` holds ideas that don't meet the Definition of Ready yet; `todo` is Ready work only.
 
 ## Verbs
 
@@ -109,8 +113,9 @@ Identity: `todo · in_progress · done · blocked` ↔ `1-⬜ todo` · `2-🟡 d
    anything else rather than writing it.
 2. Compute the next id for the item's level (above) and derive its folder name.
 3. Write `item.json` with the vocabulary fields:
-   - epic → `epics/<name>/`, feature → `features/<name>/`, both with `"status": "todo"`;
-   - ticket → `"$ROOT/1-⬜ todo/<name>/"`, **without** a `status` field.
+   - epic → `epics/<name>/`, feature → `features/<name>/`, with `"status"` = the initial status;
+   - ticket → the initial status's folder (`"$ROOT/0-💡 backlog/<name>/"` by default, `"$ROOT/1-⬜ todo/<name>/"`
+     when minted Ready), **without** a `status` field.
 4. Return the id.
 
 > JSON write convention: end every `json.dump` with a trailing newline.
@@ -119,7 +124,7 @@ Identity: `todo · in_progress · done · blocked` ↔ `1-⬜ todo` · `2-🟡 d
 Read `item.json` from `resolve <id>`. For a ticket, add `status` from the status folder it sits in.
 
 ### `list(query) → [item]`
-Glob `"$ROOT"/{epics,features,[1-4]-*}/*/item.json`, parse each (tickets take their status from the
+Glob `"$ROOT"/{epics,features,[0-4]-*}/*/item.json`, parse each (tickets take their status from the
 folder), and filter by `type` / `status` / `parent` as asked. A feature's tickets are
 `list(parent: <feature-id>)`; an epic's features are `list(type: feature, parent: <epic-id>)`.
 

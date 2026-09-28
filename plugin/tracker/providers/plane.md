@@ -64,6 +64,7 @@ pick a state in that group. Defaults (override in config `statusMap`):
 
 | CodeMaster | Plane group |
 |---|---|
+| `backlog` | `backlog` |
 | `todo` | `unstarted` |
 | `in_progress` | `started` |
 | `done` | `completed` |
@@ -82,9 +83,10 @@ Render the vocabulary into a Plane work item. `description_html` carries the **g
 `<h4>Acceptance criteria</h4>` + `<ul>` of the criteria (Plane descriptions are HTML).
 
 ```sh
-TODO=$(state_id "$(jq -r '.statusMap.todo // "unstarted"' .codemaster/config.json)")
+INIT=${STATUS:-backlog}   # mint's initial status: backlog (default) or todo
+STATE=$(state_id "$(jq -r --arg s "$INIT" '.statusMap[$s] // {backlog:"backlog",todo:"unstarted"}[$s]' .codemaster/config.json)")
 "$API" --raw POST "$BASE/work-items/" -H "Content-Type: application/json" -d "$(jq -n \
-  --arg name "$TITLE" --arg html "$DESC_HTML" --arg state "$TODO" --arg parent "$PARENT_UUID" \
+  --arg name "$TITLE" --arg html "$DESC_HTML" --arg state "$STATE" --arg parent "$PARENT_UUID" \
   --argjson labels "$LABEL_IDS" \
   '{name:$name, description_html:$html, state:$state, labels:$labels} + (if $parent=="" then {} else {parent:$parent} end)')"
 ```
@@ -199,7 +201,7 @@ routes it (set `type` + an optional `parent`, or turn it into a new feature / ep
 > are **not yet exercised** — confirm the exact PATCH body against your Plane before relying on them.
 
 ## Assumptions (confirm against your instance when you test)
-- `todo → unstarted` (default Plane projects also have a `backlog` group — switch in `statusMap` if you prefer it).
+- `backlog → backlog` and `todo → unstarted` — Plane's own split between ideas and planned work.
 - `blocked` is a **label**, not a state.
 - VCS links go in a **comment** (vs. a custom field / external-link integration).
 - `mint` puts goal + acceptance criteria in the work item's **description**; `attach_doc` adds the

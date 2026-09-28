@@ -164,7 +164,7 @@ the fleet, or the cage.
 
 | Provider | Backlog lives in | Use when |
 |---|---|---|
-| `folder` *(default)* | a **gitignored** local backlog you can read in the file explorer: `epics/`, `features/`, and tickets in `1-⬜ todo` · `2-🟡 doing` · `3-⛔ blocked` · `4-✅ done` | solo / repo-native, no external tool |
+| `folder` *(default)* | a **gitignored** local backlog you can read in the file explorer: `epics/`, `features/`, and tickets in `0-💡 backlog` · `1-⬜ todo` · `2-🟡 doing` · `3-⛔ blocked` · `4-✅ done` | solo / repo-native, no external tool |
 | `plane` | a [Plane](https://plane.so) project, via its REST API | the team tracks work in Plane |
 
 **Switch it on — this is the first thing you run in a new repo:**

@@ -61,7 +61,7 @@ skills know about; each provider maps them to its native schema. The canonical s
 | `title` | one line |
 | `type` | `epic` · `feature` · `story` · `task` · `spike` · `fix` |
 | `subtype` | `enabler` — tasks only |
-| `status` | `todo` · `in_progress` · `done` · `blocked` |
+| `status` | `backlog` · `todo` · `in_progress` · `done` · `blocked` — **`backlog`** is an idea, not yet Ready; **`todo`** meets the [Definition of Ready](../definitions.md). Moving `backlog → todo` *is* the Ready check. |
 | `parent` | optional — id of a higher-level item (see the hierarchy rules above) |
 | `goal` *or* `story` | a story carries `story`; every other type carries a one-sentence `goal` |
 | `riskiest_assumption` | **epics and features only** — the one thing most likely to be wrong. Epic: named by `roadmap`, it orders the features. Feature: named when the feature is minted, sharpened by `/spec`, promoted to an enabler by `backlog`. **Absent on a feature = no unknown → sliced without a spec.** |
@@ -76,7 +76,7 @@ docs. Signatures are conceptual — each provider doc says exactly how it realiz
 
 | Verb | Used by | Contract |
 |---|---|---|
-| `mint(item) → id` | `roadmap`, `intake`, `backlog`, `new-ticket` | Create a tracked item from the vocabulary fields at initial status `todo`; **return the canonical `id`.** Folds "assign id + persist + register". |
+| `mint(item) → id` | `roadmap`, `intake`, `backlog`, `new-ticket` | Create a tracked item from the vocabulary fields at the initial status given — `backlog` (the default) or `todo` (only when it meets the Definition of Ready); **return the canonical `id`.** Folds "assign id + persist + register". |
 | `read(id) → item` | every skill | Fetch the full item (title, type, status, goal/story, riskiest_assumption, acceptance_criteria, parent, links). |
 | `list(query) → [item]` | `intake`, `roadmap`, "what's ready/next" | Enumerate items, filterable by `type` / `status` / `parent`. |
 | `transition(id, status)` | `start-ticket`, `ship` | The **only** writer of `status`. Maps the CodeMaster status to the provider's native state. |
@@ -125,7 +125,7 @@ These are what actually make the flow portable:
    the server **assign** the id on create — so the flow is "`mint` first, then branch off the
    returned id." Skills must treat `mint`'s return value as the source of truth for the id,
    never assume a prefix.
-2. **Status map.** How `todo / in_progress / done / blocked` map to the provider's states,
+2. **Status map.** How `backlog / todo / in_progress / done / blocked` map to the provider's states,
    and which transition `ship` fires (→ `done` on merge; optionally → a review state on
    PR-open if one exists). For the `folder` provider this is the identity map; for Plane it
    maps to state *groups* and lives under `statusMap` in config.

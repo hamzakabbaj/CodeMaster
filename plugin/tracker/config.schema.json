@@ -32,7 +32,7 @@
       "properties": {
         "root": {
           "type": "string",
-          "description": "Backlog root relative to the repo, e.g. '.codemaster/backlog'. Gitignored in its entirety. Holds epics/, features/, and the ticket status folders (1-⬜ todo · 2-🟡 doing · 3-⛔ blocked · 4-✅ done)."
+          "description": "Backlog root relative to the repo, e.g. '.codemaster/backlog'. Gitignored in its entirety. Holds epics/, features/, and the ticket status folders (0-💡 backlog · 1-⬜ todo · 2-🟡 doing · 3-⛔ blocked · 4-✅ done)."
         },
         "idPrefix": {
           "type": "string",
@@ -76,6 +76,9 @@
       "description": "Maps CodeMaster status -> the provider's native state (for remote providers, a Plane state group). Identity for the folder provider.",
       "additionalProperties": false,
       "properties": {
+        "backlog": {
+          "type": "string"
+        },
         "todo": {
           "type": "string"
         },

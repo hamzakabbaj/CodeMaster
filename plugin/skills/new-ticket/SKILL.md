@@ -29,7 +29,8 @@ skill. This skill owns the *shaping* (DoR); the provider owns the *persistence*.
    `acceptance_criteria`, and an **optional** `parent` — a feature or an epic, never another ticket.
    No parent is fine: the ticket stands alone.
 2. **`mint` the item** via the active provider. Pass the vocabulary fields; the provider assigns the
-   `id`, checks the parent's level, and persists the item at initial status `todo`.
+   `id`, checks the parent's level, and persists the item — at status **`todo`** if it meets the
+   Definition of Ready, else **`backlog`** (an idea to refine later). Say which, and why.
    **Treat the provider's returned `id` as the source of truth** — don't assume a prefix or pre-compute it.
 3. **Confirm** the returned `id` and where it now lives. Do not start work — creating ≠ starting (that's
    `/start-ticket`).

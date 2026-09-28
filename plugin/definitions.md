@@ -10,8 +10,9 @@ The two checklists every CodeMaster ticket passes through — the single source 
 - [ ] **Small enough to finish in one short-lived branch.**
 - [ ] **Verification approach identified** — how we'll prove it works (which tests, which check).
 
-A ticket that fails the DoR doesn't get built: `frame` sends it to *refine* (vague AC), *spike*
-(an unknown), or *split* via `intake` (too big).
+**The DoR is the line between `backlog` and `todo`.** An item that doesn't meet it yet waits in
+`backlog`; moving it to `todo` is the claim that it does. A ticket that fails the DoR doesn't get
+built: `frame` sends it to *refine* (vague AC), *spike* (an unknown), or *split* via `intake` (too big).
 
 ## Definition of Done (DoD) — before a ticket is closed
 - [ ] **Acceptance criteria met and demonstrated** — recorded in the ticket's `evidence` doc
