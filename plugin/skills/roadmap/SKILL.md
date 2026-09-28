@@ -21,7 +21,7 @@ The levels and their rules live in the tracker contract
 | an epic id (`read` returns `type: epic`) | **Epic → features** | the features of that one epic |
 
 Either way, resolve the tracker from `.codemaster/config.json` first (**absent → stop and send the
-user to `/codemaster-init`**; there is no silent default).
+user to `/tracker-init`**; there is no silent default).
 
 ## Mode A — product → epics
 

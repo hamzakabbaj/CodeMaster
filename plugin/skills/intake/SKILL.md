@@ -22,7 +22,7 @@ The levels and their rules live in the tracker contract
   without a queue (`folder`) skip this.
 
 Resolve the tracker from `.codemaster/config.json` first (**absent → stop and send the user to
-`/codemaster-init`**; there is no silent default).
+`/tracker-init`**; there is no silent default).
 
 ## Step 1 — Understand the request
 Restate it in **one sentence** as a user-visible outcome. Then answer the two questions that route it

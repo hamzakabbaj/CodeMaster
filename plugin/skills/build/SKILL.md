@@ -13,7 +13,7 @@ stops at green.
 ## Preconditions (assert, don't assume)
 - On `feat/<id>-<slug>` (NOT `main`). If on `main`, stop — run `/start-ticket <id>` first.
 - **A `verify` command is configured** — `jq -r '.verify // empty' .codemaster/config.json` is the
-  project's own test/lint/typecheck command. **Empty → stop and send the user to `/codemaster-init`**;
+  project's own test/lint/typecheck command. **Empty → stop and send the user to `/tracker-init`**;
   build never guesses how a project proves itself green.
 - **The done-contract exists.** `frame` must have run: `read_doc(<id>, "acceptance-tests")` returns
   the contract. **If the contract is missing, stop — run `/frame <id>` first.** Build does not invent

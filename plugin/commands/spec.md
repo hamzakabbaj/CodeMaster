@@ -14,7 +14,7 @@ nothing else: ticket-level planning is `frame`'s `plan`, UI variant exploration 
 ## 1. Read the feature — via the active tracker
 
 Resolve the tracker from `.codemaster/config.json` (**absent → stop and send the user to
-`/codemaster-init`**; there is no silent default. Contract:
+`/tracker-init`**; there is no silent default. Contract:
 [`plugin/tracker/README.md`](../tracker/README.md)) and **`read`** **$ARGUMENTS**:
 - **Not a `feature`** → stop. Epics aren't specced (break one into features with `roadmap <epic-id>`);
   a ticket's planning is `frame`'s job.

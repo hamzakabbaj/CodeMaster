@@ -10,13 +10,13 @@ reaches git. The process skills never touch these files directly — they call t
 { "tracker": "folder", "verify": "npm test", "folder": { "root": ".codemaster/backlog", "idPrefix": "ETK" } }
 ```
 
-- `root` — backlog directory, repo-relative, **gitignored in its entirety** (`/codemaster-init` adds it
+- `root` — backlog directory, repo-relative, **gitignored in its entirety** (`/tracker-init` adds it
   to `.gitignore`). **None of it is committed.**
 - `idPrefix` — uppercase project tag for **tickets** (`ETK-12`). Not `E` or `F` — those are the epic
   and feature id letters.
 
 Resolve `ROOT` and `PREFIX` from config — **there is no fallback**: if `.codemaster/config.json` is
-absent the repo is unconfigured and the calling skill stops, sending the user to `/codemaster-init`.
+absent the repo is unconfigured and the calling skill stops, sending the user to `/tracker-init`.
 All paths below are relative to the repo root.
 
 ## Layout — built to be read in a file explorer

@@ -19,7 +19,7 @@
     "verify": {
       "type": "string",
       "minLength": 1,
-      "description": "The project's own green-check command, run by build (every loop) and ship (final gate) — e.g. 'npm test && npm run lint'. Set by /codemaster-init; build and ship stop if it's missing."
+      "description": "The project's own green-check command, run by build (every loop) and ship (final gate) — e.g. 'npm test && npm run lint'. Set by /tracker-init; build and ship stop if it's missing."
     },
     "folder": {
       "type": "object",
@@ -90,7 +90,7 @@
         },
         "blocked": {
           "type": "string",
-          "description": "Omit for the `plane` provider — Plane has no `blocked` state group; it models blocked as a label. /codemaster-init --check flags it if present."
+          "description": "Omit for the `plane` provider — Plane has no `blocked` state group; it models blocked as a label. /tracker-init --check flags it if present."
         }
       }
     }

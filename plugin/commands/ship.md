@@ -3,14 +3,14 @@ description: Ship a finished CodeMaster ticket — PR → checks → review → 
 argument-hint: <ticket id>  (e.g. /ship 67 · /ship PROJ-123) — defaults to the current branch's ticket
 ---
 
-You are shipping ticket **$ARGUMENTS**. `build` got the branch to green; you get it reviewed and merged behind the project's gates. **The merge is the only irreversible step — you stop for explicit confirmation before it.** Backlog status lives in the active **tracker** — resolve it from `.codemaster/config.json` (**absent → stop and send the user to `/codemaster-init`**; there is no silent default. Mechanics in `.codemaster/provider.md` or `plugin/tracker/providers/<tracker>.md`; contract `plugin/tracker/README.md`).
+You are shipping ticket **$ARGUMENTS**. `build` got the branch to green; you get it reviewed and merged behind the project's gates. **The merge is the only irreversible step — you stop for explicit confirmation before it.** Backlog status lives in the active **tracker** — resolve it from `.codemaster/config.json` (**absent → stop and send the user to `/tracker-init`**; there is no silent default. Mechanics in `.codemaster/provider.md` or `plugin/tracker/providers/<tracker>.md`; contract `plugin/tracker/README.md`).
 
 Do exactly this:
 
 1. **Resolve the ticket.** If `$ARGUMENTS` is empty, infer the ticket **id** from the current branch name (`feat/<id>-<slug>`); if you still can't, ask and stop.
 2. **Assert preconditions.** Run `git status` and `git rev-parse --abbrev-ref HEAD`. You must be on `feat/<id>-<slug>` (**NOT `main`**) — if not, surface it and stop. The feature work should already be committed by `build`; surface any pending change before continuing.
 3. **Confirm the work is done.** `read` the ticket via the active provider; confirm its acceptance criteria are met (and demonstrated in the `evidence` doc). If they aren't, stop and send it back to `build` — `ship` does not write feature code.
-4. **Final gate, then push.** Run the configured **`verify`** command (`jq -r '.verify // empty' .codemaster/config.json`; empty → stop, `/codemaster-init`) **first** — build's output is what you're shipping, so prove it's green before anything leaves the machine. Red → stop, back to `build`. Green → `git push -u origin feat/<id>-<slug>`. The ticket's status is **not** flipped yet: every provider keeps status outside the repo, so `transition(<id>, done)` fires at merge (step 11).
+4. **Final gate, then push.** Run the configured **`verify`** command (`jq -r '.verify // empty' .codemaster/config.json`; empty → stop, `/tracker-init`) **first** — build's output is what you're shipping, so prove it's green before anything leaves the machine. Red → stop, back to `build`. Green → `git push -u origin feat/<id>-<slug>`. The ticket's status is **not** flipped yet: every provider keeps status outside the repo, so `transition(<id>, done)` fires at merge (step 11).
 5. **Compose and validate the PR title.** **The PR title becomes the squash-merge commit subject on `main`**, so validate it before opening the PR. If the repo has its own commit-message check (a `commit-msg` hook, commitlint), run the title through **that**. Otherwise hold it to Conventional Commits — `type(scope): subject (<id>)`, ≤ 72 chars:
    ```sh
    T="<your title>"

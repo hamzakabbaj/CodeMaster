@@ -5,7 +5,7 @@ argument-hint: <ticket id> [--worktree]   (e.g. /start-ticket 12  ·  /start-tic
 
 You are starting work on ticket **$ARGUMENTS**. **Where** the ticket lives is decided by the active
 **tracker provider** — resolve it from `.codemaster/config.json` (`tracker` field). **If that file is
-absent, stop** and send the user to `/codemaster-init`; there is no silent default. Load the verb
+absent, stop** and send the user to `/tracker-init`; there is no silent default. Load the verb
 mechanics from `.codemaster/provider.md` if present, else the bundled
 `plugin/tracker/providers/<tracker>.md`. Contract: `plugin/tracker/README.md`.
 

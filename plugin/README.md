@@ -38,7 +38,7 @@ claude plugin install codemaster@codemaster
 | `/start-ticket` | Create a ticket's feature branch and flip its status to in progress. `--worktree` cuts an isolated git worktree, so independent tickets build in parallel (pairs with `plane`; `ship` cleans it up). |
 | `/design-options` | Generate 2–3 throwaway UI variants as a `file://`-openable gallery, then stop for you to pick. The decision lands in the ticket's `design-options` doc slot; the gallery is thrown away. |
 | `/ship` | PR → both gates → review → (confirm) → squash-merge → verify main. |
-| `/codemaster-init` | **Run this first in a new repo.** Set up where the backlog lives — scaffold `.codemaster/` for the `folder` or `plane` provider; with no flags (or `--check`) it's a **doctor** that diagnoses and repairs an existing setup (see **Tracker** below). `/tracker-init` is an alias. |
+| `/tracker-init` | **Run this first in a new repo.** Set up where the backlog lives — scaffold `.codemaster/` for the `folder` or `plane` provider; with no flags (or `--check`) it's a **doctor** that diagnoses and repairs an existing setup (see **Tracker** below). Also records your `verify` command. |
 
 ### Skills — multi-step procedures (invoked by name or auto-matched)
 
@@ -126,7 +126,7 @@ The doctrine behind each step is in [docs/02 (robust-code loop)](../docs/02-robu
 
 What to actually run, in order, for the common starting points. (Commands carry the `/`; skills are bare but also work as `/name`.)
 
-**Once per repo, before anything else:** `/codemaster-init` — picks where the backlog lives and
+**Once per repo, before anything else:** `/tracker-init` — picks where the backlog lives and
 records your `verify` command. Nothing below works until it has run; the skills stop and point you
 back here rather than guessing a default.
 
@@ -170,9 +170,9 @@ the fleet, or the cage.
 **Switch it on — this is the first thing you run in a new repo:**
 
 ```bash
-/codemaster-init --tracker=folder --id-prefix=ETK     # or: --tracker=plane --workspace=acme --project=<uuid>
-/codemaster-init                                      # no flags → doctor: report state, then ask
-/codemaster-init --check                              # diagnose only, write nothing (CI-friendly)
+/tracker-init --tracker=folder --id-prefix=ETK     # or: --tracker=plane --workspace=acme --project=<uuid>
+/tracker-init                                      # no flags → doctor: report state, then ask
+/tracker-init --check                              # diagnose only, write nothing (CI-friendly)
 ```
 
 It scaffolds `.codemaster/` in your repo — `config.json` (committed) + the chosen provider's
@@ -180,7 +180,7 @@ mechanics; for `plane` it also drops in the API wrapper and a gitignored `plane.
 and **verifies the setup for real** (credentials resolve; every `statusMap` value names a state group
 that actually exists in your instance). Re-running with the same provider is an idempotent refresh
 after a plugin update; switching providers over a non-empty backlog orphans its items and so needs
-`--force`. `/tracker-init` is kept as an alias.
+`--force`.
 
 **There is no silent default.** A repo without `.codemaster/config.json` is unconfigured — `intake` /
 `roadmap` / `new-ticket` / `backlog` / `/spec` / `/start-ticket` / `/ship` stop and send you here
@@ -197,7 +197,7 @@ Full contract: [`tracker/README.md`](tracker/README.md).
 ## What your repo provides
 
 CodeMaster brings the process; your repo brings its own proof. The plugin ships no test runner and
-no CI — `build` and `ship` run **your** checks, via the `verify` command `/codemaster-init` records
+no CI — `build` and `ship` run **your** checks, via the `verify` command `/tracker-init` records
 in `.codemaster/config.json` (e.g. `npm test && npm run lint`). If your repo has commit hooks or CI,
 they stay in charge: the plugin's `block-no-verify` hook stops the agent from skipping them, and
 `/ship` waits for your PR checks before it asks to merge.

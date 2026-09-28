@@ -14,7 +14,7 @@ A consuming project carries `.codemaster/config.json` at its root:
 ```
 
 - **If the file is absent the repo is *unconfigured*, not "folder by default".** Every skill that
-  needs a verb stops and routes the user to **`/codemaster-init`**. There is deliberately no silent
+  needs a verb stops and routes the user to **`/tracker-init`**. There is deliberately no silent
   fallback: the old one handed a fresh project an un-gitignored backlog at CodeMaster's own
   historical path (`blueprint/v1/backlog`), which quietly violates "the repo holds only the product".
 - To invoke a verb, a skill: (1) reads `.codemaster/config.json` → `tracker`, (2) follows
@@ -135,10 +135,10 @@ These are what actually make the flow portable:
 - [`providers/folder.md`](providers/folder.md) — files + git in the repo (the default; what CodeMaster has always done).
 - [`providers/plane.md`](providers/plane.md) — a [Plane](https://plane.so) instance over its REST API via the bundled `plane-api.sh` CLI.
 
-## Materializing into a project — `/codemaster-init`
+## Materializing into a project — `/tracker-init`
 
 A consuming repo doesn't reference the plugin's files directly (an installed plugin's path isn't
-resolvable from skill-body bash). Instead, **`/codemaster-init --tracker=<provider>`** copies the
+resolvable from skill-body bash). Instead, **`/tracker-init --tracker=<provider>`** copies the
 chosen provider's mechanics — and, for `plane`, its wrapper + an env template — into the project's
 `.codemaster/`: `config.json` + `provider.md` are committed; `plane.env` (secrets) is gitignored, as
 is the `folder` backlog root. Skills then read only cwd-relative `.codemaster/…`.
@@ -150,7 +150,7 @@ that instance**. `--check` runs the doctor and writes nothing (CI-friendly). Re-
 provider is an idempotent **refresh**; requesting a *different* provider over a non-empty backlog is
 a **switch**, which orphans the existing items and therefore requires `--force`.
 
-`/tracker-init` remains as an alias. Inside the CodeMaster source repo the bundled
+Inside the CodeMaster source repo the bundled
 `plugin/tracker/…` paths also resolve, but the repo still needs a `config.json` — there is no
 implicit default anywhere.
 

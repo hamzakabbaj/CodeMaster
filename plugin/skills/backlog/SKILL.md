@@ -13,7 +13,7 @@ or epics.** Code is downstream of this.
 ## Preconditions
 
 Resolve the tracker from `.codemaster/config.json` (**absent → stop and send the user to
-`/codemaster-init`**; there is no silent default. Contract:
+`/tracker-init`**; there is no silent default. Contract:
 [`../../tracker/README.md`](../../tracker/README.md)). Then `read` **$ARGUMENTS** — if it's empty,
 `list(type: feature, status: todo)` and ask which one.
 - **Not a `feature`** → stop. An epic is broken into features by `roadmap <epic-id>`; a single ticket

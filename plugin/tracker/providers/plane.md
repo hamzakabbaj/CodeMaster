@@ -4,7 +4,7 @@ Work items live in a [Plane](https://plane.so) project; the tracker verbs are RE
 the CLI wrapper `plane-api.sh`. Adapted from the standalone `plane` skill. **Remote provider:**
 ids are server-assigned, status lives in Plane (not the repo), and secrets are project-local.
 
-## Setup (`/codemaster-init --tracker=plane` materializes this)
+## Setup (`/tracker-init --tracker=plane` materializes this)
 
 ```
 .codemaster/
