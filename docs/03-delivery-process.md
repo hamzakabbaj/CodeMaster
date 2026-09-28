@@ -60,7 +60,7 @@ It installs at **user scope**, so the skills/agents/commands/hooks are available
 claude plugin uninstall codemaster && claude plugin install codemaster@codemaster   # then restart
 ```
 
-Note some primitives assume CodeMaster's own structure (`backlog`, `ship`, `start-ticket`, and the trace hook target `blueprint/v1/backlog/`); the general ones (`build`, `spec`, `design-thinking`, the fleet agents) travel anywhere. Verify a clean install any time with `scripts/plugin_install_smoke.sh` (runs under a throwaway config, leaves `~/.claude` untouched).
+Note some primitives assume CodeMaster's own structure (`backlog`, `ship`, `start-ticket`); the general ones (`build`, `spec`, `design-thinking`, the fleet agents) travel anywhere. Verify a clean install any time with `scripts/plugin_install_smoke.sh` (runs under a throwaway config, leaves `~/.claude` untouched).
 
 **Releasing a version:** bump `plugin.json`'s `version` (SemVer), accumulate changes under `## [Unreleased]` in `plugin/CHANGELOG.md`, then `claude plugin tag plugin` (validates the manifest, creates the annotated tag `codemaster--v<version>`; `--dry-run` to preview, `--push --remote origin` to publish), and promote `[Unreleased]` → `[<version>] - <date>`.
 

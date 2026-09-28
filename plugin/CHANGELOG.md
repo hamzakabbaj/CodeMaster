@@ -18,6 +18,9 @@ All notable changes to the **CodeMaster** plugin — the `plugin/` unit declared
 - Relocated the plugin into a dedicated **`plugin/`** folder (`.claude-plugin/`, `skills/`, `agents/`, `commands/`, `hooks/`, this `CHANGELOG.md`) so the unit is one obvious folder. (CM-75)
 - **One way to load the plugin: install it.** Removed the `.claude/{skills,agents,commands,hooks}` symlinks — the plugin no longer auto-loads natively; it loads only via marketplace install (in this repo too, through `scripts/setup.sh`). Hooks now come from the plugin's `hooks.json` (dropped from `.claude/settings.json`; retired the now-moot `test_hooks_sync.py` drift guard). Editing `plugin/` requires `uninstall` + `reinstall` to take effect. (CM-77)
 
+### Removed
+- **The `trace-subagent` hook (`SubagentStop`).** It only fired on `feat/CM-*` branches and wrote into CodeMaster's own historical `blueprint/v1/backlog/tickets/` layout, so in a consuming repo it never did anything; it also still keyed on the pre-rename `tester` agent. Agent conclusions that matter belong in the ticket's `evidence` doc via the tracker, not a hardcoded repo path. `block-no-verify` is now the plugin's only hook.
+
 ## [0.1.0] - 2026-06-09
 
 First packaged version of the engineering OS — `.claude/` is now a coherent, versioned, CI-validated plugin unit (Phase 5). Still dogfooded in-repo: loaded natively, no marketplace, nothing installed.

@@ -13,19 +13,6 @@
           }
         ]
       }
-    ],
-    "SubagentStop": [
-      {
-        "matcher": "code-explorer|reviewer|architect|security|test-designer",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/trace-subagent.sh\"",
-            "timeout": 10,
-            "statusMessage": "Persisting agent trace to the ticket"
-          }
-        ]
-      }
     ]
   }
 }

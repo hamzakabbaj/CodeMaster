@@ -70,7 +70,6 @@ claude plugin install codemaster@codemaster
 | Hook | Event | Guarantee |
 |---|---|---|
 | `block-no-verify` | `PreToolUse` | Blocks `git commit --no-verify` (and friends) — the cage can't be bypassed. |
-| `trace-subagent` | `SubagentStop` | Persists a trace when a subagent finishes, for auditability. |
 
 ## How it composes — the greenfield flow
 
