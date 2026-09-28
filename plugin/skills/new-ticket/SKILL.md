@@ -24,7 +24,7 @@ skill. This skill owns the *shaping* (DoR); the provider owns the *persistence*.
    [`plugin/tracker/README.md`](../../tracker/README.md).
 
 ## Steps
-1. **Gather inputs** (ask only for what's missing): title, type (`story|task|spike|fix`), `story`
+1. **Gather inputs** (ask only for what's missing): title, type (`story|task|chore|spike|fix`), `story`
    ("As a … I want … so that …", for a story) **or** a one-sentence `goal` (every other type), testable
    `acceptance_criteria`, and an **optional** `parent` — a feature or an epic, never another ticket.
    No parent is fine: the ticket stands alone.

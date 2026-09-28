@@ -43,18 +43,44 @@ uuid=$("$API" --all "$BASE/work-items/?fields=id,sequence_id" | jq -r --argjson 
 ## Levels and types — by **label**
 
 Plane has one work-item kind with an arbitrary-depth `parent`, so CodeMaster's `type` rides on a
-**label** named after it: `epic` · `feature` · `story` · `task` · `spike` · `fix`, plus `enabler` for
-an enabler task. `mint` resolves each label's id (creating it once if the project lacks it) and sets
-it; `read` maps the label back to `type`. Hierarchy uses Plane's native `parent`, following the
-contract's rule — parents are optional and always point **up** a level.
+**label**. Hierarchy uses Plane's native `parent`, following the contract's rule — parents are
+optional and always point **up** a level.
+
+Each CodeMaster role maps to one project label. The defaults follow the common team convention:
+
+| Role | Default label | Colour |
+|---|---|---|
+| `epic` | 👑 Epic | `#ff6900` |
+| `feature` | 🧩 Feature | `#00d084` |
+| `story` | 📖 US | `#0693e3` |
+| `task` | 📋 Task | `#fcb900` |
+| `chore` | 🧹 Chore | `#abb8c3` |
+| `fix` | 🐞 Bug | `#eb144c` |
+| `spike` | 🔬 Spike | `#8ed1fc` |
+| `enabler` *(task subtype)* | 🧱 Enabler | `#9900ef` |
+| `blocked` *(a status)* | ⛔ Blocked | `#d93d42` |
+
+**The mapping lives in config** — `plane.labels` in `.codemaster/config.json`, one label **name** per
+role — and `/tracker-init` fills it. It reuses a project's existing labels before creating any: the
+matcher `.codemaster/bin/labels.jq` pairs each role with the label that plays it, ignoring emoji and
+case and accepting known aliases (`US` · `User Story` · `Story` → story; `Bug` · `Fix` → fix). Only
+roles with no match get a label created, with the default name and colour. Existing labels are never
+renamed or recoloured.
+
+Resolve a role to its label id at the start of any verb that sets or reads a type:
 
 ```sh
-label_id() { "$API" "$BASE/labels/" | jq -r --arg n "$1" '[.results[]|select(.name==$n)][0].id // empty'; }
-# absent → "$API" --raw POST "$BASE/labels/" -H "Content-Type: application/json" -d "{\"name\":\"$1\"}"
+LABELS=$("$API" --all "$BASE/labels/" | jq --argjson cfg "$(jq '.plane.labels // {}' .codemaster/config.json)" -f .codemaster/bin/labels.jq)
+label_id() { echo "$LABELS" | jq -r --arg r "$1" '.[$r].id // empty'; }   # empty → run /tracker-init
 ```
 
+`mint` sets the type's label (+ `enabler`); `read` maps a label back to its role, so an item a human
+labelled `🧹 Chore` reads back as `type: chore`. An item with no role label reads back with no type —
+report it rather than guessing.
+
 > Plane's paid tiers have native Epics / work-item types; labels work on every tier, so the provider
-> uses them. Not yet exercised against a live instance — confirm the label payloads when you test.
+> uses them. The matcher is tested against real projects; **creating** a label (`POST labels/` with
+> `{name, color}`) is not yet exercised — confirm it on a first `/tracker-init` run.
 
 ## Status map — by **state group**
 
@@ -110,7 +136,7 @@ label, and `.parent` (a feature's tickets, an epic's features). Reverse-map each
 ### `transition(id, status)`
 Resolve the UUID; resolve the target group's state id; `"$API" --raw PATCH "$BASE/work-items/$uuid/"
 -H "Content-Type: application/json" -d '{"state":"<state_id>"}'`. For `blocked`, instead add/remove
-the `blocked` label (`labels: [...]`) and leave the state. This is the only writer of status.
+the `blocked` role's label (`label_id blocked`) and leave the state. This is the only writer of status.
 
 ### `set_parent(id, parent | none)`
 Check the new parent's level (its type label), resolve both UUIDs, then `"$API" --raw PATCH

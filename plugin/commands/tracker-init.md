@@ -90,6 +90,14 @@ Then the provider-specific checks — **these are the ones that actually catch b
 - **`blocked` must NOT be in `statusMap`.** Plane has no `blocked` group — the provider models
   blocked as a **label** ([`providers/plane.md`](../tracker/providers/plane.md) §Status map). A
   `"blocked": "blocked"` entry is broken config; report it and drop it.
+- **Type labels** — `.codemaster/bin/labels.jq` exists, and every CodeMaster role has a label in the
+  project:
+  ```sh
+  .codemaster/bin/plane-api.sh --all "workspaces/$W/projects/$P/labels/" \
+    | jq --argjson cfg "$(jq '.plane.labels // {}' .codemaster/config.json)" -f .codemaster/bin/labels.jq
+  ```
+  A role that comes back `{missing: …}` is **missing** (a safe repair: §3 creates it). A role that
+  matched an existing label but isn't recorded in `plane.labels` is **unmapped** (repair: record it).
 
 **`--check` stops here.** Print the verdict — `CodeMaster: ok (<provider>)` or a list of the broken
 lines with the exact fix for each — and do nothing else.
@@ -101,7 +109,7 @@ From the doctor result, classify — say which one you're doing before you do it
 | State | Action |
 |---|---|
 | no `.codemaster/` | **fresh init** — scaffold §4. |
-| configured, same provider requested | **refresh** — re-copy `provider.md` and `item.schema.json` (+ the `plane` wrapper) from `$SRC`, leave `config.json` and `plane.env` alone. Idempotent; this is what you run after a plugin update. |
+| configured, same provider requested | **refresh** — re-copy `provider.md` and `item.schema.json` (+ the `plane` wrapper and `labels.jq`) from `$SRC`, leave `config.json` and `plane.env` alone. Idempotent; this is what you run after a plugin update. |
 | configured, **different** provider requested | **switch — a migration, not a rewrite.** |
 
 **The switch guard.** Changing `tracker` orphans everything in the current backlog — the items don't
@@ -111,7 +119,8 @@ it lives) and that CodeMaster has no migration verb — the items must be moved 
 deliberately. With `--force`, proceed and say plainly what was left behind.
 
 Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env` mode, stale
-`provider.md`, `blocked` in `statusMap`, missing `verify`) — repairs are safe and never need `--force`.
+`provider.md`, `blocked` in `statusMap`, missing `verify`, missing or unmapped type labels) — repairs are
+safe and never need `--force`.
 
 ## 4. Scaffold
 
@@ -161,10 +170,23 @@ at the end of this section. Then, by provider:
   }
   ```
 - `cp "$SRC/providers/plane.md" .codemaster/provider.md`
-- `mkdir -p .codemaster/bin && cp "$SRC/providers/plane/bin/plane-api.sh" .codemaster/bin/ && chmod +x .codemaster/bin/plane-api.sh`
+- `mkdir -p .codemaster/bin && cp "$SRC/providers/plane/bin/plane-api.sh" "$SRC/providers/plane/labels.jq" .codemaster/bin/ && chmod +x .codemaster/bin/plane-api.sh`
 - Ensure `.gitignore` holds the root-anchored line `/.codemaster/plane.env` — **before** copying the
   template in. **Never commit it.**
 - `cp "$SRC/providers/plane/plane.env.template" .codemaster/plane.env && chmod 600 .codemaster/plane.env` — **only if it doesn't already exist**; never clobber filled-in credentials.
+
+### `plane` — type labels (once the credentials work)
+Run the matcher from §2. Then, for each role:
+- **matched** an existing label → keep it as is (never rename or recolour a label the team already uses);
+- **missing** → create it with the default name and colour the matcher returns:
+  ```sh
+  .codemaster/bin/plane-api.sh --raw POST "workspaces/$W/projects/$P/labels/" \
+    -H "Content-Type: application/json" -d "$(jq -n --arg n "$NAME" --arg c "$COLOR" '{name:$n, color:$c}')"
+  ```
+Finally write the role → label-name map into `.codemaster/config.json` as `plane.labels`, so every
+later verb resolves the same labels. Report which labels were **reused** and which were **created**.
+This step needs working credentials — on a fresh init they're still placeholders, so it runs on the
+next `/tracker-init` after `plane.env` is filled.
 
 ### Verify command (every provider)
 `verify` is how `build` and `ship` prove the code is green — the project's own checks, not
@@ -189,13 +211,13 @@ report pass/fail — a red run here is information about the codebase (not an in
 user should know before the first `build`.
 
 For a fresh `plane` init the credentials are still placeholders, so connectivity *will* fail — that's
-expected, not a bug. Say so explicitly: "fill `.codemaster/plane.env`, then run `/tracker-init
---check`", and make that the single next action. Do not report success on an unverified Plane setup.
+expected, not a bug. Say so explicitly: "fill `.codemaster/plane.env`, then run `/tracker-init` again"
+(it verifies the connection **and** sets up the type labels), and make that the single next action. Do not report success on an unverified Plane setup.
 
 ## 6. Confirm
 
 Report: the action taken (fresh / refresh / switch), every file written, the doctor verdict, and the
-**one** next action — `/tracker-init --check` if Plane creds are pending, else `intake` or
+**one** next action — `/tracker-init` again if Plane creds are pending, else `intake` or
 `roadmap`. From here `intake` / `new-ticket` / `roadmap` / `backlog` / `/spec` / `/start-ticket` /
 `/ship` all route through the active provider automatically.
 

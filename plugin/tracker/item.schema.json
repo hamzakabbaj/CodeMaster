@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "CodeMaster — work item",
-  "description": "One tracked item at any level: an epic, a feature, or a ticket (story · task · spike · fix). Every provider serializes this vocabulary; the folder provider stores it verbatim as item.json.",
+  "description": "One tracked item at any level: an epic, a feature, or a ticket (story · task · chore · spike · fix). Every provider serializes this vocabulary; the folder provider stores it verbatim as item.json.",
   "type": "object",
   "required": [
     "id",
@@ -24,10 +24,11 @@
         "feature",
         "story",
         "task",
+        "chore",
         "spike",
         "fix"
       ],
-      "description": "Level + kind. epic and feature are containers; story · task · spike · fix are tickets (one branch, one PR)."
+      "description": "Level + kind. epic and feature are containers; story · task · chore · spike · fix are tickets (one branch, one PR)."
     },
     "subtype": {
       "type": "string",
@@ -53,7 +54,7 @@
     },
     "goal": {
       "type": "string",
-      "description": "epic · feature · task · spike · fix: one sentence. An outcome for epics/features ('users can X'), the change for a task/fix, the question for a spike."
+      "description": "epic · feature · task · chore · spike · fix: one sentence. An outcome for epics/features ('users can X'), the change for a task/chore/fix, the question for a spike."
     },
     "story": {
       "type": "string",
@@ -128,6 +129,7 @@
           "type": {
             "enum": [
               "task",
+              "chore",
               "spike",
               "fix"
             ]

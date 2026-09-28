@@ -34,7 +34,7 @@ Three levels. Each has one job:
 |---|---|---|---|---|
 | **Epic** | `epic` | A product area or big outcome | months | a goal, a **product-level** riskiest assumption (which feature goes first), its features |
 | **Feature** | `feature` | One shippable capability | **2–5 stories** | a goal, an optional **design/technical** riskiest assumption, the `spec` doc when it has one |
-| **Ticket** | `story` · `task` · `spike` · `fix` | One branch, one PR | hours–days | acceptance criteria + the ticket doc slots |
+| **Ticket** | `story` · `task` · `chore` · `spike` · `fix` | One branch, one PR | hours–days | acceptance criteria + the ticket doc slots |
 
 **Parents are optional, but always point up.** A ticket's `parent` is a feature **or** an epic; a
 feature's `parent` is an epic; an epic has no parent. Any item may stand alone — a stray bug is a
@@ -45,7 +45,8 @@ are a feature waiting to be named, and `intake` says so.)
 **Ticket types:**
 - `story` — user-visible behaviour, written as a `story` ("As a … I want … so that …").
 - `task` — technical work with a one-sentence `goal`. `subtype: enabler` marks groundwork that
-  unblocks stories — typically a feature's riskiest assumption, built first. A chore is a `task`.
+  unblocks stories — typically a feature's riskiest assumption, built first.
+- `chore` — maintenance with no user-visible value (dependency bumps, config, cleanup); a one-sentence `goal`.
 - `spike` — a timeboxed investigation of an unknown; its `goal` is the question.
 - `fix` — a bug; its `goal` is the broken behaviour to correct.
 
@@ -59,7 +60,7 @@ skills know about; each provider maps them to its native schema. The canonical s
 |---|---|
 | `id` | canonical handle, assigned by the provider on `mint`. Format is provider-defined (`folder`: `E1` · `F1` · `ETK-12`; Plane: `PROJ-123` for everything) — skills treat it as opaque. |
 | `title` | one line |
-| `type` | `epic` · `feature` · `story` · `task` · `spike` · `fix` |
+| `type` | `epic` · `feature` · `story` · `task` · `chore` · `spike` · `fix` |
 | `subtype` | `enabler` — tasks only |
 | `status` | `backlog` · `todo` · `in_progress` · `done` · `blocked` — **`backlog`** is an idea, not yet Ready; **`todo`** meets the [Definition of Ready](../definitions.md). Moving `backlog → todo` *is* the Ready check. |
 | `parent` | optional — id of a higher-level item (see the hierarchy rules above) |

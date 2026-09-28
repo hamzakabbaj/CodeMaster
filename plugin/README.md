@@ -77,7 +77,7 @@ claude plugin install codemaster@codemaster
 |---|---|---|---|
 | **Epic** | a product area or big outcome | months | no — just a goal, a product-level bet, and its features |
 | **Feature** | one shippable capability | **2–5 stories** | **only if it has an unknown** (its riskiest assumption) |
-| **Ticket** — `story` · `task` · `spike` · `fix` | one branch, one PR | hours–days | no — `frame` gives it a plan and acceptance tests |
+| **Ticket** — `story` · `task` · `chore` · `spike` · `fix` | one branch, one PR | hours–days | no — `frame` gives it a plan and acceptance tests |
 
 Parents are **optional** and always point up: a ticket can sit under a feature, directly under an
 epic, or stand alone (a stray bug is just a `fix`). Full rules:

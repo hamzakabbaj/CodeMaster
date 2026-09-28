@@ -39,7 +39,7 @@ relevant code. Don't ask the user for what you can read.
 
 | Size | Looks like | Mint |
 |---|---|---|
-| **Fix / chore** | a bug, a config/copy/one-file change | one **`fix`** (bug) or **`task`** (chore) |
+| **Fix / chore** | a bug, a config/copy/one-file change | one **`fix`** (bug) or **`chore`** |
 | **One story** | one vertical slice — one screen/endpoint/behavior | one **`story`** (or `task`) |
 | **A feature** | **2–5** stories that ship one capability together | one **`feature`** — with a `riskiest_assumption` if there's an unknown |
 | **Epic-sized** | more than ~5 stories, or a whole new product area | one **`epic`** |

@@ -44,7 +44,7 @@ Resolve the tracker from `.codemaster/config.json` (**absent → stop and send t
 4. **Dependency-order.** Enabler first, then the stories. Record `depends_on`/`blocks` on every
    ticket — the build *order* lives in those edges, **never in the id**.
 5. **Meet the [Definition of Ready](../../definitions.md)** for every ticket: one concern, a `story`
-   (for a story) or a one-sentence `goal` (task · spike · fix), testable acceptance criteria, known
+   (for a story) or a one-sentence `goal` (task · chore · spike · fix), testable acceptance criteria, known
    deps, one branch's worth, and a verification approach.
 
 ## Persist via the active tracker
@@ -58,8 +58,8 @@ compute or assume one.
 
 ## Conventions
 
-- **Types:** `story` (with a `story`: "As a … I want … so that …") · `task` (one-sentence `goal`; a
-  chore is a task) · `spike` (the `goal` is the question) · `fix` (the `goal` is the broken behaviour).
+- **Types:** `story` (with a `story`: "As a … I want … so that …") · `task` (one-sentence `goal`) ·
+  `chore` (maintenance, one-sentence `goal`) · `spike` (the `goal` is the question) · `fix` (the `goal` is the broken behaviour).
 - **`subtype: "enabler"`** is the **only** marker of an enabler — never a special id range.
 - **`verification`** names how the ticket is proven — which tests, run by the project's `verify`
   command.

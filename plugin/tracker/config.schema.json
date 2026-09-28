@@ -68,6 +68,40 @@
           "type": "string",
           "default": ".codemaster/plane.env",
           "description": "Path (repo-relative) to the gitignored env file with PLANE_API_URL / PLANE_API_KEY / PLANE_WORKSPACE_SLUG."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Which Plane label plays each CodeMaster role, by label name. Filled by /tracker-init (existing labels reused, missing ones created).",
+          "properties": {
+            "epic": {
+              "type": "string"
+            },
+            "feature": {
+              "type": "string"
+            },
+            "story": {
+              "type": "string"
+            },
+            "task": {
+              "type": "string"
+            },
+            "chore": {
+              "type": "string"
+            },
+            "fix": {
+              "type": "string"
+            },
+            "spike": {
+              "type": "string"
+            },
+            "enabler": {
+              "type": "string"
+            },
+            "blocked": {
+              "type": "string"
+            }
+          }
         }
       }
     },
