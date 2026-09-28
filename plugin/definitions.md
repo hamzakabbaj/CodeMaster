@@ -18,6 +18,7 @@ built: `frame` sends it to *refine* (vague AC), *spike* (an unknown), or *split*
 - [ ] **Acceptance criteria met and demonstrated** — recorded in the ticket's `evidence` doc
       (pointers to the green run / PR / tests; small text only, no committed binaries).
 - [ ] **The `verify` command is green** (`.codemaster/config.json`), and the PR's CI checks pass.
-- [ ] **Docs updated** where behaviour changed — README, CLAUDE.md, API docs.
+- [ ] **Docs updated** where behaviour changed — README, CLAUDE.md, API docs — and the **schema docs**
+      (`.codemaster/docs/database/`, via `db-docs`) whenever the database schema changed.
 - [ ] **No secrets, no boundary violations.**
 - [ ] **Reviewed (automated + human) and merged via PR.**

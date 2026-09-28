@@ -62,6 +62,7 @@ the three marked **manual** have side effects or timing you control, so only you
 | `frame` | Set one ticket up to build — DoR gate → ground the code → plan if gnarly → design the acceptance tests — then stop at the done-contract. |
 | `design-options` | Generate 2–3 throwaway UI variants as a `file://`-openable gallery, then stop for you to pick. Run by `frame` when a ticket hinges on an open UI choice; the decision lands in the ticket's `design-options` doc slot. |
 | `build` | Run the robust-code loop on a framed ticket — generate (test-first) → verify → checkpoint → critique — until the acceptance tests pass and `verify` is green. |
+| `db-docs` | Document the database **as built** — `schema.dbml` + a README for what DBML can't hold (views, triggers, functions, RLS…) — in `.codemaster/docs/database/`, derived from the code. `build` refreshes it whenever a branch touches the schema; `ship` refuses a schema change without it. |
 | `ship` · **manual** | `verify` → PR → checks → review → (confirm) → squash-merge → verify main. |
 
 ### Agents — specialist subagents the fleet delegates to

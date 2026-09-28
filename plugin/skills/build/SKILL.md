@@ -41,6 +41,10 @@ Repeat until the acceptance tests pass and `verify` is green:
    `main`**. Review `git status` and stage the increment's files by name (never secrets, `.env`, or
    unrelated changes), then `git commit -m "<conventional subject>"`. Every checkpoint is a
    revertible safe point.
+   **Schema changed? Document it in the same checkpoint.** If the increment touches a path in
+   `database.sources` (`.codemaster/config.json`) — or clearly changes the schema (a new migration, a
+   model) when no sources are recorded yet — run the **`db-docs`** skill before committing and stage
+   `.codemaster/docs/database/` with the change. Schema and its docs land together, in one PR.
 4. **Critique** (at meaningful green points — **at minimum once before you consider the ticket
    done**; more often when `risky`/`gnarly`): send the **critique lenses** — the fleet agents in
    *Critique lenses* below — at the branch diff (`git diff $(git merge-base main HEAD)`), **in

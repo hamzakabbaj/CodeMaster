@@ -21,6 +21,21 @@
       "minLength": 1,
       "description": "The project's own green-check command, run by build (every loop) and ship (final gate) — e.g. 'npm test && npm run lint'. Set by /tracker-init; build and ship stop if it's missing."
     },
+    "database": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The project's one database. Written by the db-docs skill on its first run.",
+      "properties": {
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Repo paths that define the schema (e.g. 'prisma/schema.prisma', 'alembic/versions/'). db-docs derives the docs from them; build and ship treat a change here as a schema change."
+        }
+      }
+    },
     "folder": {
       "type": "object",
       "description": "Settings for the `folder` provider (files + git).",
