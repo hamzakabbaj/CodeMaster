@@ -33,7 +33,7 @@ Do exactly this:
 12. **Report.** The merged commit SHA, the ticket now `done` in the tracker, and `main`'s state.
 
 Guardrails:
-- **Never merge on a red check or a red `verify`**, and **never `--no-verify`** (a PreToolUse hook blocks it).
+- **Never merge on a red check or a red `verify`**, and **never `--no-verify`** — the repo's commit hooks always run.
 - **The PR title is the squash subject** — validate it (step 5) before opening the PR.
 - **Confirm before the squash-merge** — it's outward-facing and hard to reverse. Where the repo has no branch protection, this skill + the discipline are the enforcement.
 - One ticket → one PR. `ship` does **not** write feature code (that's `build`) and assumes the branch is already green.

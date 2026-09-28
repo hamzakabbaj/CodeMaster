@@ -15,7 +15,7 @@ claude plugin marketplace add hamzakabbaj/CodeMaster   # or a local path to the 
 claude plugin install codemaster@codemaster            # user scope: available in all projects
 ```
 
-Then **restart Claude Code** so the skills, agents, and hooks register. The name reads `codemaster@codemaster` because it's `<plugin>@<marketplace>` — this repo is both the catalog *and* the single plugin in it.
+Then **restart Claude Code** so the skills and agents register. The name reads `codemaster@codemaster` because it's `<plugin>@<marketplace>` — this repo is both the catalog *and* the single plugin in it.
 
 ### Updating
 
@@ -76,12 +76,6 @@ the three marked **manual** have side effects or timing you control, so only you
 | `librarian` | Read-only navigator/consistency-checker for the docs, ROADMAP, and backlog. |
 | `code-explorer` | Read-only reconnaissance — traces execution paths and maps blast radius before a change. |
 
-### Hooks — the always-on, deterministic guards (`hooks/hooks.json`)
-
-| Hook | Event | Guarantee |
-|---|---|---|
-| `block-no-verify` | `PreToolUse` | Blocks `git commit --no-verify` (and friends) — the cage can't be bypassed. |
-
 ## How work is organized — epic → feature → ticket
 
 | Level | What it is | Size | Gets a spec? |
@@ -127,8 +121,8 @@ epic, or stand alone (a stray bug is just a `fix`). Full rules:
       one story / fix  -> mint a ticket     -> /start-ticket -> frame -> build -> /ship
 
    ── the deterministic cage runs underneath the whole flow ──
-   your `verify` command + your repo's git hooks and CI (+ the plugin's
-   no-bypass hook) enforce the invariants no matter what the model decides.
+   your `verify` command + your repo's git hooks and CI enforce the
+   invariants no matter what the model decides.
 ```
 
 The doctrine behind each step is in [docs/02 (robust-code loop)](../docs/02-robust-code-process.md) and [docs/03 (delivery)](../docs/03-delivery-process.md).
@@ -210,8 +204,8 @@ Full contract: [`tracker/README.md`](tracker/README.md).
 CodeMaster brings the process; your repo brings its own proof. The plugin ships no test runner and
 no CI — `build` and `ship` run **your** checks, via the `verify` command `/tracker-init` records
 in `.codemaster/config.json` (e.g. `npm test && npm run lint`). If your repo has commit hooks or CI,
-they stay in charge: the plugin's `block-no-verify` hook stops the agent from skipping them, and
-`/ship` waits for your PR checks before it asks to merge.
+they stay in charge: `build` and `ship` never skip them (`--no-verify` is off-limits), and `/ship`
+waits for your PR checks before it asks to merge.
 
 ## Learn more
 

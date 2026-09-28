@@ -94,7 +94,7 @@ diff is clean on that lens — no invented problems.
   rewrite the target on the fly.
 
 ## Guardrails
-- **Never checkpoint on red; never `git commit --no-verify`** (a PreToolUse hook blocks it anyway).
+- **Never checkpoint on red; never `git commit --no-verify`** — the repo's commit hooks always run.
 - **One concern per branch.** The cage — `verify` + green-only checkpoints + the repo's commit hooks —
   stays on the whole time. Guarantees come from the cage, not from remembering to be careful.
 - **Build ends at green.** Opening the PR, automated + human review, merge, and flipping the ticket
