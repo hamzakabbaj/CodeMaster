@@ -13,10 +13,15 @@ stops at green.
 ## Preconditions (assert, don't assume)
 - On `feat/<id>-<slug>` (NOT `main`). If on `main`, stop — run `/start-ticket <id>` first.
 - **The done-contract exists.** `frame` must have run: `read_doc(<id>, "acceptance-tests")` returns
-  the contract (and `read_doc(<id>, "plan")` if it was gnarly). **If the contract is missing, stop —
-  run `/frame <id>` first.** Build does not invent the target; it builds to a reviewed one.
+  the contract. **If the contract is missing, stop — run `/frame <id>` first.** Build does not invent
+  the target; it builds to a reviewed one.
 - Read the ticket via the tracker `read` verb and the done-contract via `read_doc` before
   generating. The docs live in the tracker (a card or a gitignored local file), never the repo.
+- **Read the other slots frame may have filled** — each is optional, and an empty one is a
+  statement, not a gap: `read_doc(<id>, "plan")` (if gnarly), `read_doc(<id>, "architecture")`
+  (a boundary verdict to respect), and **`read_doc(<id>, "design-options")`** — when it exists, the
+  human already chose a direction at a gate, so **build that variant and honour the consequence it
+  records.** Re-litigating a settled design choice mid-loop wastes the gate.
 
 ## The loop: generate → verify → checkpoint → critique
 Repeat until the acceptance tests pass and the ladder is green:
@@ -43,6 +48,11 @@ Repeat until the acceptance tests pass and the ladder is green:
      findings, and what you acted on vs. deferred to `ship`. One evidence doc — *not* a separate
      `security` / `architect-review` / `edge-cases` doc per lens (those go stale the moment you act
      on them). This is the trail `ship`'s reviewer reads (on the card, or the gitignored local file).
+   - **If a critique round actually moves a boundary** — reorders a sequence, relocates a
+     responsibility, changes a contract between layers — record *that* via
+     **`attach_doc(<id>, "architecture", …)`**, even though `frame` didn't write one. The
+     architecture slot belongs to whoever settles the boundary, and mid-loop is a legitimate moment
+     to settle it. Keep it to the decision and its consequence; the findings stay in `evidence`.
 
 If the code you're touching drifts out of context mid-loop, **re-ground** with the `code-explorer`
 agent — `frame` did the first pass, but the loop can recover the map again when needed.

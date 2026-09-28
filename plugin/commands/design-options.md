@@ -15,11 +15,14 @@ Do exactly this:
    - Reuse the project's **design tokens** where they exist; this is exploration of *direction*, not a license to ignore the system.
    - Self-contained HTML/CSS/JS (no server, no fetch, no modules) so it opens straight off disk — same `file://` constraint as the rest of CodeMaster's static surfaces.
 4. **Present + STOP for the pick.** Give the user the `file://` path to open and a short summary of each variant and its tradeoff. **Stop and let the user choose** — this is the human gate, exactly as `/spec` stops for plan-review. Do not start building.
-5. **Record the decision via `attach_doc(<id>, "plan", …)`** (the active tracker — a card or a gitignored local file, never the repo): the **chosen variant, why, and why-not the rejected ones** — a lightweight ADR. (Having a `plan` doc is also the `gnarly` signal for `build-critique`, so the design decision and the architect lens travel together.)
+5. **Record the decision via `attach_doc(<id>, "design-options", …)`** — its own named doc slot on the active tracker (a card comment, or a gitignored local file; never the repo). Write the **chosen variant, why, and why-not the rejected ones** — a lightweight ADR — plus any **consequence the build must honour** (e.g. "stalled state must survive greyscale"). `build` reads this back with `read_doc(<id>, "design-options")` when it implements the pick.
+   > It has its own slot rather than living inside `plan` because the two answer different questions and are written by different actors at different moments: `plan` is *how we'll build it* (frame), `design-options` is *what we decided it should look like, and what we rejected* (you, at a gate). Folding the decision into `plan` buried it — and a ticket can have a design decision with no plan at all.
+   >
+   > If the ticket is also gnarly enough to earn a `plan`, frame writes that separately; the two travel together.
 6. **Hand back to `build`.** The chosen direction is now built **for real** with the project's components in the loop — the prototype is discarded.
 
 Guardrails:
-- **`prototypes/` is gitignored — never commit the gallery.** The durable artifact is the decision recorded in the `plan` doc (via `attach_doc`). No committed binaries or screenshots (they bloat history and go stale).
+- **`prototypes/` is gitignored — never commit the gallery.** The durable artifact is the decision recorded in the `design-options` doc (via `attach_doc`). No committed binaries or screenshots (they bloat history and go stale).
 - **The prototype is a decision aid, never the implementation.** Build the pick with real project components, then run the verify → checkpoint → critique loop on *that*.
 - **Reuse the design system first.** If the look is already dictated, don't re-explore — stop (step 2).
 - **Element altitude only.** This is one element/screen for one ticket. Whole-project UX is `design-thinking`; the system's component language is the system design's `design_system`. Same wireframe-and-pick loop, smallest scale.

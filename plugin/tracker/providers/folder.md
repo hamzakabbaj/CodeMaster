@@ -8,18 +8,19 @@ here now — those skills just call the verbs.
 ## Config
 
 ```json
-{ "tracker": "folder", "folder": { "root": "blueprint/v1/backlog", "idPrefix": "CM" } }
+{ "tracker": "folder", "folder": { "root": ".codemaster/backlog", "idPrefix": "CM" } }
 ```
 
-- `root` — backlog directory, repo-relative, **gitignored in its entirety** (`tracker init` adds it
+- `root` — backlog directory, repo-relative, **gitignored in its entirety** (`/codemaster-init` adds it
   to `.gitignore`). Holds `roadmap.json` + co-located epics:
-  `epics/<epic-id>/{spec.md, tickets/<id>-<slug>/{ticket.json, plan.md, acceptance-tests.md, …}}`.
+  `epics/<epic-id>/{spec.md, tickets/<id>-<slug>/{ticket.json, design-options.md, plan.md, acceptance-tests.md, …}}`.
   Everything about one epic — its brief, its tickets, and their docs — lives in that epic's folder,
   and **none of it is committed.**
 - `idPrefix` — uppercase tag; ticket ids are `<idPrefix>-<n>` (e.g. `CM-80`); epic ids are kebab-case.
 
-Resolve `ROOT` and `PREFIX` from config (fall back to `blueprint/v1/backlog` + `CM` if
-`.codemaster/config.json` is absent). All paths below are relative to the repo root.
+Resolve `ROOT` and `PREFIX` from config — **there is no fallback**: if `.codemaster/config.json` is
+absent the repo is unconfigured and the calling skill stops, sending the user to `/codemaster-init`.
+All paths below are relative to the repo root.
 
 ## ID scheme & timing
 
@@ -90,11 +91,13 @@ record `links` in `ticket.json` if a project wants them explicit.
 
 ### `attach_doc(id, name, markdown)`
 Write the doc as a **gitignored** markdown file in the item's own folder:
-- an **epic** id → `"$ROOT"/epics/<id>/<name>.md` (e.g. `spec.md`).
-- a **ticket** id → `"$ROOT"/epics/*/tickets/<id>-*/<name>.md` (e.g. `plan.md`,
-  `acceptance-tests.md`, `architecture.md`, `evidence.md`).
+- an **epic** id → `"$ROOT"/epics/<id>/<name>.md` — only `spec.md` lives at this altitude.
+- a **ticket** id → `"$ROOT"/epics/*/tickets/<id>-*/<name>.md` — the five ticket slots:
+  `design-options.md`, `plan.md`, `architecture.md`, `acceptance-tests.md`, `evidence.md`.
 
-Overwrite if it exists. `name` is the bare doc name (no extension); the provider adds `.md`.
+Overwrite if it exists. `name` is the bare doc name (no extension); the provider adds `.md`, and it
+must be one of the **six named slots** ([`../README.md`](../README.md#the-six-doc-slots)) — reject
+anything else rather than creating a new file.
 
 ### `read_doc(id, name) → markdown`
 Read `<name>.md` from that same folder (resolve the item's folder as in `read`). Return its

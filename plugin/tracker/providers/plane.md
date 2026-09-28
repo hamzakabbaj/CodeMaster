@@ -4,7 +4,7 @@ Work items live in a [Plane](https://plane.so) project; the tracker verbs are RE
 the CLI wrapper `plane-api.sh`. Adapted from the standalone `plane` skill. **Remote provider:**
 ids are server-assigned, status lives in Plane (not the repo), and secrets are project-local.
 
-## Setup (`tracker init plane` materializes this)
+## Setup (`/codemaster-init --tracker=plane` materializes this)
 
 ```
 .codemaster/
@@ -104,20 +104,26 @@ channel — no guaranteed issue-links endpoint):
 ### `attach_doc(id, name, markdown)`
 The card **is** the home for docs — nothing goes to the repo. Convert the markdown to HTML and
 attach it to the work item, by `name`:
+`name` must be one of the **six named slots** ([`../README.md`](../README.md#the-six-doc-slots)).
+
 - **`spec`** (epic) / **`plan`** (ticket) → the work item's **description** (`description_html`).
   Set the relevant `<h4>` section so the body stays readable. These are the durable, reviewed-on-the-card docs.
-- **`architecture` · `acceptance-tests` · `evidence`** → a **comment** on the work item
-  (`comments/`, `comment_html`), each prefixed with an `<h4>` naming the doc. Comments keep the
+- **`design-options` · `architecture` · `acceptance-tests` · `evidence`** → a **comment** on the work
+  item (`comments/`, `comment_html`), each prefixed with an `<h4>` naming the doc. Comments keep the
   agent-output trail without bloating the description.
 
 ```sh
 # description docs (spec/plan): PATCH the work item
 "$API" --raw PATCH "$BASE/work-items/$uuid/" -H "Content-Type: application/json" \
   -d "$(jq -n --arg html "$DOC_HTML" '{description_html:$html}')"
-# trail docs (architecture/acceptance-tests/evidence): POST a comment
+# trail docs (design-options/architecture/acceptance-tests/evidence): POST a comment
 "$API" --raw POST "$BASE/work-items/$uuid/comments/" -H "Content-Type: application/json" \
   -d "$(jq -n --arg html "<h4>$NAME</h4>$DOC_HTML" '{comment_html:$html}')"
 ```
+
+> `design-options` is a comment, not the description: the decision is a **point-in-time record**
+> ("variant B, because…") that shouldn't compete with the plan for the card's body. It stays
+> readable in the card's timeline, next to the moment the human picked.
 
 ### `read_doc(id, name) → markdown`
 Resolve the UUID; fetch the work item (`?expand=state` is unneeded here). For `spec`/`plan`, return

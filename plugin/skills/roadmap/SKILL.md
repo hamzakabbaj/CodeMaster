@@ -53,7 +53,8 @@ before anything is persisted. You are the discriminator here, same as `/spec`'s 
 ## Outputs — persist via the active tracker
 
 The decomposition judgment is **provider-agnostic**. On approval, `mint` each epic
-(`type: epic`) via the active provider — resolve it from `.codemaster/config.json`; contract in
+(`type: epic`) via the active provider — resolve it from `.codemaster/config.json` (**absent → stop
+and send the user to `/codemaster-init`**; there is no silent default); contract in
 [`plugin/tracker/README.md`](../../tracker/README.md) — in dependency order, recording
 `depends_on`/`blocks`. `mint`'s return value is the canonical epic id; never assume the format.
 

@@ -19,7 +19,7 @@
       "properties": {
         "root": {
           "type": "string",
-          "description": "Backlog root relative to the repo, e.g. 'blueprint/v1/backlog'. Holds roadmap.json + tickets/<id>-<slug>/ticket.json."
+          "description": "Backlog root relative to the repo, e.g. '.codemaster/backlog'. Gitignored in its entirety. Holds roadmap.json + epics/<epic-id>/tickets/<id>-<slug>/ticket.json."
         },
         "idPrefix": {
           "type": "string",
@@ -51,7 +51,7 @@
         "todo": { "type": "string" },
         "in_progress": { "type": "string" },
         "done": { "type": "string" },
-        "blocked": { "type": "string" }
+        "blocked": { "type": "string", "description": "Omit for the `plane` provider — Plane has no `blocked` state group; it models blocked as a label. /codemaster-init --check flags it if present." }
       }
     }
   }

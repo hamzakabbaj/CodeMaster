@@ -3,7 +3,7 @@ description: Ship a finished CodeMaster ticket — PR → both gates → review 
 argument-hint: <CM-number>  (e.g. /ship 67) — defaults to the current branch's ticket
 ---
 
-You are shipping ticket **$ARGUMENTS** through the Step-6 ceremony. `build` got the branch to green; you get it reviewed and merged behind the enforced gates. **The merge is the only irreversible step — you stop for explicit confirmation before it.** Backlog status lives in the active **tracker** — resolve it from `.codemaster/config.json` (default `folder`; mechanics in `.codemaster/provider.md` or `plugin/tracker/providers/<tracker>.md`; contract `plugin/tracker/README.md`).
+You are shipping ticket **$ARGUMENTS** through the Step-6 ceremony. `build` got the branch to green; you get it reviewed and merged behind the enforced gates. **The merge is the only irreversible step — you stop for explicit confirmation before it.** Backlog status lives in the active **tracker** — resolve it from `.codemaster/config.json` (**absent → stop and send the user to `/codemaster-init`**; there is no silent default. Mechanics in `.codemaster/provider.md` or `plugin/tracker/providers/<tracker>.md`; contract `plugin/tracker/README.md`).
 
 Do exactly this:
 

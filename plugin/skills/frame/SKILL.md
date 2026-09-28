@@ -43,8 +43,9 @@ frontend / data), the files each touches, the order, and **which ladder rung ver
 persist it via **`attach_doc(<id>, "plan", …)`**. Two conditional forks, taken only when their
 uncertainty is real:
 - **3b. Design fork — `/design-options <id>`** *(when an open UI/interaction decision exists)*:
-  generates a 2–3 variant gallery, **stops for the user to pick**, records the choice in the `plan` doc.
-  Skip it when the system design's design system already dictates the look.
+  generates a 2–3 variant gallery, **stops for the user to pick**, and records the choice in its own
+  **`attach_doc(<id>, "design-options", …)`** slot — chosen variant, why, why-not, and the consequence
+  build must honour. Skip it when the system design's design system already dictates the look.
 - **3c. Approach fork — `architect` agent** *(when the approach itself is hard)*: review the design
   before code — wrong-layer choices, coupling, abstractions that will rot. Capture the verdict via
   **`attach_doc(<id>, "architecture", …)`**.
@@ -64,11 +65,14 @@ Present the plan (if any) and the acceptance tests, and **stop for review.** Thi
 place to catch a wrong target — you're the discriminator. Only after approval does `build` run.
 
 ## Outputs — via the tracker, never committed
-Attach to the ticket via `attach_doc`: `plan` (if gnarly), `architecture` (if the architect ran),
-`acceptance-tests` (always — the contract). The provider decides where they live (folder → a
-gitignored local file; plane → the card). Also `transition` any DoR refinements onto the ticket.
-The `/design-options` gallery itself lives in gitignored `prototypes/` — only the *decision* is
-recorded (in the `plan` doc).
+Attach to the ticket via `attach_doc`: `design-options` (if the design fork ran), `plan` (if gnarly),
+`architecture` (if the architect ran), `acceptance-tests` (always — the contract). The provider
+decides where they live (folder → a gitignored local file; plane → the card). Also `transition` any
+DoR refinements onto the ticket. The `/design-options` gallery itself lives in gitignored
+`prototypes/` — only the *decision* is recorded, in the `design-options` slot.
+
+> **A slot you left empty is a statement.** No `architecture` doc means no boundary moved; no
+> `design-options` doc means there was no open UI choice. Don't attach an empty one to look complete.
 
 ## Guardrails
 - **Frame writes no product code** and opens no PR. It ends at the done-contract; `build` does the

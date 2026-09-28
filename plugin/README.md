@@ -36,9 +36,9 @@ claude plugin install codemaster@codemaster
 |---|---|
 | `/spec` | Produce the epic brief (`spec.md`) for one epic — sharpen its riskiest assumption — then stop for plan-review before slicing. |
 | `/start-ticket` | Create a ticket's feature branch and flip its status to in progress. `--worktree` cuts an isolated git worktree, so independent tickets build in parallel (pairs with `plane`; `ship` cleans it up). |
-| `/design-options` | Generate 2–3 throwaway UI variants as a `file://`-openable gallery, then stop for you to pick. |
+| `/design-options` | Generate 2–3 throwaway UI variants as a `file://`-openable gallery, then stop for you to pick. The decision lands in the ticket's `design-options` doc slot; the gallery is thrown away. |
 | `/ship` | PR → both gates → review → (confirm) → squash-merge → verify main. |
-| `/tracker-init` | Set up where the backlog lives — scaffold `.codemaster/` for the `folder` or `plane` provider (see **Tracker** below). |
+| `/codemaster-init` | **Run this first in a new repo.** Set up where the backlog lives — scaffold `.codemaster/` for the `folder` or `plane` provider; with no flags (or `--check`) it's a **doctor** that diagnoses and repairs an existing setup (see **Tracker** below). `/tracker-init` is an alias. |
 
 ### Skills — multi-step procedures (invoked by name or auto-matched)
 
@@ -114,6 +114,9 @@ The doctrine behind each step is in [docs/02 (robust-code loop)](../docs/02-robu
 
 What to actually run, in order, for the common starting points. (Commands carry the `/`; skills are bare but also work as `/name`.)
 
+**Once per repo, before anything else:** `/codemaster-init` — picks where the backlog lives. Nothing
+below works until it has run; the skills stop and point you back here rather than guessing a default.
+
 **A brand-new feature — the full arc.** When a request might be several stories or an epic:
 1. Describe the request, then run `intake` — it triages the altitude and, for anything epic-sized, **mints an epic** and routes you to spec.
 2. `/spec <epic-id>` — produces the epic brief, then **stops for your plan review**.
@@ -131,7 +134,7 @@ What to actually run, in order, for the common starting points. (Commands carry 
 - `/start-ticket <id>` → `frame <id>` *(lightweight — the contract is small)* → `/build` → `/ship`.
 
 **Exploring a UI/UX decision.** This happens *inside* `frame`'s plan step, not as a separate stage:
-- when a ticket hinges on an open UI choice, `frame` runs `/design-options <id>` — 2–3 throwaway variants as a `file://` gallery — **stops for you to pick**, records the choice in `plan.md`, and `build` then implements it for real.
+- when a ticket hinges on an open UI choice, `frame` runs `/design-options <id>` — 2–3 throwaway variants as a `file://` gallery — **stops for you to pick**, records the choice in the ticket's `design-options` doc, and `build` reads it back and implements that variant for real.
 
 **Upstream design, before any tickets exist.** For a greenfield product or a big feature:
 - `design-thinking` → `technical-design` → `roadmap` (decompose into epics) → `/spec` (per epic, just-in-time).
@@ -154,19 +157,29 @@ the fleet, or the cage.
 | `folder` *(default)* | a **gitignored** local backlog (`<root>/roadmap.json` + `epics/<id>/{spec, tickets/…}`) | solo / repo-native, no external tool |
 | `plane` | a [Plane](https://plane.so) project, via its REST API | the team tracks work in Plane |
 
-**Switch it on:**
+**Switch it on — this is the first thing you run in a new repo:**
 
 ```bash
-/tracker-init folder      # or: /tracker-init plane
+/codemaster-init --tracker=folder --id-prefix=ETK     # or: --tracker=plane --workspace=acme --project=<uuid>
+/codemaster-init                                      # no flags → doctor: report state, then ask
+/codemaster-init --check                              # diagnose only, write nothing (CI-friendly)
 ```
 
-`tracker-init` scaffolds `.codemaster/` in your repo — `config.json` (committed) + the chosen
-provider's mechanics; for `plane` it also drops in the API wrapper and a gitignored `plane.env`
-for your token. From then on `intake` / `roadmap` / `new-ticket` / `backlog` / `/start-ticket` / `/ship`
-route through the active provider automatically. Full contract: [`tracker/README.md`](tracker/README.md).
+It scaffolds `.codemaster/` in your repo — `config.json` (committed) + the chosen provider's
+mechanics; for `plane` it also drops in the API wrapper and a gitignored `plane.env` for your token,
+and **verifies the setup for real** (credentials resolve; every `statusMap` value names a state group
+that actually exists in your instance). Re-running with the same provider is an idempotent refresh
+after a plugin update; switching providers over a non-empty backlog orphans its items and so needs
+`--force`. `/tracker-init` is kept as an alias.
 
-> The tracker owns the **whole backlog** — work-items, status, **and** the markdown docs (`spec` ·
-> `plan` · `acceptance-tests` · `evidence`), via the `attach_doc`/`read_doc` verbs. The git repo
+**There is no silent default.** A repo without `.codemaster/config.json` is unconfigured — `intake` /
+`roadmap` / `new-ticket` / `backlog` / `/spec` / `/start-ticket` / `/ship` stop and send you here
+rather than guessing. Once configured they all route through the active provider automatically.
+Full contract: [`tracker/README.md`](tracker/README.md).
+
+> The tracker owns the **whole backlog** — work-items, status, **and** the six markdown doc slots
+> (`spec` · `design-options` · `plan` · `architecture` · `acceptance-tests` · `evidence`), via the
+> `attach_doc`/`read_doc` verbs. The git repo
 > holds only the **product** (code + tests); the backlog and its docs are **never committed** —
 > Plane cards for teams, a gitignored local backlog for solo. The lone bridge: `build` reads the
 > `acceptance-tests` doc and transcribes it into executable tests, which *are* committed.

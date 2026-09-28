@@ -15,11 +15,12 @@ skill. This skill owns the *shaping* (DoR); the provider owns the *persistence*.
 > the small cases.
 
 ## Resolve the tracker (do this first)
-1. Read `.codemaster/config.json` at the repo root → its `tracker` field (default `folder` if the
-   file is absent).
+1. Read `.codemaster/config.json` at the repo root → its `tracker` field. **If the file is absent,
+   stop** — the repo is unconfigured; tell the user to run `/codemaster-init` and do nothing else.
+   There is no silent default (see [`plugin/tracker/README.md`](../../tracker/README.md#selecting-a-provider)).
 2. Load that provider's verb mechanics: **`.codemaster/provider.md`** if present (materialized by
-   `tracker init`), else the bundled `plugin/tracker/providers/<tracker>.md`. The provider defines how
-   `mint` actually persists and how the `id` is assigned. The contract is in
+   `/codemaster-init`), else the bundled `plugin/tracker/providers/<tracker>.md`. The provider defines
+   how `mint` actually persists and how the `id` is assigned. The contract is in
    [`plugin/tracker/README.md`](../../tracker/README.md).
 
 ## Steps

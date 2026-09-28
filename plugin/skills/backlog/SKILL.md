@@ -30,8 +30,9 @@ Read these directly from the project's `blueprint/` record; do not ask the user 
 
 The slicing judgment here (vertical slices, dependency order, promoted enabler) is
 **provider-agnostic**. Persist each sliced ticket with the tracker `mint` verb — id assignment,
-storage, and registration belong to the active provider (resolve it from `.codemaster/config.json`;
-contract in [`plugin/tracker/README.md`](../../tracker/README.md)). The epic **already exists**
+storage, and registration belong to the active provider (resolve it from `.codemaster/config.json` —
+**absent → stop and send the user to `/codemaster-init`**, there is no silent default; contract in
+[`plugin/tracker/README.md`](../../tracker/README.md)). The epic **already exists**
 (minted by `roadmap`) — **do not create epics.** `mint` each sliced ticket with `parent` = the
 epic id, in dependency order, recording `depends_on`/`blocks`.
 

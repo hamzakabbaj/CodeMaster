@@ -13,7 +13,8 @@ no code.
 
 ## 1. Read the epic — via the active tracker
 
-Resolve the tracker from `.codemaster/config.json` (default `folder`; contract
+Resolve the tracker from `.codemaster/config.json` (**absent → stop and send the user to
+`/codemaster-init`**; there is no silent default. Contract:
 [`plugin/tracker/README.md`](../tracker/README.md)) and **`read`** epic **$ARGUMENTS** — its
 `goal`, `riskiest_assumption`, and `depends_on`. Don't ask the user to paste what `roadmap` already
 recorded. Then read the upstream design record (design-thinking + system-design) for the
