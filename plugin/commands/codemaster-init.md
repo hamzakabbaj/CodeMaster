@@ -1,6 +1,6 @@
 ---
 description: Initialize or check CodeMaster in this repo — pick the tracker provider, scaffold .codemaster/, and verify it actually works. Run once per repo; re-run to refresh or to diagnose.
-argument-hint: "[--tracker=folder|plane] [--root=…] [--id-prefix=…] [--workspace=…] [--project=…] [--check] [--force]"
+argument-hint: "[--tracker=folder|plane] [--verify=\"<cmd>\"] [--root=…] [--id-prefix=…] [--workspace=…] [--project=…] [--check] [--force]"
 ---
 
 You are initializing (or diagnosing) **CodeMaster** in this repo. The job is to materialize a
@@ -16,6 +16,7 @@ fresh project an un-gitignored backlog at CodeMaster's own historical path.
 | Flag | Meaning |
 |---|---|
 | `--tracker=folder\|plane` | which provider to configure. A **bare positional** (`folder` / `plane`) means the same thing — that's the legacy `/tracker-init` form. |
+| `--verify="<cmd>"` | the project's green-check command (see §4 *Verify command*). |
 | `--root=<path>` | `folder` only — backlog root (default `.codemaster/backlog`). |
 | `--id-prefix=<PREFIX>` | `folder` only — uppercase id prefix (default: the repo name's initials, else `CM`). |
 | `--workspace=<slug>` | `plane` only — workspace slug. |
@@ -47,6 +48,9 @@ test -f .codemaster/config.json && jq -e '.tracker' .codemaster/config.json    #
 test -f .codemaster/provider.md                                                # mechanics materialized?
 cmp -s .codemaster/provider.md "$SRC/providers/$(jq -r .tracker .codemaster/config.json).md"  # stale vs installed plugin?
 ```
+
+- **`verify` is set** — `jq -e '.verify | strings | length > 0' .codemaster/config.json`. Missing is
+  **broken**: `build` and `ship` stop without it.
 
 Then the provider-specific checks — **these are the ones that actually catch breakage**:
 
@@ -92,17 +96,18 @@ it lives) and that CodeMaster has no migration verb — the items must be moved 
 deliberately. With `--force`, proceed and say plainly what was left behind.
 
 Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env` mode, stale
-`provider.md`, `blocked` in `statusMap`) — repairs are safe and never need `--force`.
+`provider.md`, `blocked` in `statusMap`, missing `verify`) — repairs are safe and never need `--force`.
 
 ## 4. Scaffold
 
-`mkdir -p .codemaster`. Then, by provider:
+`mkdir -p .codemaster`. Every `config.json` below also carries **`"verify": "<cmd>"`** — see
+*Verify command* at the end of this section. Then, by provider:
 
 ### `folder`
 - `root` default `.codemaster/backlog`; `idPrefix` default from the repo name (`CodeMaster` → `CM`), else `CM`.
 - Write `.codemaster/config.json`:
   ```json
-  { "tracker": "folder", "folder": { "root": "<root>", "idPrefix": "<PREFIX>" } }
+  { "tracker": "folder", "verify": "<cmd>", "folder": { "root": "<root>", "idPrefix": "<PREFIX>" } }
   ```
 - `cp "$SRC/providers/folder.md" .codemaster/provider.md`
 - **Gitignore the backlog** — ensure `.gitignore` contains `<root>/`. The folder backlog (work-items
@@ -117,6 +122,7 @@ Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env`
   ```json
   {
     "tracker": "plane",
+    "verify": "<cmd>",
     "plane": { "workspace": "<slug>", "project": "<pid>" },
     "statusMap": { "todo": "unstarted", "in_progress": "started", "done": "completed" }
   }
@@ -126,10 +132,27 @@ Also fix any repair the doctor found (missing gitignore entry, wrong `plane.env`
 - `cp "$SRC/providers/plane/plane.env.template" .codemaster/plane.env && chmod 600 .codemaster/plane.env` — **only if it doesn't already exist**; never clobber filled-in credentials.
 - Ensure `.gitignore` contains `.codemaster/plane.env`. **Never commit it.**
 
+### Verify command (every provider)
+`verify` is how `build` and `ship` prove the code is green — the project's own checks, not
+CodeMaster's. If `--verify` didn't supply it, **propose one from what the repo actually has**, then
+ask the user to confirm or edit it:
+- `package.json` → its `test` / `lint` / `typecheck` scripts (`npm test && npm run lint`, using the
+  repo's package manager — look at the lockfile).
+- `pyproject.toml` / `setup.cfg` → `pytest` (+ `ruff check .` / `mypy` if configured).
+- `Cargo.toml` → `cargo test && cargo clippy -- -D warnings` · `go.mod` → `go test ./... && go vet ./...`.
+- A `Makefile` with a `test` / `check` target → `make check`.
+- An existing CI workflow → mirror the commands its main job runs.
+
+Chain with `&&` so the first failure stops it. Never invent a check the repo doesn't have. If the
+repo has **no** tests yet, say so and record the closest honest check (a build or typecheck) — the
+first `build` ticket will add real tests.
+
 ## 5. Verify — re-run the doctor
 
 Validate `.codemaster/config.json` against `"$SRC/config.schema.json"`, then **re-run §2 against what
-you just wrote.** Init is not done until the doctor is green.
+you just wrote.** Init is not done until the doctor is green. Run the `verify` command once and
+report pass/fail — a red run here is information about the codebase (not an init failure), but the
+user should know before the first `build`.
 
 For a fresh `plane` init the credentials are still placeholders, so connectivity *will* fail — that's
 expected, not a bug. Say so explicitly: "fill `.codemaster/plane.env`, then run `/codemaster-init

@@ -10,7 +10,7 @@ changing one config line. The loop, the fleet, and the cage don't change.
 A consuming project carries `.codemaster/config.json` at its root:
 
 ```json
-{ "tracker": "folder", "folder": { "root": ".codemaster/backlog", "idPrefix": "CM" } }
+{ "tracker": "folder", "verify": "npm test", "folder": { "root": ".codemaster/backlog", "idPrefix": "CM" } }
 ```
 
 - **If the file is absent the repo is *unconfigured*, not "folder by default".** Every skill that
@@ -20,6 +20,9 @@ A consuming project carries `.codemaster/config.json` at its root:
 - To invoke a verb, a skill: (1) reads `.codemaster/config.json` → `tracker`, (2) follows
   the matching provider doc in [`providers/`](providers/) for that verb. Nothing else in the
   skill is provider-aware.
+
+- `verify` isn't a tracker setting, but it lives in the same per-project file: the project's own
+  green-check command (`npm test && npm run lint`, `pytest`, …) that `build` and `ship` run.
 
 Config is validated by [`config.schema.json`](config.schema.json).
 
@@ -64,7 +67,7 @@ every provider stores the same six things and any skill can ask for one by name.
 |---|---|---|---|---|
 | `spec` | **epic** | `/spec` | `backlog`, `frame` | The epic brief. Tickets **inherit** it — a ticket never owns one. |
 | `design-options` | ticket | `/design-options` | `build` | The **UI/interaction decision**: which variant was chosen, why, and why not the others. The gallery itself is throwaway (gitignored `prototypes/`); only the decision is durable. |
-| `plan` | ticket | `frame` | `build` | The approach across layers, when the ticket is gnarly enough to earn one. Its presence is the `gnarly` signal for `build-critique`. |
+| `plan` | ticket | `frame` | `build` | The approach across layers, when the ticket is gnarly enough to earn one. Its presence is the `gnarly` signal that adds the `architect` lens to `build`'s critique. |
 | `architecture` | ticket | `frame` *or* `build` | `build`, `ship` | A boundary/coupling verdict — from the `architect` agent in frame, or from `build` when a critique round moves a boundary mid-loop. |
 | `acceptance-tests` | ticket | `frame` | `build` | The done-contract. **The one bridge**: `build` transcribes it into executable tests, and *those* are committed. |
 | `evidence` | ticket | `build`, completed by `ship` | humans, `ship` | Proof per acceptance criterion, the ladder run, what the critique changed, the merged PR. What makes "done" checkable rather than claimed. |

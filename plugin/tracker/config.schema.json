@@ -4,17 +4,30 @@
   "title": "CodeMaster tracker config (.codemaster/config.json)",
   "description": "Per-project selection of the backlog tracker provider and its settings.",
   "type": "object",
-  "required": ["tracker"],
+  "required": [
+    "tracker"
+  ],
   "additionalProperties": true,
   "properties": {
     "tracker": {
-      "enum": ["folder", "plane"],
+      "enum": [
+        "folder",
+        "plane"
+      ],
       "description": "Which provider implements the tracker verbs."
+    },
+    "verify": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The project's own green-check command, run by build (every loop) and ship (final gate) — e.g. 'npm test && npm run lint'. Set by /codemaster-init; build and ship stop if it's missing."
     },
     "folder": {
       "type": "object",
       "description": "Settings for the `folder` provider (files + git).",
-      "required": ["root", "idPrefix"],
+      "required": [
+        "root",
+        "idPrefix"
+      ],
       "additionalProperties": false,
       "properties": {
         "root": {
@@ -31,11 +44,20 @@
     "plane": {
       "type": "object",
       "description": "Settings for the `plane` provider (REST API via CLI).",
-      "required": ["workspace", "project"],
+      "required": [
+        "workspace",
+        "project"
+      ],
       "additionalProperties": false,
       "properties": {
-        "workspace": { "type": "string", "description": "Plane workspace slug." },
-        "project": { "type": "string", "description": "Plane project id (UUID)." },
+        "workspace": {
+          "type": "string",
+          "description": "Plane workspace slug."
+        },
+        "project": {
+          "type": "string",
+          "description": "Plane project id (UUID)."
+        },
         "envFile": {
           "type": "string",
           "default": ".codemaster/plane.env",
@@ -48,10 +70,19 @@
       "description": "Maps CodeMaster status -> the provider's native state (for remote providers, a Plane state group). Identity for the folder provider.",
       "additionalProperties": false,
       "properties": {
-        "todo": { "type": "string" },
-        "in_progress": { "type": "string" },
-        "done": { "type": "string" },
-        "blocked": { "type": "string", "description": "Omit for the `plane` provider — Plane has no `blocked` state group; it models blocked as a label. /codemaster-init --check flags it if present." }
+        "todo": {
+          "type": "string"
+        },
+        "in_progress": {
+          "type": "string"
+        },
+        "done": {
+          "type": "string"
+        },
+        "blocked": {
+          "type": "string",
+          "description": "Omit for the `plane` provider — Plane has no `blocked` state group; it models blocked as a label. /codemaster-init --check flags it if present."
+        }
       }
     }
   }

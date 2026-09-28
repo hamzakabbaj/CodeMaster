@@ -37,4 +37,4 @@ skill. This skill owns the *shaping* (DoR); the provider owns the *persistence*.
 - One concern per ticket. If acceptance criteria span unrelated changes, suggest splitting.
 - Keep detail just-in-time: a placeholder-only ticket is fine until it's pulled into work.
 - **Status and persistence belong to the provider**, never to this skill — call `mint`/`transition`,
-  don't hand-edit a board or a backend. The `folder` provider's board (`ROADMAP.md`) is generated; never edit it by hand.
+  don't hand-edit a board or a backend.

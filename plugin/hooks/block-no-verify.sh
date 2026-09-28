@@ -1,7 +1,7 @@
 #!/bin/sh
 # Claude Code PreToolUse hook (Bash matcher).
-# Blocks `git commit --no-verify` / `-n` so the agent cannot bypass the
-# .githooks/commit-msg gate.
+# Blocks `git commit --no-verify` / `-n` so the agent cannot bypass the repo's
+# own commit hooks (husky, pre-commit, lefthook, a plain .git/hooks script…).
 #
 # CM-34: token-aware detection. The naive substring version (CM-8) false-blocked
 # any command that merely MENTIONED the flag in a message/body argument. We now
@@ -41,6 +41,6 @@ print("block" if blocked else "allow")
 ' 2>/dev/null)
 
 if [ "$verdict" = "block" ]; then
-  printf '%s' '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Blocked by CodeMaster invariant: git commit --no-verify/-n bypasses the .githooks/commit-msg gate. Remove the flag and let the hook validate the message. (Server CI also re-checks this.)"}}'
+  printf '%s' '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Blocked by CodeMaster invariant: git commit --no-verify/-n bypasses the commit hooks of this repo. Remove the flag and let the hooks run; if a hook is wrong, fix the hook."}}'
 fi
 exit 0

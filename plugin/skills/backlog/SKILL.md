@@ -23,7 +23,7 @@ Read these directly from the project's `blueprint/` record; do not ask the user 
 2. **Slice vertically, one concern each.** Every ticket delivers something verifiable end-to-end and is finishable in one short-lived branch. If a ticket's acceptance criteria span unrelated changes, split it.
 3. **Promote the riskiest assumption.** The epic's `riskiest_assumption` (named at `roadmap`, sharpened in `/spec`) becomes its **own foundational enabler ticket**, built and proven before the stories that depend on it. (This is the concrete payoff of naming risk before you slice — e.g. EtiKets promoted its timezone rule, TabSplit its settlement engine.)
 4. **Dependency-order.** Enablers first (marked `subtype: enabler`), then the stories that depend on them. Record `depends_on`/`blocks` on every ticket — the build *order* lives in those edges, **never in the id**.
-5. **Meet the Definition of Ready** for each ticket — the canonical DoR lives in [`backlog/README.md`](../../../backlog/README.md) (single source of truth); the checklist below is a view of it, not a separate definition: clear single-sentence goal (task) or user story (story), testable acceptance criteria, known/unblocked deps, small enough for one branch, and an identified verification approach (which ladder rung proves it).
+5. **Meet the Definition of Ready** for each ticket — the canonical DoR lives in [`definitions.md`](../../definitions.md) (single source of truth); the checklist below is a view of it, not a separate definition: clear single-sentence goal (task) or user story (story), testable acceptance criteria, known/unblocked deps, small enough for one branch, and an identified verification approach (which ladder rung proves it).
 6. **Refine just-in-time.** Only elaborate a ticket when it's pulled into work; `roadmap.json` is the index/order, the ticket file holds the detail. A ticket may carry an optional inline `plan` object for gnarly work (the Step-5 Plan beat, captured early).
 
 ## Outputs — persist via the active tracker
@@ -39,7 +39,7 @@ epic id, in dependency order, recording `depends_on`/`blocks`.
 **For the default `folder` provider**, `mint` writes the structured JSON backlog:
 
 ```
-<root>/                                       # root from config, e.g. blueprint/v1/backlog
+<root>/                                       # root from config, e.g. .codemaster/backlog
   roadmap.json                                # the index: project, version, epics[] (each with ordered tickets[])
   epics/<epic-id>/                            # the epic roadmap minted; spec.md from /spec
     tickets/<ID>-<slug>/ticket.json           # each sliced ticket, co-located under its epic
@@ -64,6 +64,6 @@ cat "${CLAUDE_SKILL_DIR}/schema/ticket.schema.json"
 
 ## Output rules
 
-- All output is **valid JSON** conforming to its schema (enforced by the blueprint conformance rung in `scripts/ci.sh`).
+- All output is **valid JSON** conforming to its schema.
 - Use **real content** derived from the spec and system design — never placeholder data.
 - When the user provides `$ARGUMENTS`, treat it as the epic id to slice. If absent, `list` the epics via the active tracker and confirm which one to slice.

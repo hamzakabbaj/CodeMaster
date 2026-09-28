@@ -49,7 +49,7 @@ claude plugin install codemaster@codemaster
 | `roadmap` | Decompose a designed product into a dependency-ordered set of epics, each with its riskiest assumption — the backlog skeleton before `/spec`. |
 | `backlog` | Slice one approved epic's `/spec` brief into a dependency-ordered set of Ready tickets (promoting the epic's riskiest assumption to an enabler). |
 | `frame` | Set one ticket up to build — DoR gate → ground the code → plan if gnarly → design the acceptance tests — then stop at the done-contract. |
-| `build` | Run the robust-code loop on a framed ticket — generate (test-first) → verify → checkpoint → critique — until the acceptance tests pass and the ladder is green. |
+| `build` | Run the robust-code loop on a framed ticket — generate (test-first) → verify → checkpoint → critique — until the acceptance tests pass and `verify` is green. |
 | `new-ticket` | Scaffold one already-shaped ticket via the tracker, under its parent epic. |
 | `intake` | Front door for an out-of-the-blue request — triage it to the right altitude (fix · story · stories · epic) and route it (mint tickets, or mint an epic → `/spec`). With Plane, can pull from its **Intake** queue. |
 
@@ -59,7 +59,7 @@ claude plugin install codemaster@codemaster
 |---|---|
 | `architect` | Design-review: where complexity should live, whether an approach fits our conventions. |
 | `test-designer` | Adversarial test design — acceptance tests (in `frame`) + edge cases (in `build`'s critique). |
-| `devops` | CI/CD, gates, reproducibility — the verification ladder, hooks, Actions, deploy/rollback. |
+| `devops` | CI/CD, gates, reproducibility — the `verify` command, hooks, CI, deploy/rollback. |
 | `security` | AppSec threat-modeling — secrets, injection, authz, untrusted input, supply chain. |
 | `reviewer` | PR review against our conventions and Definition of Done — approve/block verdict. |
 | `librarian` | Read-only navigator/consistency-checker for the docs, ROADMAP, and backlog. |
@@ -91,9 +91,9 @@ The greenfield line is `design-thinking` → `technical-design` → `roadmap` �
       frame              DoR -> ground -> plan -> acceptance tests
             |            > done-contract review      (human checkpoint)
       build              generate (test-first) -> verify -> checkpoint -> critique
-            |              (repeat until the acceptance tests pass & the ladder is green)
+            |              (repeat until the acceptance tests pass & verify is green)
             |
-      /ship              PR -> both CI gates -> reviewer
+      /ship              verify -> PR -> checks -> reviewer
             |            > merge confirm             (human checkpoint)
             v
       main               squash-merged, branch deleted
@@ -104,8 +104,8 @@ The greenfield line is `design-thinking` → `technical-design` → `roadmap` �
       fix / chore   → new-ticket under `maintenance`  → /start-ticket → frame → build → /ship
 
    ── the deterministic cage runs underneath the whole flow ──
-   git hooks (commit-msg, pre-commit) + the CI ladder enforce the
-   invariants no matter what the model decides.
+   your `verify` command + your repo's git hooks and CI (+ the plugin's
+   no-bypass hook) enforce the invariants no matter what the model decides.
 ```
 
 The doctrine behind each step is in [docs/02 (robust-code loop)](../docs/02-robust-code-process.md) and [docs/03 (delivery)](../docs/03-delivery-process.md).
@@ -123,7 +123,7 @@ below works until it has run; the skills stop and point you back here rather tha
 3. `backlog <epic-id>` — slices the approved brief into Ready tickets.
 4. `/start-ticket <id>` — branches and flips the ticket to in-progress.
 5. `frame <id>` — grounds, plans, and designs the acceptance tests, then **stops at the done-contract**.
-6. `/build` — runs the robust-code loop until the acceptance tests pass and the ladder is green.
+6. `/build` — runs the robust-code loop until the acceptance tests pass and `verify` is green.
 7. `/ship` — opens the PR, waits for both gates + the reviewer, then **stops for your merge confirm**.
 8. Repeat 4–7 for each ticket.
 
@@ -141,9 +141,9 @@ below works until it has run; the skills stop and point you back here rather tha
 
 ### Best-practice rules
 - **Don't skip the checkpoints.** Let `/spec` stop at plan review, `frame` stop at the done-contract, and `/ship` stop at merge confirm — those pauses are where *you* are the discriminator, not the model.
-- **One ticket = one branch = one PR.** `/start-ticket` and `/ship` assume this; the git hooks enforce it.
+- **One ticket = one branch = one PR.** `/start-ticket` and `/ship` assume this.
 - **Frame before build.** `build` refuses without `frame`'s done-contract — the acceptance tests that *define* done. Frame is where "done" gets made executable and reviewed; build just drives the code to it.
-- **Trust the cage, verify the output.** The hooks + CI guarantee the invariants; your job at each checkpoint is to review design, security, and correctness — not just "does it run".
+- **Trust the cage, verify the output.** `verify`, the hooks, and your CI guarantee the invariants; your job at each checkpoint is to review design, security, and correctness — not just "does it run".
 
 ## Tracker — where the backlog lives (pluggable)
 
@@ -184,14 +184,13 @@ Full contract: [`tracker/README.md`](tracker/README.md).
 > Plane cards for teams, a gitignored local backlog for solo. The lone bridge: `build` reads the
 > `acceptance-tests` doc and transcribes it into executable tests, which *are* committed.
 
-## Heads-up: CodeMaster ships its own primitives
+## What your repo provides
 
-CodeMaster is a **meta-project — it's dogfooded on its own repo.** The **backlog** is now pluggable
-(see **Tracker** above — `folder` or `plane`), but some skills still lean on *this* repo's
-machinery — the `scripts/gen_roadmap.py` generators and the `scripts/ci.sh` verification ladder.
-Installed into a **foreign project**, the install reliably delivers the **fleet, hooks, thin commands,
-and the tracker**; the CI/generator scripts assume CodeMaster's own structure, so a consuming project
-wires its own CI. See [docs/03 §6](../docs/03-delivery-process.md#6-release-management) for the full picture.
+CodeMaster brings the process; your repo brings its own proof. The plugin ships no test runner and
+no CI — `build` and `ship` run **your** checks, via the `verify` command `/codemaster-init` records
+in `.codemaster/config.json` (e.g. `npm test && npm run lint`). If your repo has commit hooks or CI,
+they stay in charge: the plugin's `block-no-verify` hook stops the agent from skipping them, and
+`/ship` waits for your PR checks before it asks to merge.
 
 ## Learn more
 

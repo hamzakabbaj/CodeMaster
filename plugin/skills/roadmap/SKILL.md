@@ -61,15 +61,14 @@ and send the user to `/codemaster-init`**; there is no silent default); contract
 For the default **`folder`** provider, `mint` writes the skeleton into the backlog root:
 
 ```
-<root>/                  # root from config, e.g. blueprint/v1/backlog
+<root>/                  # root from config, e.g. .codemaster/backlog
   roadmap.json           # the index: project, version, epics[] — each with id, name, goal,
                          #   riskiest_assumption, depends_on/blocks, and an empty tickets[]
   epics/<id>/            # scaffolded folder per epic, empty until /spec attaches the brief
 ```
 
 `roadmap.json` validates against the roadmap schema bundled with the `backlog` skill
-(`backlog/schema/roadmap.schema.json`) and is checked by the blueprint-conformance rung in
-`scripts/ci.sh`. Regenerate the board after minting (the folder provider runs `gen_roadmap.py`).
+(`backlog/schema/roadmap.schema.json`).
 
 ## Conventions
 

@@ -20,7 +20,8 @@ any code exists.
   and `read_doc(<epic-id>, "spec")` for the epic brief this ticket sits in.
 
 ## 1. DoR gate → refine / spike / split
-Confirm the ticket is **Ready**: acceptance criteria are testable, and the scope is **one concern**.
+Confirm the ticket is **Ready** against the [Definition of Ready](../../definitions.md): acceptance
+criteria are testable, and the scope is **one concern**.
 If it isn't, don't push forward blind — take the escape that fits:
 - **vague** → *refine* the AC until they're checkable.
 - **unknown** → *spike* (a timeboxed investigation) — don't start building on an unknown.

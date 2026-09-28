@@ -48,7 +48,7 @@ Every ticket lives **under a parent epic** — there is no flat ticket bucket. S
 
 ### Small (fix / one story / a few stories) → `new-ticket` under a parent epic
 1. **Resolve the parent epic.** Pick the existing epic the work belongs to (via the `list` verb / the `folder` board `roadmap.json`). If it's a fix/chore that fits **no** existing epic, use the standing **`maintenance`** epic — and if that epic doesn't exist yet, `mint` it once (`type: epic`, goal "Standing home for ad-hoc fixes and chores that don't belong to a feature epic"). **Don't spawn a micro-epic per fix.**
-2. **Mint the ticket(s)** via the **[`new-ticket`](../new-ticket/SKILL.md)** procedure with `parent` = that epic id. For **a few stories**, order them (enabler first if one is needed) and record `depends_on`/`blocks`. Each must meet the Definition of Ready ([`backlog/README.md`](../../../backlog/README.md)).
+2. **Mint the ticket(s)** via the **[`new-ticket`](../new-ticket/SKILL.md)** procedure with `parent` = that epic id. For **a few stories**, order them (enabler first if one is needed) and record `depends_on`/`blocks`. Each must meet the Definition of Ready ([`definitions.md`](../../definitions.md)).
 
 ### Epic-sized → `mint` one epic, then send to `/spec`
 **Do not hand-slice the feature into stories — there's no spec yet.** Instead:
@@ -62,6 +62,6 @@ Report: the **altitude verdict + one-line reason**, what you created (ticket ids
 ## Guardrails
 - **Triage, don't build.** You mint tickets / an epic shell and a recommendation. Never write feature code or a spec here.
 - **Don't fake-slice an epic.** If there are unknowns, the honest output is "new epic → go spec it," not a pile of speculative stories. Promoting the riskiest assumption is the `backlog` skill's job *after* a spec exists, not yours.
-- **One concern per ticket** (DoR, [`backlog/README.md`](../../../backlog/README.md)). If a single ticket's acceptance criteria span unrelated changes, split it.
-- **Reuse, don't duplicate.** Ticket mechanics come from `new-ticket` → the tracker `mint` verb (id assignment, persistence, registration all belong to the active provider); the DoR and altitude doctrine live in `backlog/README.md`. Point at them; don't restate them.
+- **One concern per ticket** (DoR, [`definitions.md`](../../definitions.md)). If a single ticket's acceptance criteria span unrelated changes, split it.
+- **Reuse, don't duplicate.** Ticket mechanics come from `new-ticket` → the tracker `mint` verb (id assignment, persistence, registration all belong to the active provider); the DoR lives in [`definitions.md`](../../definitions.md) and the altitude table is Step 2 above. Point at them; don't restate them.
 - **Ids belong to the provider.** `CM-` is CodeMaster's own `folder` backlog; other projects use their own prefix (`TS-`, `ETK-`) or a remote tracker's scheme (`PROJ-123`). The triage is identical; the id/paths follow the active tracker — never hardcode a prefix.
