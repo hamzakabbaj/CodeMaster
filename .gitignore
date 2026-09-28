@@ -30,5 +30,5 @@ tmp/
 # Decision aids only — the durable artifact is the choice recorded in plan.md.
 prototypes/
 
-# CodeMaster tracker — local secrets (never commit)
-.codemaster/plane.env
+# Plane credentials — local secrets, wherever they live (never commit)
+plane.env
