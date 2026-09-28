@@ -1,4 +1,5 @@
 ---
+name: spec
 description: Write the brief for ONE feature that carries a riskiest assumption — sharpen the unknown, sketch the approach, then stop for review before the feature is sliced into tickets. Features without an unknown skip this and go straight to backlog. Persists via the tracker's attach_doc (never committed to the repo).
 argument-hint: <feature-id>
 ---
@@ -15,7 +16,7 @@ nothing else: ticket-level planning is `frame`'s `plan`, UI variant exploration 
 
 Resolve the tracker from `.codemaster/config.json` (**absent → stop and send the user to
 `/tracker-init`**; there is no silent default. Contract:
-[`plugin/tracker/README.md`](../tracker/README.md)) and **`read`** **$ARGUMENTS**:
+[`plugin/tracker/README.md`](../../tracker/README.md)) and **`read`** **$ARGUMENTS**:
 - **Not a `feature`** → stop. Epics aren't specced (break one into features with `roadmap <epic-id>`);
   a ticket's planning is `frame`'s job.
 - **No `riskiest_assumption`** → stop and say so: there's no unknown to settle, so the next step is

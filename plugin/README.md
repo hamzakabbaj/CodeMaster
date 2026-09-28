@@ -2,7 +2,7 @@
 
 > A Big-Tech-grade engineering operating system, packaged as a Claude Code plugin.
 
-CodeMaster turns Claude Code into a disciplined engineering team: a top-down pipeline — **design → roadmap → spec → backlog → frame → build → ship** — whose engine is a **generate → verify → checkpoint → critique** loop, run by a fleet of specialist subagents behind a **deterministic cage** of hooks, tests, and CI. The guiding idea: trustworthy AI engineering comes from the *cage you build around* a probabilistic model — not from the model behaving. This plugin bundles that judgment — the commands, skills, agents, and hooks — so you can install it into any project.
+CodeMaster turns Claude Code into a disciplined engineering team: a top-down pipeline — **design → roadmap → spec → backlog → frame → build → ship** — whose engine is a **generate → verify → checkpoint → critique** loop, run by a fleet of specialist subagents behind a **deterministic cage** of hooks, tests, and CI. The guiding idea: trustworthy AI engineering comes from the *cage you build around* a probabilistic model — not from the model behaving. This plugin bundles that judgment — the skills, agents, and hooks — so you can install it into any project.
 
 This README is the front page for someone who just installed the plugin. The full doctrine lives in [`docs/`](../docs/00-index.md); the rationale and status live in the repo's backlog.
 
@@ -15,7 +15,7 @@ claude plugin marketplace add hamzakabbaj/CodeMaster   # or a local path to the 
 claude plugin install codemaster@codemaster            # user scope: available in all projects
 ```
 
-Then **restart Claude Code** so the skills, agents, commands, and hooks register. The name reads `codemaster@codemaster` because it's `<plugin>@<marketplace>` — this repo is both the catalog *and* the single plugin in it.
+Then **restart Claude Code** so the skills, agents, and hooks register. The name reads `codemaster@codemaster` because it's `<plugin>@<marketplace>` — this repo is both the catalog *and* the single plugin in it.
 
 ### Updating
 
@@ -30,28 +30,39 @@ claude plugin install codemaster@codemaster
 
 ## What's inside
 
-### Commands — thin orchestration prompts (`/codemaster:<name>`)
+### Skills — everything you run (`/codemaster:<name>`)
 
-| Command | What it does |
+Every entry point is a skill. You can run any of them with `/codemaster:<name>`. Most Claude can also
+start on its own when the conversation calls for it (e.g. `intake` when you describe a new feature);
+the three marked **manual** have side effects or timing you control, so only you can start them.
+
+**Set up**
+
+| Skill | What it does |
 |---|---|
-| `/spec` | Write the half-page brief for one **feature** that carries a riskiest assumption — sharpen the unknown, sketch the approach — then stop for review before slicing. Features without an unknown skip it. |
-| `/start-ticket` | Create a ticket's feature branch and flip its status to in progress. `--worktree` cuts an isolated git worktree, so independent tickets build in parallel (pairs with `plane`; `ship` cleans it up). |
-| `/design-options` | Generate 2–3 throwaway UI variants as a `file://`-openable gallery, then stop for you to pick. The decision lands in the ticket's `design-options` doc slot; the gallery is thrown away. |
-| `/ship` | PR → both gates → review → (confirm) → squash-merge → verify main. |
-| `/tracker-init` | **Run this first in a new repo.** Set up where the backlog lives — scaffold `.codemaster/` for the `folder` or `plane` provider; with no flags (or `--check`) it's a **doctor** that diagnoses and repairs an existing setup (see **Tracker** below). Also records your `verify` command. |
+| `tracker-init` · **manual** | **Run this first in a new repo.** Set up where the backlog lives — scaffold `.codemaster/` for the `folder` or `plane` provider; with no flags (or `--check`) it's a **doctor** that diagnoses and repairs an existing setup (see **Tracker** below). Also records your `verify` command, and sets up Plane's type labels. |
 
-### Skills — multi-step procedures (invoked by name or auto-matched)
+**Design and plan**
 
 | Skill | What it does |
 |---|---|
 | `design-thinking` | Guide the Design Thinking methodology (brief, empathy maps, personas, wireframes…). |
 | `technical-design` | Guide technical architecture and system design (APIs, schema, design system). |
-| `roadmap` | The structure above tickets: split a designed product into **epics** (each with its product-level bet), or — run on one epic, when you start it — split that epic into **features** of 2–5 stories. |
-| `backlog` | Slice one **feature** into its 2–5 Ready tickets, promoting the feature's riskiest assumption (if any) to an enabler that's built first. |
-| `frame` | Set one ticket up to build — DoR gate → ground the code → plan if gnarly → design the acceptance tests — then stop at the done-contract. |
-| `build` | Run the robust-code loop on a framed ticket — generate (test-first) → verify → checkpoint → critique — until the acceptance tests pass and `verify` is green. |
-| `new-ticket` | Scaffold one already-shaped ticket via the tracker — optionally under a feature or an epic. |
 | `intake` | Front door for an out-of-the-blue request — triage it to the right level (ticket · feature · epic), suggest a parent, mint it, and name the next step. With Plane, can pull from its **Intake** queue. |
+| `roadmap` | The structure above tickets: split a designed product into **epics** (each with its product-level bet), or — run on one epic, when you start it — split that epic into **features** of 2–5 stories. |
+| `spec` | Write the half-page brief for one **feature** that carries a riskiest assumption — sharpen the unknown, sketch the approach — then stop for review before slicing. Features without an unknown skip it. |
+| `backlog` | Slice one **feature** into its 2–5 Ready tickets, promoting the feature's riskiest assumption (if any) to an enabler that's built first. |
+| `new-ticket` | Scaffold one already-shaped ticket via the tracker — optionally under a feature or an epic. |
+
+**Build and ship one ticket**
+
+| Skill | What it does |
+|---|---|
+| `start-ticket` · **manual** | Create a ticket's feature branch and flip its status to in progress. `--worktree` cuts an isolated git worktree, so independent tickets build in parallel (pairs with `plane`; `ship` cleans it up). |
+| `frame` | Set one ticket up to build — DoR gate → ground the code → plan if gnarly → design the acceptance tests — then stop at the done-contract. |
+| `design-options` | Generate 2–3 throwaway UI variants as a `file://`-openable gallery, then stop for you to pick. Run by `frame` when a ticket hinges on an open UI choice; the decision lands in the ticket's `design-options` doc slot. |
+| `build` | Run the robust-code loop on a framed ticket — generate (test-first) → verify → checkpoint → critique — until the acceptance tests pass and `verify` is green. |
+| `ship` · **manual** | `verify` → PR → checks → review → (confirm) → squash-merge → verify main. |
 
 ### Agents — specialist subagents the fleet delegates to
 
@@ -124,7 +135,7 @@ The doctrine behind each step is in [docs/02 (robust-code loop)](../docs/02-robu
 
 ## Using it — recipes
 
-What to actually run, in order, for the common starting points. (Commands carry the `/`; skills are bare but also work as `/name`.)
+What to actually run, in order, for the common starting points. (Every step is a skill; run it as `/codemaster:<name>` — shortened to `/<name>` below.)
 
 **Once per repo, before anything else:** `/tracker-init` — picks where the backlog lives and
 records your `verify` command. Nothing below works until it has run; the skills stop and point you

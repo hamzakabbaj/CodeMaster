@@ -1,6 +1,7 @@
 ---
+name: design-options
 description: Explore a UI/UX choice for a ticket — generate 2–3 throwaway variants of the element as a file://-openable gallery, then stop for the user to pick. The design-altitude parallel of /spec — element altitude, used during a ticket's plan step.
-argument-hint: <CM-number>  (e.g. /design-options 68) — defaults to the current branch's ticket
+argument-hint: <ticket id>  (e.g. /design-options ETK-7) — defaults to the current branch's ticket
 ---
 
 You are exploring the **look & interaction** of one element for ticket **$ARGUMENTS**, so the user can choose a direction *before* it's built. This is the design-altitude parallel of `/spec`: where `/spec` attacks a gnarly *plan*, this surfaces a UI/UX *choice*. The engine is the `frontend-design` skill (the official plugin) when it's installed; where it isn't (a Track B/C repo without it), fall back to generating the gallery directly with HTML/CSS — the skill makes the variants more distinctive, it isn't a hard dependency. **The gallery is a decision aid, never the implementation.**

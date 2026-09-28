@@ -1,6 +1,8 @@
 ---
+name: tracker-init
 description: Initialize or check CodeMaster in this repo — pick the tracker provider, scaffold .codemaster/, and verify it actually works. Run once per repo; re-run to refresh or to diagnose.
 argument-hint: "[--tracker=folder|plane] [--verify=\"<cmd>\"] [--root=…] [--id-prefix=…] [--workspace=…] [--project=…] [--check] [--force]"
+disable-model-invocation: true
 ---
 
 You are initializing (or diagnosing) **CodeMaster** in this repo. The job is to materialize a
@@ -88,7 +90,7 @@ Then the provider-specific checks — **these are the ones that actually catch b
   `backlog · unstarted · started · completed · cancelled` — anything else is a misconfiguration that
   would only surface later, when `/ship` tries to transition a ticket.
 - **`blocked` must NOT be in `statusMap`.** Plane has no `blocked` group — the provider models
-  blocked as a **label** ([`providers/plane.md`](../tracker/providers/plane.md) §Status map). A
+  blocked as a **label** ([`providers/plane.md`](../../tracker/providers/plane.md) §Status map). A
   `"blocked": "blocked"` entry is broken config; report it and drop it.
 - **Type labels** — `.codemaster/bin/labels.jq` exists, and every CodeMaster role has a label in the
   project:
@@ -228,4 +230,4 @@ Report: the action taken (fresh / refresh / switch), every file written, the doc
   installed version. Re-run this after a plugin update to refresh `provider.md` + the wrapper.
 - Never print the contents of `plane.env` or the API key, including in the doctor report. Report
   presence and shape ("set" / "still the template placeholder"), never the value.
-- This command configures; it does not create work. It never mints, transitions, or deletes items.
+- This skill configures; it does not create work. It never mints, transitions, or deletes items.

@@ -1,6 +1,8 @@
 ---
+name: start-ticket
 description: Start work on a ticket — create its feature branch (optionally an isolated git worktree) and flip its status to in progress (via the active tracker).
 argument-hint: <ticket id> [--worktree]   (e.g. /start-ticket 12  ·  /start-ticket PROJ-123 --worktree)
+disable-model-invocation: true
 ---
 
 You are starting work on ticket **$ARGUMENTS**. **Where** the ticket lives is decided by the active
@@ -45,5 +47,5 @@ Do exactly this:
    acceptance criteria to satisfy. Then await direction — do not start implementing yet.
 
 Guardrails: branch off an up-to-date `main`; one ticket → one branch (→ one worktree in `--worktree`
-mode). Do not commit anything in this command. A `--worktree` is cleaned up by `ship` after the
+mode). Do not commit anything here. A `--worktree` is cleaned up by `ship` after the
 merge. Status and persistence belong to the provider — call `read`/`transition`, don't hand-edit a backend.
